@@ -95,9 +95,9 @@ class app():
 
         #Add widgets to "start" ribbon
 
-        run_button = tkinter.Button(start_ribbon,text = "Run",image= run_icon, compound= "top").subsample(2,2)
+        run_button = tkinter.Button(start_ribbon,text = "Run",image= run_icon, compound= "top")
         run_button.pack(side = "left")
-        build_button = tkinter.Button(start_ribbon,text = "Build",image= build_icon, compound= "top").subsample(2,2)
+        build_button = tkinter.Button(start_ribbon,text = "Build",image= build_icon, compound= "top")
         build_button.pack(side = "left")
 
         main_frame = tkinter.Frame(main)
