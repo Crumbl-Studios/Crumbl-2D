@@ -13,8 +13,9 @@ class app():
         global right_pane
         global bottom_pane
         global module_tabs
+        global main
 
-        main = tkinter.Tk(None,None," Crumbl Engine Editor")
+        main = tkinter.Tk(None,None," Start Page - Crumbl Engine Editor")
         main.geometry("1366x720")
 
         #Iconography
@@ -50,16 +51,20 @@ class app():
         editmenu.add_command(label = "Dedent region")
         menubar.add_cascade(label="Edit", menu=editmenu)
 
-        editmenu = tkinter.Menu(menubar, tearoff=0)
-        editmenu.add_command(label="Start page")
-        editmenu.add_command(label="IDE")
-        editmenu.add_command(label="UI editor")
-        editmenu.add_command(label="Help")
-        editmenu.add_separator()
-        editmenu.add_command(label = "Asset viewer")
-        editmenu.add_command(label = "Python console")
-        editmenu.add_command(label = "Objects")
+        viewmenu = tkinter.Menu(menubar, tearoff=0)
+        viewmenu.add_command(label="Start page")
+        viewmenu.add_command(label="IDE")
+        viewmenu.add_command(label="UI editor")
+        viewmenu.add_command(label="Help")
+        viewmenu.add_separator()
+        viewmenu.add_command(label = "Asset viewer")
+        viewmenu.add_command(label = "Python console")
+        viewmenu.add_command(label = "Objects")
         menubar.add_cascade(label="View", menu=editmenu)
+
+        pluginmenu = tkinter.Menu(menubar, tearoff= 0)
+        pluginmenu.add_command(label="No plugins installed...", state= "disabled")
+        menubar.add_cascade(label="Plugins", menu= pluginmenu)
 
         helpmenu = tkinter.Menu(menubar, tearoff=0)
         helpmenu.add_command(label="Documentation")
@@ -113,6 +118,7 @@ class app():
         bottom_pane.pack(side = "bottom", fill = "x", expand = 0)
 
         module_tabs = ttk.Notebook(main_frame)
+        module_tabs.bind("<<NotebookTabChanged>>", app.windowTitleChange)
         module_tabs.pack(fill = "both", expand = 1)
 
         nbPage = app.notebookAdd("Start Page")
@@ -120,6 +126,12 @@ class app():
 
         main.mainloop()
         
+    def windowTitleChange(event):
+        global module_tabs
+
+        tab_name = module_tabs.tab(module_tabs.select(), "text")
+        main.title = tab_name +" - Crumbl Engine Editor"
+
     def notebookAdd(title,renameable = 0,closeable = 0,poppable = 0):
             global module_tabs
             try:
