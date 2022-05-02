@@ -75,12 +75,13 @@ def loadpage(helpdi,maintext,refresh,back,loadbar,app,currentop,currentpage,sear
             linktext = helpdoc.readline().rstrip("\n")
             currentop.set("text: "+linktext)
             link = helpdoc.readline().rstrip("\n")
+            linkloc= link
             currentop.set("location:" +link + "("+str(Linepercent*100)+"%)")
             maintext.tag_add(link,END)
             maintext.tag_config(link,foreground="blue",underline = 1)
-            maintext.tag_bind(link,"<Enter>",lambda e,linkloc= link: enter(linkloc))
-            maintext.tag_bind(link,"<Leave>",lambda e,linkloc= link: leave(linkloc))
-            maintext.tag_bind(link,"<Button-1>",lambda e,linkloc= link: click(linkloc))
+            maintext.tag_bind(link,"<Enter>",lambda linkloc , maintext = maintext, currentop = currentop, app = app: enter(linkloc, maintext, currentop,app))
+            maintext.tag_bind(link,"<Leave>",lambda linkloc , maintext = maintext, currentop = currentop, app = app: leave(linkloc, maintext, currentop,app))
+            maintext.tag_bind(link,"<Button-1>",lambda linkloc , maintext = maintext, currentop = currentop, back = back, loadbar = loadbar, app = app, currentpage = currentpage: click(linkloc,maintext,currentop,back,loadbar,app,currentop,currentpage))
             maintext.insert(END,linktext,link)
             linesrendered += 2
             app.update()
@@ -184,14 +185,16 @@ def handle(obj):
     helpdir = loc
     loadpage(loc)
 
-def enter(place,maintext,currentop):
+def enter(place,maintext,currentop,app):
     maintext.config(cursor = "hand2")
     maintext.tag_config(place,foreground="magenta",underline = 0)
+    app.update()
     currentop.set("Link to: "+str(place)+" (click to navigate)")
 
-def leave(place,maintext,currentop):
+def leave(place,maintext,currentop,app):
     maintext.config(cursor = "xterm")
     maintext.tag_config(place,foreground="blue",underline = 1)
+    app.update()
     currentop.set("Ready")
 
 def imgenter(e,maintext,currentop):

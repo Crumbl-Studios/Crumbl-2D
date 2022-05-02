@@ -1,6 +1,7 @@
 import tkinter
 from tkinter import Menu, ttk
 import fileHandler
+from PIL import ImageTk
 
 # UI Module imports
 import UIModules.start_page as start_page
@@ -18,10 +19,13 @@ class app():
         main = tkinter.Tk(None,None," Start Page - Crumbl Engine Editor")
         main.geometry("1366x720")
 
-        #Iconography
+        # Iconography
+        logo_icon = tkinter.PhotoImage(master = main,file = fileHandler.crumbl_logo)
 
         run_icon = tkinter.PhotoImage(master = main,file = fileHandler.run_asset)
         build_icon = tkinter.PhotoImage(master = main,file = fileHandler.build_asset)
+        # Set window icon
+        main.iconphoto(True,logo_icon)
 
         # File/Edit/Help Menu
 
@@ -60,7 +64,7 @@ class app():
         viewmenu.add_command(label = "Asset viewer")
         viewmenu.add_command(label = "Python console")
         viewmenu.add_command(label = "Objects")
-        menubar.add_cascade(label="View", menu=editmenu)
+        menubar.add_cascade(label="View", menu=viewmenu)
 
         pluginmenu = tkinter.Menu(menubar, tearoff= 0)
         pluginmenu.add_command(label="No plugins installed...", state= "disabled")
