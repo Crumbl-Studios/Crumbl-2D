@@ -5,6 +5,8 @@ from PIL import ImageTk
 
 # UI Module imports
 import UIModules.start_page as start_page
+import UIModules.ide as ide
+import UIModules.ui_editor as ui_editor
 
 class app():
     def __init__(self):
@@ -15,6 +17,8 @@ class app():
         global bottom_pane
         global module_tabs
         global main
+        global close_button
+        global pop_button
 
         main = tkinter.Tk(None,None," Start Page - Crumbl Engine Editor")
         main.geometry("1366x720")
@@ -56,10 +60,10 @@ class app():
         menubar.add_cascade(label="Edit", menu=editmenu)
 
         viewmenu = tkinter.Menu(menubar, tearoff=0)
-        viewmenu.add_command(label="Start page")
-        viewmenu.add_command(label="IDE")
-        viewmenu.add_command(label="UI editor")
-        viewmenu.add_command(label="Help")
+        viewmenu.add_command(label="Start page",command = lambda mod = "start_page":app.runMod(mod))
+        viewmenu.add_command(label="IDE",command = lambda mod = "ide":app.runMod(mod))
+        viewmenu.add_command(label="UI editor",command = lambda mod = "ui_editor":app.runMod(mod))
+        viewmenu.add_command(label="Help",command = lambda mod = "help_page":app.runMod(mod))
         viewmenu.add_separator()
         viewmenu.add_command(label = "Asset viewer")
         viewmenu.add_command(label = "Python console")
@@ -110,7 +114,7 @@ class app():
         build_button.pack(side = "left")
 
         main_frame = tkinter.Frame(main)
-        main_frame.pack(side = "top", fill = "x", expand = 0)
+        main_frame.pack(side = "top", fill = "both", expand = 0)
 
         left_pane = tkinter.Frame(main_frame)
         left_pane.pack(side = "left", fill = "y", expand = 0)
@@ -121,7 +125,19 @@ class app():
         bottom_pane = tkinter.Frame(main_frame)
         bottom_pane.pack(side = "bottom", fill = "x", expand = 0)
 
-        module_tabs = ttk.Notebook(main_frame)
+        canvas_frame = tkinter.Frame(main_frame)
+        canvas_frame.pack(fill = "both", expand = 0)
+        close_bar = tkinter.Frame(canvas_frame)
+        close_bar.pack(side = "top",fill = "x",expand = 1)
+
+        close_button = tkinter.Button(close_bar,text = "X",fg = "red",state='disabled')
+        close_button.pack(side = "right")
+        restore_button = tkinter.Button(close_bar,text = "🗗")
+        restore_button.pack(side = "right")
+        pop_button = tkinter.Button(close_bar,text = "➚",state='disabled')
+        pop_button.pack(side = "right")
+
+        module_tabs = ttk.Notebook(canvas_frame)
         module_tabs.bind("<<NotebookTabChanged>>", app.windowTitleChange)
         module_tabs.pack(fill = "both", expand = 1)
 
@@ -130,26 +146,62 @@ class app():
 
         main.mainloop()
         
+    def runMod(mod):
+        if mod == "start_page":
+            currentTab = app.notebookAdd("Start page",closeable = True,poppable = True)
+            start_page.NotebookPage.start_page(currentTab)
+        if mod == "ide":
+            currentTab = app.notebookAdd("IDE",renameable = True,closeable = True,poppable = True)
+            ide.NotebookPage.start_page(currentTab)
+        if mod == "ui_editor":
+            currentTab = app.notebookAdd("UI Editor",renameable = True,closeable = True,poppable = True)
+            ui_editor.NotebookPage.start_page(currentTab)
+        if mod == "help_page":
+            currentTab = app.notebookAdd("Help viewer",closeable = True,poppable = True)
+            start_page.NotebookPage.start_page(currentTab)
+
     def windowTitleChange(event):
         global module_tabs
-
         tab_name = module_tabs.tab(module_tabs.select(), "text")
         main.title = tab_name +" - Crumbl Engine Editor"
+        tab_no = module_tabs.index(module_tabs.select())
+        print(tab_no)
+        if module_tabs.closes[tab_no]:
+            close_button.config(state = 'normal')
+        else:
+            close_button.config(state = 'disabled')
+        if module_tabs.poppable[tab_no]:
+            pop_button.config(state = 'normal')
+        else:
+            pop_button.config(state = 'disabled')
 
-    def notebookAdd(title,renameable = 0,closeable = 0,poppable = 0):
+    def notebookAdd(title,renameable = False,closeable = False,poppable = False):
             global module_tabs
             try:
                 module_tabs.notes.append(tkinter.Frame(module_tabs))
                 module_tabs.texts.append(title)
+                module_tabs.renames.append(renameable)
+                module_tabs.closes.append(closeable)
+                module_tabs.poppable.append(poppable)
             except Exception:
                 module_tabs.notes = []
                 module_tabs.texts = []
+                module_tabs.closes = []
+                module_tabs.poppable = []
+                module_tabs.renames = []
                 module_tabs.notes.append(tkinter.Frame(module_tabs))
                 module_tabs.texts.append(title)
             module_tabs.add(module_tabs.notes[-1],text = title)
             varName = module_tabs.notes[-1] #len(upNotebook.notes)
             print("Tab system: tab generated"+str(varName)+","+title)
+            if poppable:
+                close_button.config(state = 'normal')
+            else:
+                close_button.config(state = 'disabled')
+            if poppable:
+                pop_button.config(state = 'normal')
+            else:
+                pop_button.config(state = 'disabled')
             return varName
-
 
 engine = app()
