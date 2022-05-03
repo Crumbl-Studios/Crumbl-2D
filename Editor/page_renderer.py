@@ -41,7 +41,6 @@ def loadpage(helpdi,maintext,refresh,back,loadbar,app,currentop,currentpage,sear
     loads.pack(fill = "x")
     END = tkinter.INSERT
     refresh.config(text = "X")
-    refresh.config(fg = "red")
     refresh.config(command = stop)
     try:
         currentpages = os.path.join(page_dir,helpdi)
@@ -166,7 +165,6 @@ def loadpage(helpdi,maintext,refresh,back,loadbar,app,currentop,currentpage,sear
     maintext.config(state = "disabled")
     app.configure(cursor = "")
     refresh.config(text = "↺")
-    refresh.config(fg = "green")
     refresh.config(command = lambda helpdir,maintext,refresh,back,loadbar,app,currentop,searchframe = None: reload(helpdir,maintext,refresh,back,loadbar,app,currentop,searchframe = None))
     cancel = 0
 
@@ -225,7 +223,6 @@ def stop(helpdir,maintext,refresh,back,loadbar,app,currentop,searchframe = None)
     maintext.config(state = "disabled")
     app.configure(cursor = "")
     refresh.config(text = "↺")
-    refresh.config(fg = "green")
     refresh.config(command = lambda helpdir,maintext,refresh,back,loadbar,app,currentop,
     searchframe = None: reload(helpdir,maintext,refresh,back,loadbar,app,currentop,searchframe = None))
 

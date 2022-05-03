@@ -2,11 +2,15 @@ import tkinter
 from tkinter import Menu, ttk
 import fileHandler
 from PIL import ImageTk
+import sv_ttk
 
 # UI Module imports
 import UIModules.start_page as start_page
 import UIModules.ide as ide
 import UIModules.ui_editor as ui_editor
+
+# Wizard UI imports
+import UIModules.settings_wizard as settings_wizard
 
 class app():
     def __init__(self):
@@ -22,6 +26,14 @@ class app():
 
         main = tkinter.Tk(None,None," Start Page - Crumbl Engine Editor")
         main.geometry("1366x720")
+
+        # Theme system (Sun Valley clone)
+        if settings_wizard.darkMode:
+            sv_ttk.set_theme("dark")
+            sv_ttk.use_dark_theme()
+        else:
+            sv_ttk.set_theme("light")
+            sv_ttk.use_light_theme()
 
         # Iconography
         logo_icon = tkinter.PhotoImage(master = main,file = fileHandler.crumbl_logo)
@@ -108,9 +120,9 @@ class app():
 
         #Add widgets to "start" ribbon
 
-        run_button = tkinter.Button(start_ribbon,text = "Run",image= run_icon, compound= "top")
+        run_button = ttk.Button(start_ribbon,text = "Run",image= run_icon, compound= "top")
         run_button.pack(side = "left")
-        build_button = tkinter.Button(start_ribbon,text = "Build",image= build_icon, compound= "top")
+        build_button = ttk.Button(start_ribbon,text = "Build",image= build_icon, compound= "top")
         build_button.pack(side = "left")
 
         main_frame = tkinter.Frame(main)
@@ -130,11 +142,11 @@ class app():
         close_bar = tkinter.Frame(canvas_frame)
         close_bar.pack(side = "top",fill = "x",expand = 1)
 
-        close_button = tkinter.Button(close_bar,text = "X",fg = "red",state='disabled')
+        close_button = ttk.Button(close_bar,text = "X",state='disabled')
         close_button.pack(side = "right")
-        restore_button = tkinter.Button(close_bar,text = "🗗")
+        restore_button = ttk.Button(close_bar,text = "🗗")
         restore_button.pack(side = "right")
-        pop_button = tkinter.Button(close_bar,text = "➚",state='disabled')
+        pop_button = ttk.Button(close_bar,text = "➚",state='disabled')
         pop_button.pack(side = "right")
 
         module_tabs = ttk.Notebook(canvas_frame)

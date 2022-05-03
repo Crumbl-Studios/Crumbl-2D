@@ -19,15 +19,19 @@ class NotebookPage():
         currentpage = tkinter.StringVar(nbPage)
 
         # Control buttons
-        back = tkinter.Button(toolFrame,text = "⬅️",fg = "dodgerblue",command = 
+        back = ttk.Button(toolFrame,text = "⬅️",command = 
         lambda maintext,refresh,back,loader,nbPage,currentpage,currentop:
         page_renderer.back(helpdir,maintext,refresh,back,loader,nbPage,currentpage,currentop))
         back.pack(side = "left")
-        home = tkinter.Button(toolFrame,text = "⌂️",fg = "dodgerblue", command= 
+        home = ttk.Button(toolFrame,text = "⌂️", command= 
         lambda maintext,refresh,back,loader,nbPage,currentpage,currentop:
         page_renderer.home(maintext,refresh,back,loader,nbPage,currentpage,currentop))
         home.pack(side = "left")
-        refresh = tkinter.Button(toolFrame,text = "↺",fg = "green",command =
+        addressbar = ttk.Entry(toolFrame)
+        addressbar.pack(side = "left",fill="x",expand=1)
+        gobutton = ttk.Button(toolFrame,text = "▶️")
+        gobutton.pack(side = "left")
+        refresh = ttk.Button(toolFrame,text = "↺",command =
         lambda maintext,refresh,back,loader,nbPage,currentpage,currentop:
         page_renderer.loadpage(previousdir,maintext,refresh,back,loader,nbPage,currentpage,currentop))
         refresh.pack(side = "right")
