@@ -3,9 +3,20 @@
 
 from pickle import GLOBAL
 import tkinter
+from tkinter import ttk
 from PIL import ImageTk,Image
 import os
 
+maintext: tkinter.Frame
+refresh: ttk.Button
+back: ttk.Button
+loadbar: ttk.Progressbar
+currentop: tkinter.StringVar
+currentpage: tkinter.StringVar
+currenthelpdir:tkinter.StringVar
+app: tkinter.Tk
+
+searchFrame = None
 cancel = 0
 finalimage = []
 finallimage = []
@@ -17,22 +28,49 @@ cwd = os.getcwd()
 page_dir = os.path.join(cwd, "Editor/docs")
 home_page = os.path.join(page_dir, "home.crhd")
 
-def loadpage(helpdi,maintext,refresh,back,loadbar,app,currentop,currentpage,searchframe = None):
-    global cancel
+def set_tkVars(maintextNew,refreshNew,backNew,loadbarNew,appNew,currentopNew,currentpageNew,currenthepldirNew):
+    global maintext
+    global refresh
+    global back
+    global loadbar
+    global currentop
+    global currentpage
+    global currenthelpdir
+    global app
+    maintext = maintextNew
+    refresh = refreshNew
+    back = backNew
+    loadbar = loadbarNew
+    app = appNew
+    currentop = currentopNew
+    currentpage = currentpageNew
+    currenthelpdir = currenthepldirNew
+
+def loadpage(helpdi):
+    global maintext
+    global refresh
+    global back
+    global loadbar
+    global currentop
+    global currentpage
+    global currentpages
+    global currenthelpdir
+    global app
     global finalimg
     global finallimg
     global linesrendered
     global linecount
     global page_dir
-
+    global searchframe
     cancel = 1
     try:
         maintext.pack(fill = "both",expand = 1)
         searchframe.pack_forget()
     except Exception:
         pass
-    currentop.set("loading page "+helpdi)
-    currentpage.set(helpdi.rstrip("\n"))
+    currentop.set("loading page "+str(helpdi))
+    currentpage.set(str(helpdi).rstrip("\n"))
+    currenthelpdir.set(helpdi)
     app.configure(cursor = "watch")
     maintext.configure(state="normal")
     loadbar.pack(side = "top",fill = "x")
@@ -74,13 +112,13 @@ def loadpage(helpdi,maintext,refresh,back,loadbar,app,currentop,currentpage,sear
             linktext = helpdoc.readline().rstrip("\n")
             currentop.set("text: "+linktext)
             link = helpdoc.readline().rstrip("\n")
-            linkloc= link
+            linklo = link
             currentop.set("location:" +link + "("+str(Linepercent*100)+"%)")
             maintext.tag_add(link,END)
             maintext.tag_config(link,foreground="blue",underline = 1)
-            maintext.tag_bind(link,"<Enter>",lambda linkloc , maintext = maintext, currentop = currentop, app = app: enter(linkloc, maintext, currentop,app))
-            maintext.tag_bind(link,"<Leave>",lambda linkloc , maintext = maintext, currentop = currentop, app = app: leave(linkloc, maintext, currentop,app))
-            maintext.tag_bind(link,"<Button-1>",lambda linkloc , maintext = maintext, currentop = currentop, back = back, loadbar = loadbar, app = app, currentpage = currentpage: click(linkloc,maintext,currentop,back,loadbar,app,currentop,currentpage))
+            maintext.tag_bind(link,"<Enter>",lambda e,linkloc = linklo: enter(linkloc))
+            maintext.tag_bind(link,"<Leave>",lambda e,linkloc = linklo: leave(linkloc))
+            maintext.tag_bind(link,"<Button-1>",lambda e,linkloc = linklo: click(linkloc))
             maintext.insert(END,linktext,link)
             linesrendered += 2
             app.update()
@@ -157,7 +195,7 @@ def loadpage(helpdi,maintext,refresh,back,loadbar,app,currentop,currentpage,sear
             app.update()
         else:
             currentop.set("Error found")
-            helpdoc = open(cwd+"/home/errors/error2.flh",mode = "r")
+            helpdoc = open(cwd+"/home/errors/error2.crhd",mode = "r")
             app.update()
             errorcon = "Command "+line+" is not a real filescript command"
     loads.destroy()
@@ -165,10 +203,16 @@ def loadpage(helpdi,maintext,refresh,back,loadbar,app,currentop,currentpage,sear
     maintext.config(state = "disabled")
     app.configure(cursor = "")
     refresh.config(text = "↺")
-    refresh.config(command = lambda helpdir,maintext,refresh,back,loadbar,app,currentop,searchframe = None: reload(helpdir,maintext,refresh,back,loadbar,app,currentop,searchframe = None))
+    refresh.config(command = lambda helpdir = None: reload(helpdir))
     cancel = 0
 
 def handle(obj):
+    global maintext
+    global refresh
+    global back
+    global loadbar
+    global currentop
+    global currentpage
     global locations
     global titles
     global tabs
@@ -183,36 +227,61 @@ def handle(obj):
     helpdir = loc
     loadpage(loc)
 
-def enter(place,maintext,currentop,app):
+def enter(place):
+    global maintext
+    global refresh
+    global back
+    global loadbar
+    global currentop
+    global app
     maintext.config(cursor = "hand2")
     maintext.tag_config(place,foreground="magenta",underline = 0)
     app.update()
     currentop.set("Link to: "+str(place)+" (click to navigate)")
 
-def leave(place,maintext,currentop,app):
+def leave(place):
     maintext.config(cursor = "xterm")
     maintext.tag_config(place,foreground="blue",underline = 1)
     app.update()
     currentop.set("Ready")
 
-def imgenter(e,maintext,currentop):
+def imgenter(e):
+    global maintext
+    global refresh
+    global back
+    global loadbar
+    global currentop
+    global app
     maintext.config(cursor = "hand2")
     currentop.set("Image contains a link to: "+str(e)+" (click to navigate)")
 
-def imgleave(e,maintext,currentop):
+def imgleave(e):
+    global maintext
+    global refresh
+    global back
+    global loadbar
+    global currentop
+    global app
     maintext.config(cursor = "xterm")
     currentop.set("Ready")
 
-def click(link,maintext,refresh,back,loadbar,app,currentop,searchframe = None):
+def click(link):
     global errorcon
-
-    currentop.set("GOING TO PAGE: "+str(link))
-    helpdir = link
+    global page_dir
+    helpdir = page_dir+link # This somehow didnt work with os.path.join()
+    currentop.set("GOING TO PAGE: "+str(helpdir))
     currentop.set(helpdir)
     errorcon = "no errors found"
-    loadpage(link)
+    loadpage(helpdir)
 
-def stop(helpdir,maintext,refresh,back,loadbar,app,currentop,searchframe = None):
+def stop(helpdir):
+    global maintext
+    global refresh
+    global back
+    global loadbar
+    global currentop
+    global app
+    global currentpage
     global loads
     global isinfile
     isinfile = False
@@ -226,9 +295,23 @@ def stop(helpdir,maintext,refresh,back,loadbar,app,currentop,searchframe = None)
     refresh.config(command = lambda helpdir,maintext,refresh,back,loadbar,app,currentop,
     searchframe = None: reload(helpdir,maintext,refresh,back,loadbar,app,currentop,searchframe = None))
 
-def reload(helpdir,maintext,refresh,back,loadbar,app,currentop,searchframe = None):
-    loadpage(helpdir,maintext,refresh,back,loadbar,app,currentop,searchframe = None)
+def reload(helpdir):
+    global maintext
+    global refresh
+    global back
+    global loadbar
+    global currentop
+    global currentpage
+    global app
+    loadpage(helpdir)
 
-def home(maintext,refresh,back,loadbar,app,currentop,searchframe = None):
-    loadpage(home_page,maintext,refresh,back,loadbar,app,currentop,searchframe = None)
+def home():
+    global maintext
+    global refresh
+    global back
+    global loadbar
+    global currentop
+    global currentpage
+    global app
+    loadpage(home_page)
 

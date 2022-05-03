@@ -170,7 +170,7 @@ class app():
             ui_editor.NotebookPage.start_page(currentTab)
         if mod == "help_page":
             currentTab = app.notebookAdd("Help viewer",closeable = True,poppable = True)
-            start_page.NotebookPage.start_page(currentTab)
+            start_page.NotebookPage.start_page(currentTab,True)
 
     def windowTitleChange(event):
         global module_tabs

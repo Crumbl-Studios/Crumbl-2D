@@ -6,44 +6,39 @@ helpdir = "home.crhd"
 previousdir = "home.crhd"
 
 class NotebookPage():
-    def start_page(nbPage):
+    def start_page(nbPage,startHelp = False):
         # Toolbar and text sytem
         toolFrame = tkinter.Frame(nbPage,highlightbackground = "gray", highlightthickness = 1)
         toolFrame.pack(side = "top",fill = "x")
         maintext = scrolledtext.ScrolledText(nbPage,state = "disabled")
         maintext.pack(fill = "both",expand = 1)
 
-                
         # Progress text
         currentop = tkinter.StringVar(nbPage)
         currentpage = tkinter.StringVar(nbPage)
+        currenthelpdir = tkinter.StringVar(nbPage)
 
         # Control buttons
-        back = ttk.Button(toolFrame,text = "⬅️",command = 
-        lambda maintext,refresh,back,loader,nbPage,currentpage,currentop:
-        page_renderer.back(helpdir,maintext,refresh,back,loader,nbPage,currentpage,currentop))
+        back = ttk.Button(toolFrame,text = "⬅️",command = NotebookPage.back)
         back.pack(side = "left")
-        home = ttk.Button(toolFrame,text = "⌂️", command= 
-        lambda maintext,refresh,back,loader,nbPage,currentpage,currentop:
-        page_renderer.home(maintext,refresh,back,loader,nbPage,currentpage,currentop))
+        home = ttk.Button(toolFrame,text = "⌂️", command= page_renderer.home)
         home.pack(side = "left")
-        addressbar = ttk.Entry(toolFrame)
+        addressbar = ttk.Entry(toolFrame,textvariable=currenthelpdir)
         addressbar.pack(side = "left",fill="x",expand=1)
-        gobutton = ttk.Button(toolFrame,text = "▶️")
+        gobutton = ttk.Button(toolFrame,text = "▶️",command = lambda a = addressbar.get():page_renderer.loadpage(a))
         gobutton.pack(side = "left")
-        refresh = ttk.Button(toolFrame,text = "↺",command =
-        lambda maintext,refresh,back,loader,nbPage,currentpage,currentop:
-        page_renderer.loadpage(previousdir,maintext,refresh,back,loader,nbPage,currentpage,currentop))
+        refresh = ttk.Button(toolFrame,text = "↺",command = lambda a = helpdir:page_renderer.loadpage(a))
         refresh.pack(side = "right")
 
 
         # Progress bar
         loader = ttk.Progressbar(toolFrame)
 
-        currentoplabel = tkinter.Label(nbPage, textvariable = currentop)
-        currentoplabel.pack(side = "top",fill="x")
-
-        page_renderer.loadpage("home.crhd",maintext,refresh,back,loader,nbPage,currentpage,currentop)
+        page_renderer.set_tkVars(maintext,refresh,back,loader,nbPage,currentop,currentpage,currenthelpdir)
+        if startHelp:
+            page_renderer.loadpage("help/toc.crhd")
+        else:
+            page_renderer.loadpage("home.crhd")
 
         maintext.tag_add("normal",1.0)
         maintext.tag_config("normal",font = ("TkDefaultFont",12))
@@ -58,3 +53,6 @@ class NotebookPage():
         maintext.tag_add("code",1.0)
         maintext.tag_config("code",font = ("Courier New",12),background = "gainsboro")
         maintext.config(cursor="xterm")
+    
+    def back():
+        page_renderer.loadpage(previousdir)
