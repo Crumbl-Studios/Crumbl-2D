@@ -136,7 +136,7 @@ class app():
         build_button.pack(side = "left")
 
         main_frame = tkinter.Frame(main)
-        main_frame.pack(side = "top", fill = "both", expand = 0)
+        main_frame.pack(side = "top", fill = "both", expand = 1)
 
         left_pane = tkinter.Frame(main_frame)
         left_pane.pack(side = "left", fill = "y", expand = 0)
@@ -144,8 +144,24 @@ class app():
         right_pane = tkinter.Frame(main_frame)
         right_pane.pack(side = "right", fill = "y", expand = 0)
 
+        status_bar = ttk.Frame(main_frame,relief="raised",borderwidth=2)
+        status_bar.pack(side = "bottom", fill = "x", expand = 0)
+
         bottom_pane = tkinter.Frame(main_frame)
         bottom_pane.pack(side = "bottom", fill = "x", expand = 0)
+
+        winModes = ttk.Frame(status_bar)
+        winModes.pack(side="right")
+        winModeDetached = ttk.Button(winModes,text = "➚")
+        winModeDetached.pack(side="right")
+        winModeSeperate = ttk.Button(winModes,text="🗗")
+        winModeSeperate.pack(side="right")
+        winModeTabbed = ttk.Button(winModes,text = "🗖")
+        winModeTabbed.pack(side="right")
+        progress_stat = ttk.Progressbar(status_bar)
+        progress_stat.pack(side = "right")
+        status_text = ttk.Label(status_bar,text = "Ready")
+        status_text.pack(side = "right")
 
         canvas_frame = tkinter.Frame(main_frame)
         canvas_frame.pack(fill = "both", expand = 0)
