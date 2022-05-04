@@ -7,6 +7,7 @@ previousdir = "home.crhd"
 
 class NotebookPage():
     def start_page(nbPage,startHelp = False):
+        global addressbar
         # Toolbar and text sytem
         toolFrame = tkinter.Frame(nbPage,highlightbackground = "gray", highlightthickness = 1)
         toolFrame.pack(side = "top",fill = "x")
@@ -25,11 +26,11 @@ class NotebookPage():
         home.pack(side = "left")
         addressbar = ttk.Entry(toolFrame,textvariable=currenthelpdir)
         addressbar.pack(side = "left",fill="x",expand=1)
-        gobutton = ttk.Button(toolFrame,text = "▶️",command = lambda a = addressbar.get():page_renderer.loadpage(a))
+        addressbar.bind("<Return>",NotebookPage.load_page)
+        gobutton = ttk.Button(toolFrame,text = "▶️",command = NotebookPage.load_page)
         gobutton.pack(side = "left")
         refresh = ttk.Button(toolFrame,text = "↺",command = lambda a = helpdir:page_renderer.loadpage(a))
         refresh.pack(side = "right")
-
 
         # Progress bar
         loader = ttk.Progressbar(toolFrame)
@@ -53,6 +54,14 @@ class NotebookPage():
         maintext.tag_add("code",1.0)
         maintext.tag_config("code",font = ("Courier New",12),background = "gainsboro")
         maintext.config(cursor="xterm")
+
+    def load_page(event = None,page = None):
+        global addressbar
+        if not page == None:
+            page_renderer.loadpage(page)
+        else:
+            p = addressbar.get()
+            page_renderer.loadpage(p)
     
     def back():
         page_renderer.loadpage(previousdir)

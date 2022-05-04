@@ -3,6 +3,7 @@ from tkinter import Menu, ttk
 import fileHandler
 from PIL import ImageTk
 import sv_ttk
+import os
 
 # UI Module imports
 import UIModules.start_page as start_page
@@ -28,13 +29,23 @@ class app():
         main.geometry("1366x720")
 
         # Theme system (Sun Valley clone)
-        if settings_wizard.darkMode:
-            sv_ttk.set_theme("dark")
-            sv_ttk.use_dark_theme()
+        if settings_wizard.theme == "sun_valley":
+            if settings_wizard.darkMode:
+                sv_ttk.set_theme("dark")
+                sv_ttk.use_dark_theme()
+            else:
+                sv_ttk.set_theme("light")
+                sv_ttk.use_light_theme()
+        elif settings_wizard.theme == "forest":
+            if settings_wizard.darkMode:
+                main.tk.call('source', os.path.join(fileHandler.IconDir,'forest-dark.tcl'))
+                ttk.Style().theme_use('forest-dark')
+            else:
+                main.tk.call('source', os.path.join(fileHandler.IconDir,'forest-light.tcl'))
+                ttk.Style().theme_use('forest-light')
         else:
-            sv_ttk.set_theme("light")
-            sv_ttk.use_light_theme()
-
+            if settings_wizard.darkMode:
+                ttk.Style().theme_use('alt')
         # Iconography
         logo_icon = tkinter.PhotoImage(master = main,file = fileHandler.crumbl_logo)
 
@@ -72,10 +83,9 @@ class app():
         menubar.add_cascade(label="Edit", menu=editmenu)
 
         viewmenu = tkinter.Menu(menubar, tearoff=0)
-        viewmenu.add_command(label="Start page",command = lambda mod = "start_page":app.runMod(mod))
         viewmenu.add_command(label="IDE",command = lambda mod = "ide":app.runMod(mod))
         viewmenu.add_command(label="UI editor",command = lambda mod = "ui_editor":app.runMod(mod))
-        viewmenu.add_command(label="Help",command = lambda mod = "help_page":app.runMod(mod))
+        viewmenu.add_command(label="Asset preview")
         viewmenu.add_separator()
         viewmenu.add_command(label = "Asset viewer")
         viewmenu.add_command(label = "Python console")
