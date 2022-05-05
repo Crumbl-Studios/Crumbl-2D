@@ -97,7 +97,7 @@ class app():
         menubar.add_cascade(label="Plugins", menu= pluginmenu)
 
         helpmenu = tkinter.Menu(menubar, tearoff=0)
-        helpmenu.add_command(label="Documentation")
+        helpmenu.add_command(label="Documentation",command= lambda doc= "help/toc.crhd":start_page.NotebookPage.load_page(page = doc))
         helpmenu.add_command(label="About...")
         menubar.add_cascade(label="Help", menu=helpmenu)
 
@@ -135,20 +135,18 @@ class app():
         build_button = ttk.Button(start_ribbon,text = "Build",image= build_icon, compound= "top")
         build_button.pack(side = "left")
 
-        main_frame = tkinter.Frame(main)
-        main_frame.pack(side = "top", fill = "both", expand = 1)
+        vert_frame = ttk.PanedWindow(main, orient = tkinter.VERTICAL)
+        vert_frame.pack(side = "top", fill = "both", expand = 1)
+        main_frame = ttk.Panedwindow(vert_frame, orient = tkinter.HORIZONTAL)
 
         left_pane = tkinter.Frame(main_frame)
-        left_pane.pack(side = "left", fill = "y", expand = 0)
         
         right_pane = tkinter.Frame(main_frame)
-        right_pane.pack(side = "right", fill = "y", expand = 0)
 
-        status_bar = ttk.Frame(main_frame,relief="raised",borderwidth=2)
+        status_bar = ttk.Frame(main,relief="raised",borderwidth=2)
         status_bar.pack(side = "bottom", fill = "x", expand = 0)
 
-        bottom_pane = tkinter.Frame(main_frame)
-        bottom_pane.pack(side = "bottom", fill = "x", expand = 0)
+        bottom_pane = tkinter.PanedWindow(vert_frame,orient=tkinter.VERTICAL)
 
         winModes = ttk.Frame(status_bar)
         winModes.pack(side="right")
@@ -167,6 +165,12 @@ class app():
         canvas_frame.pack(fill = "both", expand = 0)
         close_bar = tkinter.Frame(canvas_frame)
         close_bar.pack(side = "top",fill = "x",expand = 1)
+
+        main_frame.add(left_pane)
+        main_frame.add(canvas_frame)
+        main_frame.add(right_pane)
+        vert_frame.add(main_frame)
+        vert_frame.add(bottom_pane)
 
         close_button = ttk.Button(close_bar,text = "X",state='disabled')
         close_button.pack(side = "right")
@@ -201,8 +205,10 @@ class app():
     def windowTitleChange(event):
         global module_tabs
         tab_name = module_tabs.tab(module_tabs.select(), "text")
+        print(module_tabs.notes)
+        print("<tkinter.Frame object "+module_tabs.select()+">")
         main.title = tab_name +" - Crumbl Engine Editor"
-        tab_no = module_tabs.index(module_tabs.select())
+        tab_no = module_tabs.notes.index("<tkinter.Frame object "+module_tabs.select()+">")
         print(tab_no)
         if module_tabs.closes[tab_no]:
             close_button.config(state = 'normal')
@@ -222,6 +228,7 @@ class app():
                 module_tabs.closes.append(closeable)
                 module_tabs.poppable.append(poppable)
             except Exception:
+                print("No module lists")
                 module_tabs.notes = []
                 module_tabs.texts = []
                 module_tabs.closes = []
