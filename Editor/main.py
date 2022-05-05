@@ -9,6 +9,7 @@ import os
 import UIModules.start_page as start_page
 import UIModules.ide as ide
 import UIModules.ui_editor as ui_editor
+import UIModules.asset_preview as asset_preview
 
 # Wizard UI imports
 import UIModules.settings_wizard as settings_wizard
@@ -85,7 +86,7 @@ class app():
         viewmenu = tkinter.Menu(menubar, tearoff=0)
         viewmenu.add_command(label="IDE",command = lambda mod = "ide":app.runMod(mod))
         viewmenu.add_command(label="UI editor",command = lambda mod = "ui_editor":app.runMod(mod))
-        viewmenu.add_command(label="Asset preview")
+        viewmenu.add_command(label="Asset preview",command = lambda mod = "asset_preview":app.runMod(mod))
         viewmenu.add_separator()
         viewmenu.add_command(label = "Asset viewer")
         viewmenu.add_command(label = "Python console")
@@ -143,7 +144,7 @@ class app():
         
         right_pane = tkinter.Frame(main_frame)
 
-        status_bar = ttk.Frame(main,relief="raised",borderwidth=2)
+        status_bar = ttk.Frame(main,relief="raised",borderwidth=1)
         status_bar.pack(side = "bottom", fill = "x", expand = 0)
 
         bottom_pane = tkinter.PanedWindow(vert_frame,orient=tkinter.VERTICAL)
@@ -164,7 +165,7 @@ class app():
         canvas_frame = tkinter.Frame(main_frame)
         canvas_frame.pack(fill = "both", expand = 0)
         close_bar = tkinter.Frame(canvas_frame)
-        close_bar.pack(side = "top",fill = "x",expand = 1)
+        close_bar.pack(side = "top",fill = "x")
 
         main_frame.add(left_pane)
         main_frame.add(canvas_frame)
@@ -180,8 +181,8 @@ class app():
         pop_button.pack(side = "right")
 
         module_tabs = ttk.Notebook(canvas_frame)
+        module_tabs.pack(fill = "both",expand=1)
         module_tabs.bind("<<NotebookTabChanged>>", app.windowTitleChange)
-        module_tabs.pack(fill = "both", expand = 1)
 
         nbPage = app.notebookAdd("Start Page")
         start_page.NotebookPage.start_page(nbPage)
@@ -198,17 +199,16 @@ class app():
         if mod == "ui_editor":
             currentTab = app.notebookAdd("UI Editor",renameable = True,closeable = True,poppable = True)
             ui_editor.NotebookPage.start_page(currentTab)
-        if mod == "help_page":
-            currentTab = app.notebookAdd("Help viewer",closeable = True,poppable = True)
-            start_page.NotebookPage.start_page(currentTab,True)
+        if mod == "asset_preview":
+            currentTab = app.notebookAdd("Asset Viewer",closeable = True,poppable = True)
+            asset_preview.NotebookPage.start_page(currentTab,True)
 
     def windowTitleChange(event):
         global module_tabs
-        tab_name = module_tabs.tab(module_tabs.select(), "text")
-        print(module_tabs.notes)
-        print("<tkinter.Frame object "+module_tabs.select()+">")
-        main.title = tab_name +" - Crumbl Engine Editor"
-        tab_no = module_tabs.notes.index("<tkinter.Frame object "+module_tabs.select()+">")
+        tab_name = module_tabs.tab(module_tabs.select(),"text")
+        main.winfo_toplevel().title(tab_name +" - Crumbl Engine Editor")
+        tab_list = [module_tabs.tab(i, option="text") for i in module_tabs.tabs()]
+        tab_no = tab_list.index(tab_name)
         print(tab_no)
         if module_tabs.closes[tab_no]:
             close_button.config(state = 'normal')
@@ -236,8 +236,11 @@ class app():
                 module_tabs.renames = []
                 module_tabs.notes.append(tkinter.Frame(module_tabs))
                 module_tabs.texts.append(title)
+                module_tabs.renames.append(renameable)
+                module_tabs.closes.append(closeable)
+                module_tabs.poppable.append(poppable)
             module_tabs.add(module_tabs.notes[-1],text = title)
-            varName = module_tabs.notes[-1] #len(upNotebook.notes)
+            varName = module_tabs.notes[-1]
             print("Tab system: tab generated"+str(varName)+","+title)
             if poppable:
                 close_button.config(state = 'normal')
