@@ -163,7 +163,7 @@ class app():
         status_text.pack(side = "right")
 
         canvas_frame = tkinter.Frame(main_frame)
-        canvas_frame.pack(fill = "both", expand = 0)
+        canvas_frame.pack(fill = "both", expand = 1)
         close_bar = tkinter.Frame(canvas_frame)
         close_bar.pack(side = "top",fill = "x")
 
@@ -173,7 +173,7 @@ class app():
         vert_frame.add(main_frame)
         vert_frame.add(bottom_pane)
 
-        close_button = ttk.Button(close_bar,text = "X",state='disabled')
+        close_button = ttk.Button(close_bar,text = "X",state='disabled',command=app.tabClose)
         close_button.pack(side = "right")
         restore_button = ttk.Button(close_bar,text = "🗗")
         restore_button.pack(side = "right")
@@ -251,5 +251,13 @@ class app():
             else:
                 pop_button.config(state = 'disabled')
             return varName
+    
+    def tabClose():
+        global module_tabs
+        tab_name = module_tabs.tab(module_tabs.select(),"text")
+        tab_list = [module_tabs.tab(i, option="text") for i in module_tabs.tabs()]
+        tab_no = tab_list.index(tab_name)
+        module_tabs.notes[tab_no].destroy()
+
 
 engine = app()
