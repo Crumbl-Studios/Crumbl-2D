@@ -10,6 +10,7 @@ import UIModules.start_page as start_page
 import UIModules.ide as ide
 import UIModules.ui_editor as ui_editor
 import UIModules.asset_preview as asset_preview
+import seperatedWindow
 
 # Wizard UI imports
 import UIModules.settings_wizard as settings_wizard
@@ -25,7 +26,18 @@ class app():
         global main
         global close_button
         global pop_button
+        global windowedTabs
+        global close_bar
+        global mini_win_canvas
+        global mini_wins
+        global winModeDetached
+        global winModeSeperate
+        global winModeTabbed
+        global tabMode
 
+        mini_wins = []
+        windowedTabs = []
+        tabMode = 0
         main = tkinter.Tk(None,None," Start Page - Crumbl Engine Editor")
         main.geometry("1366x720")
 
@@ -155,7 +167,7 @@ class app():
         winModeDetached.pack(side="right")
         winModeSeperate = ttk.Button(winModes,text="🗗")
         winModeSeperate.pack(side="right")
-        winModeTabbed = ttk.Button(winModes,text = "🗖")
+        winModeTabbed = ttk.Button(winModes,style = "Accent.TButton",text = "🗖")
         winModeTabbed.pack(side="right")
         progress_stat = ttk.Progressbar(status_bar)
         progress_stat.pack(side = "right")
@@ -164,6 +176,7 @@ class app():
 
         canvas_frame = tkinter.Frame(main_frame)
         canvas_frame.pack(fill = "both", expand = 1)
+        mini_win_canvas = tkinter.Canvas(canvas_frame)
         close_bar = tkinter.Frame(canvas_frame)
         close_bar.pack(side = "top",fill = "x")
 
@@ -175,9 +188,9 @@ class app():
 
         close_button = ttk.Button(close_bar,text = "X",state='disabled',command=app.tabClose)
         close_button.pack(side = "right")
-        restore_button = ttk.Button(close_bar,text = "🗗")
+        restore_button = ttk.Button(close_bar,text = "🗗",command=app.tabMiniWin)
         restore_button.pack(side = "right")
-        pop_button = ttk.Button(close_bar,text = "➚",state='disabled')
+        pop_button = ttk.Button(close_bar,text = "➚",state='disabled',command=app.tabDetach)
         pop_button.pack(side = "right")
 
         module_tabs = ttk.Notebook(canvas_frame)
@@ -250,8 +263,9 @@ class app():
                 pop_button.config(state = 'normal')
             else:
                 pop_button.config(state = 'disabled')
+            module_tabs.select(module_tabs.index(varName))
             return varName
-    
+
     def tabClose():
         global module_tabs
         tab_name = module_tabs.tab(module_tabs.select(),"text")
@@ -259,5 +273,60 @@ class app():
         tab_no = tab_list.index(tab_name)
         module_tabs.notes[tab_no].destroy()
 
+    def tabDetach():
+        global module_tabs
+        global windowedTabs
+        tab_name = module_tabs.tab(module_tabs.select(),"text")
+        tab_list = [module_tabs.tab(i, option="text") for i in module_tabs.tabs()]
+        tab_no = tab_list.index(tab_name)
+        windowedTabs.append(seperatedWindow.seperatedWin())
+        windowedTabs[-1].additems(tab_name)
 
+
+    def tabMiniWin():
+        global module_tabs
+        global close_bar
+        global winModeDetached
+        global winModeSeperate
+        global winModeTabbed
+        tab_name = module_tabs.tab(module_tabs.select(),"text")
+        tab_list = [module_tabs.tab(i, option="text") for i in module_tabs.tabs()]
+        tab_no = tab_list.index(tab_name)
+        module_tabs.pack_forget()
+        close_bar.pack_forget()
+        mini_win_canvas.pack(fill="both",expand=1)
+        print("Canvas replaced")
+        app.convert_tabs()
+        winModeTabbed.config(style="TButton")
+        winModeDetached.config(style="TButton")
+        winModeSeperate.config(style="Accent.TButton")
+
+    def convert_tabs():
+        global module_tabs
+        global mini_win_canvas
+        global mini_wins
+        for i in range(len(module_tabs.notes)):
+            mini_wins.append(module_tabs.notes[i])
+            print("tab %s added to list" %(str(module_tabs.notes[i])))
+            mini_wins.append(tkinter.Frame(mini_win_canvas))
+            winFrame = mini_wins[-1]
+            mini_win_canvas.create_window(i*10,i*10,anchor=tkinter.NW,window=winFrame)
+            winFrame.moveBar = tkinter.Frame(winFrame,bg="CadetBlue4")
+            winFrame.moveBar.pack(side="top")
+            winFrame.winText = tkinter.Label(winFrame.moveBar,text = module_tabs.tab(i,"text"),bg="CadetBlue4")
+            winFrame.winText.pack(side="left")
+            if not module_tabs.closes[i]:
+                winFrame.closebutton = ttk.Button(winFrame.moveBar,text = "X")
+                winFrame.closebutton.pack(side = "right")
+            winFrame.maximizebutton = ttk.Button(winFrame.moveBar,text = "🗖")
+            winFrame.maximizebutton.pack(side = "right")
+            winFrame.minimizebutton = ttk.Button(winFrame.moveBar,text = "🗕")
+            winFrame.minimizebutton.pack(side = "right")
+            if not module_tabs.poppable[i]:
+                winFrame.closebutton = ttk.Button(winFrame.moveBar,text = "➚")
+                winFrame.closebutton.pack(side = "right")
+            winFrame.gripFrame = tkinter.Frame(winFrame)
+            winFrame.gripFrame.pack(side = "bottom",fill = "x")
+            winFrame.grip = tkinter.Label(winFrame.gripFrame, text = "◢")
+            winFrame.grip.pack(side="right")
 engine = app()
