@@ -34,7 +34,10 @@ class app():
         global winModeSeperate
         global winModeTabbed
         global tabMode
+        global wins
+        global canvas_frame
 
+        wins = []
         mini_wins = []
         windowedTabs = []
         tabMode = 0
@@ -234,8 +237,9 @@ class app():
 
     def notebookAdd(title,renameable = False,closeable = False,poppable = False):
             global module_tabs
+            global canvas_frame
             try:
-                module_tabs.notes.append(tkinter.Frame(module_tabs))
+                module_tabs.notes.append(tkinter.Frame(canvas_frame))
                 module_tabs.texts.append(title)
                 module_tabs.renames.append(renameable)
                 module_tabs.closes.append(closeable)
@@ -247,7 +251,7 @@ class app():
                 module_tabs.closes = []
                 module_tabs.poppable = []
                 module_tabs.renames = []
-                module_tabs.notes.append(tkinter.Frame(module_tabs))
+                module_tabs.notes.append(tkinter.Frame(canvas_frame))
                 module_tabs.texts.append(title)
                 module_tabs.renames.append(renameable)
                 module_tabs.closes.append(closeable)
@@ -305,28 +309,51 @@ class app():
         global module_tabs
         global mini_win_canvas
         global mini_wins
+        global wins
         for i in range(len(module_tabs.notes)):
             mini_wins.append(module_tabs.notes[i])
             print("tab %s added to list" %(str(module_tabs.notes[i])))
             mini_wins.append(tkinter.Frame(mini_win_canvas))
             winFrame = mini_wins[-1]
-            mini_win_canvas.create_window(i*10,i*10,anchor=tkinter.NW,window=winFrame)
+            winFrame.dragging = False
+            wins.append(mini_win_canvas.create_window(i*32,i*32,anchor=tkinter.NW,window=winFrame,width=640,height=320))
             winFrame.moveBar = tkinter.Frame(winFrame,bg="CadetBlue4")
-            winFrame.moveBar.pack(side="top")
+            winFrame.moveBar.pack(side="top",fill= "x")
             winFrame.winText = tkinter.Label(winFrame.moveBar,text = module_tabs.tab(i,"text"),bg="CadetBlue4")
             winFrame.winText.pack(side="left")
-            if not module_tabs.closes[i]:
+            if module_tabs.closes[i]:
                 winFrame.closebutton = ttk.Button(winFrame.moveBar,text = "X")
                 winFrame.closebutton.pack(side = "right")
             winFrame.maximizebutton = ttk.Button(winFrame.moveBar,text = "🗖")
             winFrame.maximizebutton.pack(side = "right")
             winFrame.minimizebutton = ttk.Button(winFrame.moveBar,text = "🗕")
             winFrame.minimizebutton.pack(side = "right")
-            if not module_tabs.poppable[i]:
+            if module_tabs.poppable[i]:
                 winFrame.closebutton = ttk.Button(winFrame.moveBar,text = "➚")
                 winFrame.closebutton.pack(side = "right")
             winFrame.gripFrame = tkinter.Frame(winFrame)
             winFrame.gripFrame.pack(side = "bottom",fill = "x")
-            winFrame.grip = tkinter.Label(winFrame.gripFrame, text = "◢")
+            winFrame.grip = tkinter.Label(winFrame.gripFrame, text = "◢",cursor="sizing")
             winFrame.grip.pack(side="right")
+            winFrame.grip.bind("<Button-1>",lambda e,f = winFrame:dragClick(e,f))
+            winFrame.grip.bind("<B1-Motion>",lambda e,f = winFrame,w = wins[-1]:dragOccuring(e,f,w))
+            winFrame.grip.bind("<ButtonRelease-1>",lambda f = winFrame:dragStop(f))
+            try:
+                module_tabs.notes[i].pack_forget()
+                module_tabs.notes[i].pack(in_=winFrame,fill = "both",expand = 1)
+            except Exception:
+                print("copying to seperate windows failed")
+        def dragClick(ev,frame):
+            frame.dragging = True
+            frame.dragpos = (ev.x_root, ev.y_root)
+            print("Now resizing")
+        def dragOccuring(ev,frame,win):
+            global mini_win_canvas
+            dx = ev.x_root - frame.dragpos[0]
+            dy = ev.y_root - frame.dragpos[1]
+            frame.config(width = dx)
+            frame.config(height = dy)
+        def dragStop(frame):
+            frame.dragging = False
+            print("Resizing stopped")
 engine = app()
