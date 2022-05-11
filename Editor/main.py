@@ -319,6 +319,17 @@ class app():
             wins.append(mini_win_canvas.create_window(i*32,i*32,anchor=tkinter.NW,window=winFrame,width=640,height=320))
             winFrame.moveBar = tkinter.Frame(winFrame,bg="CadetBlue4")
             winFrame.moveBar.pack(side="top",fill= "x")
+            winFrame.customMenu = tkinter.Menu(winFrame.moveBar)
+            if module_tabs.closes[i]:
+                winFrame.customMenu.add_command(label="X Close")
+            winFrame.customMenu.add_command(label="🗖 Maximize")
+            winFrame.customMenu.add_command(label="🗕 Minimize")
+            if module_tabs.poppable[i]:
+                winFrame.customMenu.add_command(label="➚ Pop out")
+            winFrame.customMenu.add_separator()
+            winFrame.customMenu.add_command(label="Change window color")
+            winFrame.customBar = ttk.Menubutton(winFrame.moveBar,style="Accent.TButton",text = "▼",menu=winFrame.customMenu)
+            winFrame.customBar.pack(side = "left")
             winFrame.winText = tkinter.Label(winFrame.moveBar,text = module_tabs.tab(i,"text"),bg="CadetBlue4")
             winFrame.winText.pack(side="left")
             if module_tabs.closes[i]:
