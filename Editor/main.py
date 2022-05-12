@@ -11,6 +11,7 @@ import UIModules.ide as ide
 import UIModules.ui_editor as ui_editor
 import UIModules.asset_preview as asset_preview
 import seperatedWindow
+from tkinter.colorchooser import askcolor
 
 # Wizard UI imports
 import UIModules.settings_wizard as settings_wizard
@@ -98,15 +99,23 @@ class app():
         editmenu.add_command(label = "Dedent region")
         menubar.add_cascade(label="Edit", menu=editmenu)
 
-        viewmenu = tkinter.Menu(menubar, tearoff=0)
-        viewmenu.add_command(label="IDE",command = lambda mod = "ide":app.runMod(mod))
-        viewmenu.add_command(label="UI editor",command = lambda mod = "ui_editor":app.runMod(mod))
-        viewmenu.add_command(label="Asset preview",command = lambda mod = "asset_preview":app.runMod(mod))
+        viewmenu = tkinter.Menu(menubar,tearoff=0)
+        viewmenu.add_radiobutton(label="🗖 Tabbed (default)")
+        viewmenu.add_radiobutton(label="🗗 Windowed")
+        viewmenu.add_radiobutton(label="➚ Detached")
         viewmenu.add_separator()
-        viewmenu.add_command(label = "Asset viewer")
-        viewmenu.add_command(label = "Python console")
-        viewmenu.add_command(label = "Objects")
+        viewmenu.add_command(label="X Close current tab/window")
         menubar.add_cascade(label="View", menu=viewmenu)
+
+        winmenu = tkinter.Menu(menubar, tearoff=0)
+        winmenu.add_command(label="IDE",command = lambda mod = "ide":app.runMod(mod))
+        winmenu.add_command(label="UI editor",command = lambda mod = "ui_editor":app.runMod(mod))
+        winmenu.add_command(label="Asset preview",command = lambda mod = "asset_preview":app.runMod(mod))
+        winmenu.add_separator()
+        winmenu.add_command(label = "Asset viewer")
+        winmenu.add_command(label = "Python console")
+        winmenu.add_command(label = "Objects")
+        menubar.add_cascade(label="Window", menu=winmenu)
 
         pluginmenu = tkinter.Menu(menubar, tearoff= 0)
         pluginmenu.add_command(label="No plugins installed...", state= "disabled")
@@ -327,7 +336,7 @@ class app():
             if module_tabs.poppable[i]:
                 winFrame.customMenu.add_command(label="➚ Pop out")
             winFrame.customMenu.add_separator()
-            winFrame.customMenu.add_command(label="Change window color")
+            winFrame.customMenu.add_command(label="Change window color",command=lambda a = winFrame:setWinColor(a))
             winFrame.customBar = ttk.Menubutton(winFrame.moveBar,style="Accent.TButton",text = "▼",menu=winFrame.customMenu)
             winFrame.customBar.pack(side = "left")
             winFrame.winText = tkinter.Label(winFrame.moveBar,text = module_tabs.tab(i,"text"),bg="CadetBlue4")
@@ -344,7 +353,7 @@ class app():
                 winFrame.closebutton.pack(side = "right")
             winFrame.gripFrame = tkinter.Frame(winFrame)
             winFrame.gripFrame.pack(side = "bottom",fill = "x")
-            winFrame.grip = tkinter.Label(winFrame.gripFrame, text = "◢",cursor="sizing")
+            winFrame.grip = tkinter.Label(winFrame.gripFrame, text = "◢",cursor="bottom_right_corner")
             winFrame.grip.pack(side="right")
             winFrame.grip.bind("<Button-1>",lambda e,f = winFrame:dragClick(e,f))
             winFrame.grip.bind("<B1-Motion>",lambda e,f = winFrame,w = wins[-1]:dragOccuring(e,f,w))
@@ -362,9 +371,14 @@ class app():
             global mini_win_canvas
             dx = ev.x_root - frame.dragpos[0]
             dy = ev.y_root - frame.dragpos[1]
-            frame.config(width = dx)
-            frame.config(height = dy)
+            mini_win_canvas.itemconfig(str(frame),width = dx)
+            mini_win_canvas.itemconfig(str(frame),width = dy)
         def dragStop(frame):
             frame.dragging = False
             print("Resizing stopped")
+        def setWinColor(win):
+            color = askcolor()
+            print(color)
+            win.moveBar.config(bg = color[1])
+            win.winText.config(bg = color[1])
 engine = app()
