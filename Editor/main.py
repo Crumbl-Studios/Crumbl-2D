@@ -320,9 +320,8 @@ class app():
         global mini_wins
         global wins
         for i in range(len(module_tabs.notes)):
-            mini_wins.append(module_tabs.notes[i])
-            print("tab %s added to list" %(str(module_tabs.notes[i])))
             mini_wins.append(tkinter.Frame(mini_win_canvas))
+            print("tab %s added to list" %(str(module_tabs.notes[i])))
             winFrame = mini_wins[-1]
             winFrame.dragging = False
             wins.append(mini_win_canvas.create_window(i*32,i*32,anchor=tkinter.NW,window=winFrame,width=640,height=320))
@@ -371,8 +370,8 @@ class app():
             global mini_win_canvas
             dx = ev.x_root - frame.dragpos[0]
             dy = ev.y_root - frame.dragpos[1]
-            mini_win_canvas.itemconfig(str(frame),width = dx)
-            mini_win_canvas.itemconfig(str(frame),width = dy)
+            mini_win_canvas.itemconfig(win,width = dx)
+            mini_win_canvas.itemconfig(win,height = dy)
         def dragStop(frame):
             frame.dragging = False
             print("Resizing stopped")
