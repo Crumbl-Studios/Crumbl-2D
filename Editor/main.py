@@ -16,6 +16,9 @@ from tkinter.colorchooser import askcolor
 # Wizard UI imports
 import UIModules.settings_wizard as settings_wizard
 
+def convertRGBcolor(r,g,b):
+    return "#%02x%02x%02x" %(r,g,b)
+
 class app():
     def __init__(self):
         # Globalise vars created here
@@ -213,7 +216,7 @@ class app():
         start_page.NotebookPage.start_page(nbPage)
 
         main.mainloop()
-        
+
     def runMod(mod):
         if mod == "start_page":
             currentTab = app.notebookAdd("Start page",closeable = True,poppable = True)
@@ -293,7 +296,8 @@ class app():
         tab_list = [module_tabs.tab(i, option="text") for i in module_tabs.tabs()]
         tab_no = tab_list.index(tab_name)
         windowedTabs.append(seperatedWindow.seperatedWin())
-        windowedTabs[-1].additems(tab_name)
+        windowedTabs[-1].additems(tab_name,module_tabs.notes)
+
 
 
     def tabMiniWin():
@@ -319,14 +323,25 @@ class app():
         global mini_win_canvas
         global mini_wins
         global wins
+        winFocus : tkinter.Frame
         for i in range(len(module_tabs.notes)):
             mini_wins.append(tkinter.Frame(mini_win_canvas))
             print("tab %s added to list" %(str(module_tabs.notes[i])))
             winFrame = mini_wins[-1]
             winFrame.dragging = False
+            winFrame.winDrag = False
+            winFrame.dragpos = [0,0]
+            winFrame.winrResize = False
+            winFrame.respos = [0,0]
+            winFrame.color = [83,134,139]
             wins.append(mini_win_canvas.create_window(i*32,i*32,anchor=tkinter.NW,window=winFrame,width=640,height=320))
-            winFrame.moveBar = tkinter.Frame(winFrame,bg="CadetBlue4")
+            winFrame.moveBar = tkinter.Frame(winFrame,cursor="fleur")
+            hexCol = convertRGBcolor(winFrame.color[0],winFrame.color[1],winFrame.color[2])
+            winFrame.moveBar.config(bg = hexCol)
             winFrame.moveBar.pack(side="top",fill= "x")
+            winFrame.moveBar.bind("<Button-1>",lambda e,f = winFrame:dragClick(e,f))
+            winFrame.moveBar.bind("<B1-Motion>",lambda e,f = winFrame,w = wins[-1]:dragOccuring(e,f,w))
+            winFrame.moveBar.bind("<ButtonRelease-1>",lambda f = winFrame:dragStop(f))
             winFrame.customMenu = tkinter.Menu(winFrame.moveBar)
             if module_tabs.closes[i]:
                 winFrame.customMenu.add_command(label="X Close")
@@ -354,30 +369,48 @@ class app():
             winFrame.gripFrame.pack(side = "bottom",fill = "x")
             winFrame.grip = tkinter.Label(winFrame.gripFrame, text = "◢",cursor="bottom_right_corner")
             winFrame.grip.pack(side="right")
-            winFrame.grip.bind("<Button-1>",lambda e,f = winFrame:dragClick(e,f))
-            winFrame.grip.bind("<B1-Motion>",lambda e,f = winFrame,w = wins[-1]:dragOccuring(e,f,w))
-            winFrame.grip.bind("<ButtonRelease-1>",lambda f = winFrame:dragStop(f))
+            winFrame.grip.bind("<Button-1>",lambda e,f = winFrame:resizeClick(e,f))
+            winFrame.grip.bind("<B1-Motion>",lambda e,f = winFrame,w = wins[-1]:resizeOccuring(e,f,w))
+            winFrame.grip.bind("<ButtonRelease-1>",lambda f = winFrame:resizeStop(f))
             try:
                 module_tabs.notes[i].pack_forget()
                 module_tabs.notes[i].pack(in_=winFrame,fill = "both",expand = 1)
             except Exception:
                 print("copying to seperate windows failed")
-        def dragClick(ev,frame):
-            frame.dragging = True
-            frame.dragpos = (ev.x_root, ev.y_root)
+        def resizeClick(ev,frame):
+            frame.resizing = True
+            frame.respos = (ev.x_root, ev.y_root)
             print("Now resizing")
-        def dragOccuring(ev,frame,win):
+        def resizeOccuring(ev,frame,win):
             global mini_win_canvas
-            dx = ev.x_root - frame.dragpos[0]
-            dy = ev.y_root - frame.dragpos[1]
-            mini_win_canvas.itemconfig(win,width = dx)
-            mini_win_canvas.itemconfig(win,height = dy)
-        def dragStop(frame):
-            frame.dragging = False
+            dx = ev.x_root - frame.respos[0]
+            dy = ev.y_root - frame.respos[1]
+            mini_win_canvas.itemconfig(win,width = ev.x_root)
+            mini_win_canvas.itemconfig(win,height = ev.y_root)
+        def resizeStop(frame):
+            frame.resizing = False
             print("Resizing stopped")
         def setWinColor(win):
             color = askcolor()
             print(color)
             win.moveBar.config(bg = color[1])
             win.winText.config(bg = color[1])
+            win.color = color[1]
+        def dragClick(ev,frame):
+            frame.dragging = True
+            frame.dragpos = (ev.x_root, ev.y_root)
+            print("Now dragging")
+        def dragOccuring(ev,frame,win):
+            global mini_win_canvas
+            dx = ev.x_root - frame.dragpos[0]
+            dy = ev.y_root - frame.dragpos[1]
+            mini_win_canvas.itemconfig(win,anchor = (ev.x_root,ev.y_root))
+            ## mini_win_canvas.itemconfig(win,Y = ev.y_root)
+        def dragStop(frame):
+            frame.dragging = False
+            print("Drag stopped")
+        def focus(win):
+            global winFocus
+            winFocus = win
+            print("window %s focused"%win)
 engine = app()

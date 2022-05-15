@@ -32,5 +32,6 @@ class seperatedWin():
         self.collapsebutton = ttk.Button(self.returnbar,text = "↶")
         self.collapsebutton.pack(side='left')
         print(self)
-    def additems(self,title):
-        self.winfo_toplevel().title(title)
+    def additems(self,mtabs,title):
+        mtabs.notes[-1].pack_forget()
+        mtabs.notes[-1].pack(in_=self,fill = "both",expand = 1)
