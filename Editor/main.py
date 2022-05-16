@@ -404,7 +404,7 @@ class app():
             global mini_win_canvas
             dx = ev.x_root - frame.dragpos[0]
             dy = ev.y_root - frame.dragpos[1]
-            mini_win_canvas.itemconfig(win,anchor = (ev.x_root,ev.y_root))
+            mini_win_canvas.moveto(win,dx,dy)
             ## mini_win_canvas.itemconfig(win,Y = ev.y_root)
         def dragStop(frame):
             frame.dragging = False
