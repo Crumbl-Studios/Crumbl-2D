@@ -317,7 +317,54 @@ class app():
         winModeTabbed.config(style="TButton")
         winModeDetached.config(style="TButton")
         winModeSeperate.config(style="Accent.TButton")
-
+    def generateMiniWin(x,y,sx,sy,title,closable = True,poppable = True):
+        mini_wins.append(tkinter.Frame(mini_win_canvas))
+        winFrame = mini_wins[-1]
+        winFrame.dragging = False
+        winFrame.winDrag = False
+        winFrame.dragpos = [0,0]
+        winFrame.winrResize = False
+        winFrame.respos = [0,0]
+        winFrame.color = [83,134,139]
+        wins.append(mini_win_canvas.create_window(x,y,anchor=tkinter.NW,window=winFrame,width=sx,height=sy))
+        winFrame.moveBar = tkinter.Frame(winFrame,cursor="fleur")
+        hexCol = convertRGBcolor(winFrame.color[0],winFrame.color[1],winFrame.color[2])
+        winFrame.moveBar.config(bg = hexCol)
+        winFrame.moveBar.pack(side="top",fill= "x")
+        winFrame.moveBar.bind("<Button-1>",lambda e,f = winFrame:app.dragClick(e,f))
+        winFrame.moveBar.bind("<B1-Motion>",lambda e,f = winFrame,w = wins[-1]:app.dragOccuring(e,f,w))
+        winFrame.moveBar.bind("<ButtonRelease-1>",lambda f = winFrame:app.dragStop(f))
+        winFrame.customMenu = tkinter.Menu(winFrame.moveBar)
+        if closable:
+            winFrame.customMenu.add_command(label="X Close")
+        winFrame.customMenu.add_command(label="🗖 Maximize")
+        winFrame.customMenu.add_command(label="🗕 Minimize")
+        if poppable:
+            winFrame.customMenu.add_command(label="➚ Pop out")
+        winFrame.customMenu.add_separator()
+        winFrame.customMenu.add_command(label="Change window color",command=lambda a = winFrame:app.setWinColor(a))
+        winFrame.customBar = ttk.Menubutton(winFrame.moveBar,style="Accent.TButton",text = "▼",menu=winFrame.customMenu)
+        winFrame.customBar.pack(side = "left")
+        winFrame.winText = tkinter.Label(winFrame.moveBar,text = title,bg=hexCol)
+        winFrame.winText.pack(side="left")
+        if closable:
+            winFrame.closebutton = ttk.Button(winFrame.moveBar,text = "X")
+            winFrame.closebutton.pack(side = "right")
+        winFrame.maximizebutton = ttk.Button(winFrame.moveBar,text = "🗖")
+        winFrame.maximizebutton.pack(side = "right")
+        winFrame.minimizebutton = ttk.Button(winFrame.moveBar,text = "🗕")
+        winFrame.minimizebutton.pack(side = "right")
+        if poppable:
+            winFrame.closebutton = ttk.Button(winFrame.moveBar,text = "➚")
+            winFrame.closebutton.pack(side = "right")
+        winFrame.gripFrame = tkinter.Frame(winFrame)
+        winFrame.gripFrame.pack(side = "bottom",fill = "x")
+        winFrame.grip = tkinter.Label(winFrame.gripFrame, text = "◢",cursor="bottom_right_corner")
+        winFrame.grip.pack(side="right")
+        winFrame.grip.bind("<Button-1>",lambda e,f = winFrame:app.resizeClick(e,f))
+        winFrame.grip.bind("<B1-Motion>",lambda e,f = winFrame,w = wins[-1]:app.resizeOccuring(e,f,w))
+        winFrame.grip.bind("<ButtonRelease-1>",lambda f = winFrame:app.resizeStop(f))
+        return winFrame
     def convert_tabs():
         global module_tabs
         global mini_win_canvas
@@ -325,92 +372,48 @@ class app():
         global wins
         winFocus : tkinter.Frame
         for i in range(len(module_tabs.notes)):
-            mini_wins.append(tkinter.Frame(mini_win_canvas))
             print("tab %s added to list" %(str(module_tabs.notes[i])))
-            winFrame = mini_wins[-1]
-            winFrame.dragging = False
-            winFrame.winDrag = False
-            winFrame.dragpos = [0,0]
-            winFrame.winrResize = False
-            winFrame.respos = [0,0]
-            winFrame.color = [83,134,139]
-            wins.append(mini_win_canvas.create_window(i*32,i*32,anchor=tkinter.NW,window=winFrame,width=640,height=320))
-            winFrame.moveBar = tkinter.Frame(winFrame,cursor="fleur")
-            hexCol = convertRGBcolor(winFrame.color[0],winFrame.color[1],winFrame.color[2])
-            winFrame.moveBar.config(bg = hexCol)
-            winFrame.moveBar.pack(side="top",fill= "x")
-            winFrame.moveBar.bind("<Button-1>",lambda e,f = winFrame:dragClick(e,f))
-            winFrame.moveBar.bind("<B1-Motion>",lambda e,f = winFrame,w = wins[-1]:dragOccuring(e,f,w))
-            winFrame.moveBar.bind("<ButtonRelease-1>",lambda f = winFrame:dragStop(f))
-            winFrame.customMenu = tkinter.Menu(winFrame.moveBar)
-            if module_tabs.closes[i]:
-                winFrame.customMenu.add_command(label="X Close")
-            winFrame.customMenu.add_command(label="🗖 Maximize")
-            winFrame.customMenu.add_command(label="🗕 Minimize")
-            if module_tabs.poppable[i]:
-                winFrame.customMenu.add_command(label="➚ Pop out")
-            winFrame.customMenu.add_separator()
-            winFrame.customMenu.add_command(label="Change window color",command=lambda a = winFrame:setWinColor(a))
-            winFrame.customBar = ttk.Menubutton(winFrame.moveBar,style="Accent.TButton",text = "▼",menu=winFrame.customMenu)
-            winFrame.customBar.pack(side = "left")
-            winFrame.winText = tkinter.Label(winFrame.moveBar,text = module_tabs.tab(i,"text"),bg="CadetBlue4")
-            winFrame.winText.pack(side="left")
-            if module_tabs.closes[i]:
-                winFrame.closebutton = ttk.Button(winFrame.moveBar,text = "X")
-                winFrame.closebutton.pack(side = "right")
-            winFrame.maximizebutton = ttk.Button(winFrame.moveBar,text = "🗖")
-            winFrame.maximizebutton.pack(side = "right")
-            winFrame.minimizebutton = ttk.Button(winFrame.moveBar,text = "🗕")
-            winFrame.minimizebutton.pack(side = "right")
-            if module_tabs.poppable[i]:
-                winFrame.closebutton = ttk.Button(winFrame.moveBar,text = "➚")
-                winFrame.closebutton.pack(side = "right")
-            winFrame.gripFrame = tkinter.Frame(winFrame)
-            winFrame.gripFrame.pack(side = "bottom",fill = "x")
-            winFrame.grip = tkinter.Label(winFrame.gripFrame, text = "◢",cursor="bottom_right_corner")
-            winFrame.grip.pack(side="right")
-            winFrame.grip.bind("<Button-1>",lambda e,f = winFrame:resizeClick(e,f))
-            winFrame.grip.bind("<B1-Motion>",lambda e,f = winFrame,w = wins[-1]:resizeOccuring(e,f,w))
-            winFrame.grip.bind("<ButtonRelease-1>",lambda f = winFrame:resizeStop(f))
+            cTitle = module_tabs.tab(module_tabs.notes[i],"text")
+            winFrame = app.generateMiniWin(i*32,i*32,640,320,cTitle,module_tabs.closes[i],module_tabs.poppable[i])
             try:
                 module_tabs.notes[i].pack_forget()
                 module_tabs.notes[i].pack(in_=winFrame,fill = "both",expand = 1)
             except Exception:
                 print("copying to seperate windows failed")
-        def resizeClick(ev,frame):
-            frame.resizing = True
-            frame.respos = (ev.x_root, ev.y_root)
-            print("Now resizing")
-        def resizeOccuring(ev,frame,win):
-            global mini_win_canvas
-            dx = ev.x_root - frame.respos[0]
-            dy = ev.y_root - frame.respos[1]
-            mini_win_canvas.itemconfig(win,width = ev.x_root)
-            mini_win_canvas.itemconfig(win,height = ev.y_root)
-        def resizeStop(frame):
-            frame.resizing = False
-            print("Resizing stopped")
-        def setWinColor(win):
-            color = askcolor()
-            print(color)
-            win.moveBar.config(bg = color[1])
-            win.winText.config(bg = color[1])
-            win.color = color[1]
-        def dragClick(ev,frame):
-            frame.dragging = True
-            frame.dragpos = (ev.x_root, ev.y_root)
-            print("Now dragging")
-        def dragOccuring(ev,frame,win):
-            global mini_win_canvas
-            dx = ev.x_root - frame.dragpos[0]
-            dy = ev.y_root - frame.dragpos[1]
-            mini_win_canvas.moveto(win,dx,dy)
-            ## mini_win_canvas.itemconfig(win,Y = ev.y_root)
-        def dragStop(frame):
-            frame.dragging = False
-            print("Drag stopped")
-        def focus(win):
-            global winFocus
-            winFocus = win
-            print("window %s focused"%win)
+    def resizeClick(ev,frame):
+        frame.resizing = True
+        frame.respos = (ev.x_root, ev.y_root)
+        print("Now resizing")
+    def resizeOccuring(ev,frame,win):
+        global mini_win_canvas
+        dx = ev.x_root - frame.respos[0]
+        dy = ev.y_root - frame.respos[1]
+        mini_win_canvas.itemconfig(win,width = ev.x_root)
+        mini_win_canvas.itemconfig(win,height = ev.y_root)
+    def resizeStop(frame):
+        frame.resizing = False
+        print("Resizing stopped")
+    def setWinColor(win):
+        color = askcolor()
+        print(color)
+        win.moveBar.config(bg = color[1])
+        win.winText.config(bg = color[1])
+        win.color = color[1]
+    def dragClick(ev,frame):
+        frame.dragging = True
+        frame.dragpos = (ev.x_root, ev.y_root)
+        print("Now dragging")
+    def dragOccuring(ev,frame,win):
+        global mini_win_canvas
+        dx = ev.x_root - frame.dragpos[0]
+        dy = ev.y_root - frame.dragpos[1]
+        mini_win_canvas.moveto(win,dx,dy)
+        ## mini_win_canvas.itemconfig(win,Y = ev.y_root)
+    def dragStop(frame):
+        frame.dragging = False
+        print("Drag stopped")
+    def focus(win):
+        global winFocus
+        winFocus = win
+        print("window %s focused"%win)
 engine = app()
