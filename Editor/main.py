@@ -40,11 +40,15 @@ class app():
         global tabMode
         global wins
         global canvas_frame
+        global winFocus
+        global win_mode
 
+        winFocus = None
         wins = []
         mini_wins = []
         windowedTabs = []
         tabMode = 0
+        win_mode = "tabbed"
         main = tkinter.Tk(None,None," Start Page - Crumbl Engine Editor")
         main.geometry("1366x720")
 
@@ -104,7 +108,7 @@ class app():
 
         viewmenu = tkinter.Menu(menubar,tearoff=0)
         viewmenu.add_radiobutton(label="🗖 Tabbed (default)")
-        viewmenu.add_radiobutton(label="🗗 Windowed")
+        viewmenu.add_radiobutton(label="🗗 Windowed",command=app.tabMiniWin)
         viewmenu.add_radiobutton(label="➚ Detached")
         viewmenu.add_separator()
         viewmenu.add_command(label="X Close current tab/window")
@@ -180,7 +184,7 @@ class app():
         winModes.pack(side="right")
         winModeDetached = ttk.Button(winModes,text = "➚")
         winModeDetached.pack(side="right")
-        winModeSeperate = ttk.Button(winModes,text="🗗")
+        winModeSeperate = ttk.Button(winModes,text="🗗",command=app.tabMiniWin)
         winModeSeperate.pack(side="right")
         winModeTabbed = ttk.Button(winModes,style = "Accent.TButton",text = "🗖")
         winModeTabbed.pack(side="right")
@@ -231,25 +235,29 @@ class app():
             currentTab = app.notebookAdd("Asset Viewer",closeable = True,poppable = True)
             asset_preview.NotebookPage.start_page(currentTab,True)
 
-    def windowTitleChange(event):
+    def windowTitleChange(event = None,title = None):
         global module_tabs
-        tab_name = module_tabs.tab(module_tabs.select(),"text")
-        main.winfo_toplevel().title(tab_name +" - Crumbl Engine Editor")
-        tab_list = [module_tabs.tab(i, option="text") for i in module_tabs.tabs()]
-        tab_no = tab_list.index(tab_name)
-        print(tab_no)
-        if module_tabs.closes[tab_no]:
-            close_button.config(state = 'normal')
-        else:
-            close_button.config(state = 'disabled')
-        if module_tabs.poppable[tab_no]:
-            pop_button.config(state = 'normal')
-        else:
-            pop_button.config(state = 'disabled')
-
+        if win_mode == "tabbed":
+            tab_name = module_tabs.tab(module_tabs.select(),"text")
+            main.winfo_toplevel().title(tab_name +" - Crumbl Engine Editor")
+            tab_list = [module_tabs.tab(i, option="text") for i in module_tabs.tabs()]
+            tab_no = tab_list.index(tab_name)
+            print(tab_no)
+            if module_tabs.closes[tab_no]:
+                close_button.config(state = 'normal')
+            else:
+                close_button.config(state = 'disabled')
+            if module_tabs.poppable[tab_no]:
+                pop_button.config(state = 'normal')
+            else:
+                pop_button.config(state = 'disabled')
+        if win_mode == "miniwindow":
+            main.winfo_toplevel().title(title +" - Crumbl Engine Editor")
     def notebookAdd(title,renameable = False,closeable = False,poppable = False):
-            global module_tabs
-            global canvas_frame
+        global win_mode
+        global module_tabs
+        global canvas_frame
+        if win_mode == "tabbed":
             try:
                 module_tabs.notes.append(tkinter.Frame(canvas_frame))
                 module_tabs.texts.append(title)
@@ -280,7 +288,9 @@ class app():
             else:
                 pop_button.config(state = 'disabled')
             module_tabs.select(module_tabs.index(varName))
-            return varName
+        if win_mode == "miniwindow":
+            varName = app.generateMiniWin(0,0,640,320,title,closeable,poppable)
+        return varName
 
     def tabClose():
         global module_tabs
@@ -298,14 +308,13 @@ class app():
         windowedTabs.append(seperatedWindow.seperatedWin())
         windowedTabs[-1].additems(tab_name,module_tabs.notes)
 
-
-
     def tabMiniWin():
         global module_tabs
         global close_bar
         global winModeDetached
         global winModeSeperate
         global winModeTabbed
+        global win_mode
         tab_name = module_tabs.tab(module_tabs.select(),"text")
         tab_list = [module_tabs.tab(i, option="text") for i in module_tabs.tabs()]
         tab_no = tab_list.index(tab_name)
@@ -317,6 +326,7 @@ class app():
         winModeTabbed.config(style="TButton")
         winModeDetached.config(style="TButton")
         winModeSeperate.config(style="Accent.TButton")
+        win_mode = "miniwindow"
     def generateMiniWin(x,y,sx,sy,title,closable = True,poppable = True):
         mini_wins.append(tkinter.Frame(mini_win_canvas))
         winFrame = mini_wins[-1]
@@ -326,6 +336,8 @@ class app():
         winFrame.winrResize = False
         winFrame.respos = [0,0]
         winFrame.color = [83,134,139]
+        winFrame.bind("<FocusIn>",lambda e,w = winFrame:app.focus(w,title))
+        winFrame.bind("<Button-1>",lambda e,w = winFrame:app.focus(w,title))
         wins.append(mini_win_canvas.create_window(x,y,anchor=tkinter.NW,window=winFrame,width=sx,height=sy))
         winFrame.moveBar = tkinter.Frame(winFrame,cursor="fleur")
         hexCol = convertRGBcolor(winFrame.color[0],winFrame.color[1],winFrame.color[2])
@@ -370,7 +382,7 @@ class app():
         global mini_win_canvas
         global mini_wins
         global wins
-        winFocus : tkinter.Frame
+        global winFocus
         for i in range(len(module_tabs.notes)):
             print("tab %s added to list" %(str(module_tabs.notes[i])))
             cTitle = module_tabs.tab(module_tabs.notes[i],"text")
@@ -378,8 +390,11 @@ class app():
             try:
                 module_tabs.notes[i].pack_forget()
                 module_tabs.notes[i].pack(in_=winFrame,fill = "both",expand = 1)
+                module_tabs.notes[i].bind("<FocusIn>",lambda e,w = winFrame:app.focus(w,cTitle))
+                module_tabs.notes[i].bind("<Button-1>",lambda e,w = winFrame:app.focus(w,cTitle))
             except Exception:
                 print("copying to seperate windows failed")
+        winFocus = winFrame
     def resizeClick(ev,frame):
         frame.resizing = True
         frame.respos = (ev.x_root, ev.y_root)
@@ -412,8 +427,25 @@ class app():
     def dragStop(frame):
         frame.dragging = False
         print("Drag stopped")
-    def focus(win):
+    def focus(win,title):
         global winFocus
-        winFocus = win
-        print("window %s focused"%win)
+        if not winFocus == win:
+            c = winFocus.color
+            c[1] += 10
+            c[2] += 10
+            c[3] += 10
+            winFocus.color = c
+            ac = convertRGBcolor(c[1],c[2],c[3])
+            winFocus.moveBar.config(bg = ac)
+            winFocus.moveText.config(bg = ac)
+            winFocus = win
+            c = winFocus.color
+            c[1] -= 10
+            c[2] -= 10
+            c[3] -= 10
+            winFocus.color = c
+            winFocus.moveBar.config(bg = ac)
+            winFocus.moveText.config(bg = ac)
+            app.windowTitleChange(None,title)
+            print("window %s focused"%win)
 engine = app()
