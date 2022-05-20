@@ -40,10 +40,8 @@ class app():
         global tabMode
         global wins
         global canvas_frame
-        global winFocus
         global win_mode
 
-        winFocus = None
         wins = []
         mini_wins = []
         windowedTabs = []
@@ -328,7 +326,7 @@ class app():
         winModeSeperate.config(style="Accent.TButton")
         win_mode = "miniwindow"
     def generateMiniWin(x,y,sx,sy,title,closable = True,poppable = True):
-        mini_wins.append(tkinter.Frame(mini_win_canvas))
+        mini_wins.append(tkinter.Frame(mini_win_canvas,borderwidth=1))
         winFrame = mini_wins[-1]
         winFrame.dragging = False
         winFrame.winDrag = False
@@ -336,17 +334,17 @@ class app():
         winFrame.winrResize = False
         winFrame.respos = [0,0]
         winFrame.color = [83,134,139]
-        winFrame.bind("<FocusIn>",lambda e,w = winFrame:app.focus(w,title))
-        winFrame.bind("<Button-1>",lambda e,w = winFrame:app.focus(w,title))
         wins.append(mini_win_canvas.create_window(x,y,anchor=tkinter.NW,window=winFrame,width=sx,height=sy))
         winFrame.moveBar = tkinter.Frame(winFrame,cursor="fleur")
         hexCol = convertRGBcolor(winFrame.color[0],winFrame.color[1],winFrame.color[2])
         winFrame.moveBar.config(bg = hexCol)
         winFrame.moveBar.pack(side="top",fill= "x")
-        winFrame.moveBar.bind("<Button-1>",lambda e,f = winFrame:app.dragClick(e,f))
+        winFrame.moveBar.bind("<Button-1>",lambda e,f = winFrame,t=title:app.dragClick(e,f,t))
         winFrame.moveBar.bind("<B1-Motion>",lambda e,f = winFrame,w = wins[-1]:app.dragOccuring(e,f,w))
         winFrame.moveBar.bind("<ButtonRelease-1>",lambda f = winFrame:app.dragStop(f))
         winFrame.customMenu = tkinter.Menu(winFrame.moveBar)
+        winFrame.bind("<FocusIn>",lambda e,w = winFrame:app.focus(w,title))
+        winFrame.bind("<Button-1>",lambda e,w = winFrame:app.focus(w,title))
         if closable:
             winFrame.customMenu.add_command(label="X Close")
         winFrame.customMenu.add_command(label="🗖 Maximize")
@@ -373,7 +371,7 @@ class app():
         winFrame.gripFrame.pack(side = "bottom",fill = "x")
         winFrame.grip = tkinter.Label(winFrame.gripFrame, text = "◢",cursor="bottom_right_corner")
         winFrame.grip.pack(side="right")
-        winFrame.grip.bind("<Button-1>",lambda e,f = winFrame:app.resizeClick(e,f))
+        winFrame.grip.bind("<Button-1>",lambda e,f = winFrame,t=title:app.resizeClick(e,f,t))
         winFrame.grip.bind("<B1-Motion>",lambda e,f = winFrame,w = wins[-1]:app.resizeOccuring(e,f,w))
         winFrame.grip.bind("<ButtonRelease-1>",lambda f = winFrame:app.resizeStop(f))
         return winFrame
@@ -414,9 +412,10 @@ class app():
         win.moveBar.config(bg = color[1])
         win.winText.config(bg = color[1])
         win.color = color[1]
-    def dragClick(ev,frame):
+    def dragClick(ev,frame,title):
         frame.dragging = True
         frame.dragpos = (ev.x_root, ev.y_root)
+        app.focus(frame,title)
         print("Now dragging")
     def dragOccuring(ev,frame,win):
         global mini_win_canvas
@@ -430,22 +429,25 @@ class app():
     def focus(win,title):
         global winFocus
         if not winFocus == win:
-            c = winFocus.color
-            c[1] += 10
-            c[2] += 10
-            c[3] += 10
-            winFocus.color = c
-            ac = convertRGBcolor(c[1],c[2],c[3])
-            winFocus.moveBar.config(bg = ac)
-            winFocus.moveText.config(bg = ac)
+            try:
+                c = winFocus.color
+                c[0] += 10
+                c[1] += 10
+                c[2] += 10
+                winFocus.color = c
+                ac = convertRGBcolor(c[0],c[1],c[2])
+                winFocus.moveBar.config(bg = ac)
+                winFocus.moveText.config(bg = ac)
+            except Exception:
+                pass
             winFocus = win
+            app.windowTitleChange(None,title)
             c = winFocus.color
+            c[0] -= 10
             c[1] -= 10
             c[2] -= 10
-            c[3] -= 10
             winFocus.color = c
             winFocus.moveBar.config(bg = ac)
             winFocus.moveText.config(bg = ac)
-            app.windowTitleChange(None,title)
             print("window %s focused"%win)
 engine = app()
