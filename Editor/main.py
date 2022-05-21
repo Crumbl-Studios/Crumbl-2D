@@ -333,7 +333,7 @@ class app():
         winFrame.dragpos = [0,0]
         winFrame.winrResize = False
         winFrame.respos = [0,0]
-        winFrame.color = [83,134,139]
+        winFrame.color = [105,166,171]
         wins.append(mini_win_canvas.create_window(x,y,anchor=tkinter.NW,window=winFrame,width=sx,height=sy))
         winFrame.moveBar = tkinter.Frame(winFrame,cursor="fleur")
         hexCol = convertRGBcolor(winFrame.color[0],winFrame.color[1],winFrame.color[2])
@@ -399,10 +399,10 @@ class app():
         print("Now resizing")
     def resizeOccuring(ev,frame,win):
         global mini_win_canvas
-        dx = ev.x_root - frame.respos[0]
-        dy = ev.y_root - frame.respos[1]
-        mini_win_canvas.itemconfig(win,width = ev.x_root)
-        mini_win_canvas.itemconfig(win,height = ev.y_root)
+        dx = ev.x_root - frame.dragpos[0] - frame.respos[0]
+        dy = ev.y_root - frame.dragpos[1] - frame.respos[1]
+        mini_win_canvas.itemconfig(win,width = dx)
+        mini_win_canvas.itemconfig(win,height = dy)
     def resizeStop(frame):
         frame.resizing = False
         print("Resizing stopped")
@@ -431,9 +431,9 @@ class app():
         if not winFocus == win:
             try:
                 c = winFocus.color
-                c[0] += 10
-                c[1] += 10
-                c[2] += 10
+                c[0] += 32
+                c[1] += 32
+                c[2] += 32
                 winFocus.color = c
                 ac = convertRGBcolor(c[0],c[1],c[2])
                 winFocus.moveBar.config(bg = ac)
@@ -443,9 +443,12 @@ class app():
             winFocus = win
             app.windowTitleChange(None,title)
             c = winFocus.color
-            c[0] -= 10
-            c[1] -= 10
-            c[2] -= 10
+            c[0] = int(c[0])
+            c[1] = int(c[1])
+            c[2] = int(c[2])
+            c[0] -= 32
+            c[1] -= 32
+            c[2] -= 32
             winFocus.color = c
             winFocus.moveBar.config(bg = ac)
             winFocus.moveText.config(bg = ac)
