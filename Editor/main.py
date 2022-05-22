@@ -325,6 +325,7 @@ class app():
         winModeDetached.config(style="TButton")
         winModeSeperate.config(style="Accent.TButton")
         win_mode = "miniwindow"
+
     def generateMiniWin(x,y,sx,sy,title,closable = True,poppable = True):
         mini_wins.append(tkinter.Frame(mini_win_canvas,borderwidth=1))
         winFrame = mini_wins[-1]
@@ -346,7 +347,7 @@ class app():
         winFrame.bind("<FocusIn>",lambda e,w = winFrame:app.focus(w,title))
         winFrame.bind("<Button-1>",lambda e,w = winFrame:app.focus(w,title))
         if closable:
-            winFrame.customMenu.add_command(label="X Close")
+            winFrame.customMenu.add_command(label="X Close",command=lambda w =winFrame:app.close_win(w))
         winFrame.customMenu.add_command(label="🗖 Maximize")
         winFrame.customMenu.add_command(label="🗕 Minimize")
         if poppable:
@@ -358,7 +359,7 @@ class app():
         winFrame.winText = tkinter.Label(winFrame.moveBar,text = title,bg=hexCol)
         winFrame.winText.pack(side="left")
         if closable:
-            winFrame.closebutton = ttk.Button(winFrame.moveBar,text = "X")
+            winFrame.closebutton = ttk.Button(winFrame.moveBar,text = "X",command=lambda w =winFrame:app.close_win(w))
             winFrame.closebutton.pack(side = "right")
         winFrame.maximizebutton = ttk.Button(winFrame.moveBar,text = "🗖")
         winFrame.maximizebutton.pack(side = "right")
@@ -375,6 +376,11 @@ class app():
         winFrame.grip.bind("<B1-Motion>",lambda e,f = winFrame,w = wins[-1]:app.resizeOccuring(e,f,w))
         winFrame.grip.bind("<ButtonRelease-1>",lambda f = winFrame:app.resizeStop(f))
         return winFrame
+    
+    def close_win(win):
+        win.destroy()
+        print("Window %s closed" %win)
+
     def convert_tabs():
         global module_tabs
         global mini_win_canvas
