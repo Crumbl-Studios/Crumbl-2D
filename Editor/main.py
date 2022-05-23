@@ -184,7 +184,7 @@ class app():
         winModeDetached.pack(side="right")
         winModeSeperate = ttk.Button(winModes,text="🗗",command=app.tabMiniWin)
         winModeSeperate.pack(side="right")
-        winModeTabbed = ttk.Button(winModes,style = "Accent.TButton",text = "🗖")
+        winModeTabbed = ttk.Button(winModes,style = "Accent.TButton",text = "🗖",command=app.max_win)
         winModeTabbed.pack(side="right")
         progress_stat = ttk.Progressbar(status_bar)
         progress_stat.pack(side = "right")
@@ -388,12 +388,18 @@ class app():
         global mini_wins
         global wins
         global winFocus
+        global win_mode
         mini_win_canvas.pack_forget()
-        module_tabs.pack(fill="both")
+        close_bar.pack(side = "top",fill = "x")
+        module_tabs.pack(fill="both",expand = 1)
+        win_mode = "tabbed"
+        winModeTabbed.config(style="Accent.TButton")
+        winModeDetached.config(style="TButton")
+        winModeSeperate.config(style="TButton")
         for i in range(len(wins)):
-            app.notebookAdd(module_tabs.texts[i],module_tabs.renames[i])
             module_tabs.notes[i].pack_forget()
-            module_tabs.notes[i].pack(in_=module_tabs)
+            newtab = app.notebookAdd(module_tabs.texts[i],module_tabs.renames[i])
+            module_tabs.notes[i].pack(in_=newtab)
             print("Tab %s converted" %module_tabs.texts[i])
 
     def convert_tabs():
