@@ -251,6 +251,7 @@ class app():
                 pop_button.config(state = 'disabled')
         if win_mode == "miniwindow":
             main.winfo_toplevel().title(title +" - Crumbl Engine Editor")
+
     def notebookAdd(title,renameable = False,closeable = False,poppable = False):
         global win_mode
         global module_tabs
@@ -348,7 +349,7 @@ class app():
         winFrame.bind("<Button-1>",lambda e,w = winFrame:app.focus(w,title))
         if closable:
             winFrame.customMenu.add_command(label="X Close",command=lambda w =winFrame:app.close_win(w))
-        winFrame.customMenu.add_command(label="🗖 Maximize")
+        winFrame.customMenu.add_command(label="🗖 Maximize",command=app.max_win)
         winFrame.customMenu.add_command(label="🗕 Minimize")
         if poppable:
             winFrame.customMenu.add_command(label="➚ Pop out")
@@ -361,7 +362,7 @@ class app():
         if closable:
             winFrame.closebutton = ttk.Button(winFrame.moveBar,text = "X",command=lambda w =winFrame:app.close_win(w))
             winFrame.closebutton.pack(side = "right")
-        winFrame.maximizebutton = ttk.Button(winFrame.moveBar,text = "🗖")
+        winFrame.maximizebutton = ttk.Button(winFrame.moveBar,text = "🗖",command=app.max_win)
         winFrame.maximizebutton.pack(side = "right")
         winFrame.minimizebutton = ttk.Button(winFrame.moveBar,text = "🗕")
         winFrame.minimizebutton.pack(side = "right")
@@ -381,6 +382,20 @@ class app():
         win.destroy()
         print("Window %s closed" %win)
 
+    def max_win():
+        global module_tabs
+        global mini_win_canvas
+        global mini_wins
+        global wins
+        global winFocus
+        mini_win_canvas.pack_forget()
+        module_tabs.pack(fill="both")
+        for i in range(len(wins)):
+            app.notebookAdd(module_tabs.texts[i],module_tabs.renames[i])
+            module_tabs.notes[i].pack_forget()
+            module_tabs.notes[i].pack(in_=module_tabs)
+            print("Tab %s converted" %module_tabs.texts[i])
+
     def convert_tabs():
         global module_tabs
         global mini_win_canvas
@@ -399,39 +414,47 @@ class app():
             except Exception:
                 print("copying to seperate windows failed")
         winFocus = winFrame
+
     def resizeClick(ev,frame):
         frame.resizing = True
         frame.respos = (ev.x_root, ev.y_root)
         print("Now resizing")
+
     def resizeOccuring(ev,frame,win):
         global mini_win_canvas
         dx = ev.x_root - frame.dragpos[0] - frame.respos[0]
         dy = ev.y_root - frame.dragpos[1] - frame.respos[1]
         mini_win_canvas.itemconfig(win,width = dx)
         mini_win_canvas.itemconfig(win,height = dy)
+
     def resizeStop(frame):
         frame.resizing = False
         print("Resizing stopped")
+
     def setWinColor(win):
         color = askcolor()
         print(color)
         win.moveBar.config(bg = color[1])
         win.winText.config(bg = color[1])
         win.color = color[1]
+
     def dragClick(ev,frame,title):
         frame.dragging = True
         frame.dragpos = (ev.x_root, ev.y_root)
         app.focus(frame,title)
         print("Now dragging")
+
     def dragOccuring(ev,frame,win):
         global mini_win_canvas
         dx = ev.x_root - frame.dragpos[0]
         dy = ev.y_root - frame.dragpos[1]
         mini_win_canvas.moveto(win,dx,dy)
         ## mini_win_canvas.itemconfig(win,Y = ev.y_root)
+
     def dragStop(frame):
         frame.dragging = False
         print("Drag stopped")
+
     def focus(win,title):
         global winFocus
         if not winFocus == win:
