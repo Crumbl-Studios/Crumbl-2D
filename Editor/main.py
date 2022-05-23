@@ -105,7 +105,7 @@ class app():
         menubar.add_cascade(label="Edit", menu=editmenu)
 
         viewmenu = tkinter.Menu(menubar,tearoff=0)
-        viewmenu.add_radiobutton(label="🗖 Tabbed (default)")
+        viewmenu.add_radiobutton(label="🗖 Tabbed (default)",command=app.max_win)
         viewmenu.add_radiobutton(label="🗗 Windowed",command=app.tabMiniWin)
         viewmenu.add_radiobutton(label="➚ Detached")
         viewmenu.add_separator()
