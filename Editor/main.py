@@ -399,7 +399,7 @@ class app():
         for i in range(len(wins)):
             module_tabs.notes[i].pack_forget()
             newtab = app.notebookAdd(module_tabs.texts[i],module_tabs.renames[i])
-            module_tabs.notes[i].pack(in_=newtab)
+            module_tabs.notes[i].pack(in_=newtab,fill = "both",expand = 1)
             print("Tab %s converted" %module_tabs.texts[i])
 
     def convert_tabs():

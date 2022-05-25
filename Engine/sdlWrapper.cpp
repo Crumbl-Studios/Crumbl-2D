@@ -3,10 +3,10 @@
 #include <SDL2/SDL_mixer.h>
 #include <SDL2/SDL_timer.h>
 
-SDL_Window* main(const char* title,int xres, int yres,bool fullscreen = false,bool fullscreenDesk = false,int gDriver = 0,
-                bool invisible = false, bool noDecoration = false, bool canResize = false,bool minimized = false,
-                bool maximized = false, bool foreignWindow = false, bool highDPI = true,bool skipTaskbar = false,
-                bool utilWin = false, bool tooltipWin = false, bool popup = false)
+int main(char ** a,const char* title,int xres, int yres,bool fullscreen = false,bool fullscreenDesk = false,int gDriver = 0,
+        bool invisible = false, bool noDecoration = false, bool canResize = false,bool minimized = false,
+        bool maximized = false, bool foreignWindow = false, bool highDPI = true,bool skipTaskbar = false,
+        bool utilWin = false, bool tooltipWin = false, bool popup = false)
 {
     // Attempt init
     if (SDL_Init(SDL_INIT_EVERYTHING) != 0) 
@@ -79,5 +79,5 @@ SDL_Window* main(const char* title,int xres, int yres,bool fullscreen = false,bo
                                        SDL_WINDOWPOS_CENTERED,
                                        SDL_WINDOWPOS_CENTERED,
                                        xres, yres,flags);
-    return win;
+    return 1;
 }
