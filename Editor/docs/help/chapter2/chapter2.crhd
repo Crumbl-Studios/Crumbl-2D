@@ -1,0 +1,21 @@
+=!@TITLE
+Chapter 2:Python 101
+=!@SUBTITLE
+IN THIS CHAPTER
+2.0)Introduction
+2.1)The Basics (Project 1: Terminal Chatbot)
+2.1.1)  Print commands
+2.1.2)  Variables and lists
+2.1.3)  Inputs
+2.1.4)  % Statements (Hard Mode Print Commands)
+2.2)More advanced basics (Project 2: Guess the Number)
+2.2.1)  If Statements
+2.2.2)  "for" Loops
+2.2.3)  Math
+2.2.4)  Import Statements
+2.2.5)  More math (The Python Math Library)
+2.3)Intermediate concepts (Project 3: Terminal Chatbot 2: Electric Boogaloo)
+2.3.1)  Adding to lists
+2.3.2)  Reading from lists
+2.3.3)  The os Module
+2.3.4)  File operations

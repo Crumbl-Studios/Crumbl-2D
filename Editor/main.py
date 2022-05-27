@@ -389,6 +389,7 @@ class app():
         global wins
         global winFocus
         global win_mode
+        global main
         mini_win_canvas.pack_forget()
         close_bar.pack(side = "top",fill = "x")
         module_tabs.pack(fill="both",expand = 1)

@@ -1,0 +1,30 @@
+=!@TITLE
+Chapter 0: Introduction
+=!@SUBTITLE
+IN THIS CHAPTER
+0) Introduction
+
+
+    Welcome to the Crumbl Engine, an open source game engine designed to be easy to pick up at any skill level.
+Currently, it is engineered towards 2d games, however, we will be working at a 3d section as well.
+=!@SUBTITLE
+Possible FAQs
+1.)What kind of experience do I need to use this?
+    Any. We are gearing it so you can easily get into game development. If you have knowledge of Python, you are more than qualified. If not, the following chapters will assist you
+2.)Clearly, this is open source. How do I become a contributor?
+    Unfortunately, we have not figured that one out yet. As it stands, committing to the github repo is enough
+3.)What platforms are you planning to make it compile for or already are?
+    Most platforms, as long as they support SDL. Currently, our "definitely working on" list comprises of the following:
+        Windows
+        Mac
+        Linux
+        Android
+        IOS
+        Nintendo Switch
+    Other platforms we may work on:
+        XBOX
+        PS4/PS5
+    This list is growing, and we have even more ideas in mind
+4.) What is this built on?
+    The engine is built on SDL, using C++, with parts from dear IMGUI
+    The editor UI was built using Tkinter, using Python, and parts using the engine itself
