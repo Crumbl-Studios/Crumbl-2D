@@ -3,13 +3,15 @@ Documentation
     Welcome to the official documentation for the Crumbl Engine. This contains documentation on both how to use the engine and programming languages involved.
     Use the table of contents below to find what you are looking for.
 =!@SUBTITLE
-TABLE OF contents
+TABLE OF CONTENTS (all articles)
 =!@LINK
 0.) Introduction
 /help/chapter0/chapter0Landing.crhd
+
 =!@LINK
 1.) Using The Editor
 /help/chapter1/chapter1Landing.crhd
+
 1.1)    The Big Picture
 1.2)    The Menu Bar
 1.2.1)      File
