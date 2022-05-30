@@ -89,6 +89,8 @@ class app():
         filemenu.add_command(label="Clone repo")
         filemenu.add_command(label="Push to repo")
         filemenu.add_separator()
+        filemenu.add_command(label="Settings",command = settings_wizard.settingsWin)
+        filemenu.add_separator()
         filemenu.add_command(label="Exit", command=main.quit)
         menubar.add_cascade(label="File", menu=filemenu)
 
