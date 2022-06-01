@@ -18,9 +18,7 @@ class settingsWin():
     global settingChanged
     def __init__(startAtSection = None):
         self = tkinter.Tk()
-        self.geometry("640x640+0+0")
         self.winfo_toplevel().title("Crumbl Editor Settings")
-        self.resizable(False,False)
         if theme == "sun_valley":
             if darkMode:
                 sv_ttk.set_theme("dark")
@@ -43,7 +41,7 @@ class settingsWin():
         self.selectionMenu.heading("category",text = "Category")
         self.selectionMenu.pack(side = 'left',fill = "y",expand=0)
         self.settingArea = ttk.Frame(self)
-        self.settingArea.pack(side = 'right',fill = "both",expand=0)
+        self.settingArea.pack(fill = "both",expand=0)
         # Bottom bar
         self.bottomBar = ttk.Frame(self)
         self.bottomBar.pack(side = "bottom",fill = "x",expand=1)
@@ -53,6 +51,8 @@ class settingsWin():
         self.applyBtn.pack(side = "right")
         self.closeBtn = ttk.Button(self.bottomBar,text = "⮾ Close")
         self.closeBtn.pack(side = "right")
+        self.geometry("640x640+0+0")
+        self.resizable(False,False)
         # Personalization settings
         self.personalizedSetting = ttk.Frame(self.settingArea)
         self.personalizedSetting.pack(fill='both') # Pack this so it shows up on start
