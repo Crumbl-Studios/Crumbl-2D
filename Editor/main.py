@@ -73,6 +73,18 @@ class app():
 
         run_icon = tkinter.PhotoImage(master = main,file = fileHandler.run_asset)
         build_icon = tkinter.PhotoImage(master = main,file = fileHandler.build_asset)
+                
+        scene_icon = tkinter.PhotoImage(master = main,file = fileHandler.new_scene_asset)
+        layer_icon = tkinter.PhotoImage(master = main,file = fileHandler.new_layer_asset)
+        text_icon = tkinter.PhotoImage(master = main,file = fileHandler.new_text_asset)
+        button_icon = tkinter.PhotoImage(master = main,file = fileHandler.new_button_asset)
+        slider_icon = tkinter.PhotoImage(master = main,file = fileHandler.new_slider_asset)
+        entry_icon = tkinter.PhotoImage(master = main,file = fileHandler.new_entry_asset)
+        checkbutton_icon = tkinter.PhotoImage(master = main,file = fileHandler.new_checkbutton_asset)
+        radiobutton_icon = tkinter.PhotoImage(master = main,file = fileHandler.new_rbutton_asset)
+        cbutton_icon = tkinter.PhotoImage(master = main,file = fileHandler.new_cbutton_asset)
+        switch_icon = tkinter.PhotoImage(master = main,file = fileHandler.new_switch_asset)
+
         # Set window icon
         main.iconphoto(True,logo_icon)
 
@@ -142,7 +154,7 @@ class app():
         ribbon_tabs = ttk.Notebook(ribbon_frame)
         ribbon_tabs.pack(side = "top", fill = "x", expand = 0)
 
-        #Ribbon menu
+        # Ribbon menu
         
         start_ribbon = tkinter.Frame(ribbon_tabs)
         start_ribbon.pack(side = "top",fill = "x")
@@ -153,19 +165,54 @@ class app():
         compile_ribbon = tkinter.Frame(ribbon_tabs)
         compile_ribbon.pack(side = "top",fill = "x")
 
-        #Ribbon tab definitions
+        # Ribbon tab definitions
 
         ribbon_tabs.add(start_ribbon,text = "Start")
         ribbon_tabs.add(ui_ribbon,text = "UI")
         ribbon_tabs.add(debug_ribbon,text = "Debug")
         ribbon_tabs.add(compile_ribbon,text = "Compile")
 
-        #Add widgets to "start" ribbon
+        # Add widgets to "start" ribbon
 
-        run_button = ttk.Button(start_ribbon,text = "Run",image= run_icon, compound= "top")
-        run_button.pack(side = "left")
-        build_button = ttk.Button(start_ribbon,text = "Build",image= build_icon, compound= "top")
-        build_button.pack(side = "left")
+        quick_frames = ttk.Frame(start_ribbon)
+        quick_frames.pack(side="left")
+        run_button = ttk.Button(quick_frames,text = "Run",image= run_icon, compound= "top")
+        run_button.pack(side = "left",anchor = "n")
+        build_button = ttk.Button(quick_frames,text = "Build",image= build_icon, compound= "top")
+        build_button.pack(anchor = "n")
+        quick_text = tkinter.Label(quick_frames,text="Quick Build")
+        quick_text.pack(side = "bottom",anchor="s",expand=1)
+
+        # Add widgets to "UI" ribbon
+
+        layer_frames = ttk.Frame(ui_ribbon)
+        layer_frames.pack(side="left",padx=2,fill = "x")
+        scene_button = ttk.Button(layer_frames,text="New scene",image = scene_icon,compound="top")
+        scene_button.pack(side = "left",anchor="n")
+        layer_button = ttk.Button(layer_frames,text="New layer",image = layer_icon,compound="top")
+        layer_button.pack()
+        layer_text = tkinter.Label(layer_frames,text="Scene/Layer")
+        layer_text.pack(side = "bottom",anchor="s",expand=1)
+
+        object_frames = ttk.Frame(ui_ribbon)
+        object_frames.pack(side="left",padx=2,fill = "x")
+        text_button = ttk.Button(object_frames,text="Text",image = text_icon,compound="top")
+        text_button.pack(side = "left",anchor="n")
+        button_button = ttk.Button(object_frames,text="Button",image = button_icon,compound="top")
+        button_button.pack(side = "left",anchor="n")
+        slider_button = ttk.Button(object_frames,text="Slider",image = slider_icon,compound="top")
+        slider_button.pack(side = "left",anchor="n")
+        entry_button = ttk.Button(object_frames,text="Entry",image = entry_icon,compound="top")
+        entry_button.pack(side = "right",anchor="ne")
+        check_type_menu = tkinter.Menu(object_frames)
+        check_button = ttk.Menubutton(object_frames,text="Checkbutton",image = checkbutton_icon,compound="top",menu=check_type_menu)
+        check_button.pack(side = "right",anchor="ne")
+        check_type_menu.add_command(label = "Checkbutton",image=cbutton_icon,compound="left")
+        check_type_menu.add_command(label = "Switch",image=switch_icon,compound="left")
+        radio_button = ttk.Button(object_frames,text="Radiobutton",image = radiobutton_icon,compound="top")
+        radio_button.pack(anchor="ne")
+        object_text = tkinter.Label(object_frames,text="Insert object")
+        object_text.pack(side = "bottom",anchor="s",expand=1)
 
         vert_frame = ttk.PanedWindow(main, orient = tkinter.VERTICAL)
         vert_frame.pack(side = "top", fill = "both", expand = 1)

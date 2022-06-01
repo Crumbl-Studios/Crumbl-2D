@@ -12,3 +12,16 @@ changeImage = os.path.join(IconDir,"changedsetting.png")
 
 run_asset = os.path.join(IconDir,"run.png")
 build_asset = os.path.join(IconDir,"build.png")
+
+new_layer_asset = os.path.join(IconDir,"newlayer.png")
+new_scene_asset = os.path.join(IconDir,"newscene.png")
+
+new_text_asset = os.path.join(IconDir,"newtext.png")
+new_button_asset = os.path.join(IconDir,"newbutton.png")
+new_slider_asset = os.path.join(IconDir,"newSlider.png")
+new_entry_asset = os.path.join(IconDir,"newEntry.png")
+new_checkbutton_asset = os.path.join(IconDir,"newCheckbutton.png")
+new_rbutton_asset = os.path.join(IconDir,"newRadioButton.png")
+new_dropdown_asset = os.path.join(IconDir,"newDropdown.png")
+new_cbutton_asset = os.path.join(IconDir,"checkbutton.png")
+new_switch_asset = os.path.join(IconDir,"switch.png")
