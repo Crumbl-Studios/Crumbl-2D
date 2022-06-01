@@ -85,6 +85,8 @@ class app():
         rotate_icon = tkinter.PhotoImage(master = main,file = fileHandler.rotate_asset)
         resize_icon = tkinter.PhotoImage(master = main,file = fileHandler.resize_asset)
 
+        ruler_icon = tkinter.PhotoImage(master = main,file = fileHandler.ruler_asset)
+
         run_icon = tkinter.PhotoImage(master = main,file = fileHandler.run_asset)
         build_icon = tkinter.PhotoImage(master = main,file = fileHandler.build_asset)
                 
@@ -96,6 +98,7 @@ class app():
         entry_icon = tkinter.PhotoImage(master = main,file = fileHandler.new_entry_asset)
         checkbutton_icon = tkinter.PhotoImage(master = main,file = fileHandler.new_checkbutton_asset)
         radiobutton_icon = tkinter.PhotoImage(master = main,file = fileHandler.new_rbutton_asset)
+        object_icon = tkinter.PhotoImage(master = main,file = fileHandler.new_object_asset)
         cbutton_icon = tkinter.PhotoImage(master = main,file = fileHandler.new_cbutton_asset)
         switch_icon = tkinter.PhotoImage(master = main,file = fileHandler.new_switch_asset)
 
@@ -233,6 +236,13 @@ class app():
         move_text = tkinter.Label(move_frames,text="Transform")
         move_text.pack(side = "bottom",anchor="s",expand=1)
 
+        tool_frames = ttk.Frame(ui_ribbon)
+        tool_frames.pack(side="left",padx=2,fill = "x")
+        ruler_button = ttk.Button(tool_frames,text="Ruler",image = ruler_icon,compound="top")
+        ruler_button.pack(anchor="n")
+        tool_text = tkinter.Label(tool_frames,text="Tools")
+        tool_text.pack(side = "bottom",anchor="s",expand=1)
+
         layer_frames = ttk.Frame(ui_ribbon)
         layer_frames.pack(side="left",padx=2,fill = "x")
         scene_button = ttk.Button(layer_frames,text="New scene",image = scene_icon,compound="top")
@@ -253,6 +263,8 @@ class app():
         entry_button = ttk.Button(object_frames,text="Entry",image = entry_icon,compound="top")
         entry_button.pack(side = "right",anchor="ne")
         check_type_menu = tkinter.Menu(object_frames)
+        object_button = ttk.Button(object_frames,text="Object",image = object_icon,compound="top")
+        object_button.pack(side = "right",anchor="ne")
         check_button = ttk.Menubutton(object_frames,text="Checkbutton",image = checkbutton_icon,compound="top",menu=check_type_menu)
         check_button.pack(side = "right",anchor="ne")
         check_type_menu.add_command(label = "Checkbutton",image=cbutton_icon,compound="left")
@@ -261,6 +273,23 @@ class app():
         radio_button.pack(anchor="ne")
         object_text = tkinter.Label(object_frames,text="Insert object")
         object_text.pack(side = "bottom",anchor="s",expand=1)
+
+        option_frames = ttk.Frame(ui_ribbon)
+        option_frames.pack(side="left",padx=2,fill = "x")
+        show_rulers = ttk.Checkbutton(option_frames,text="Show border rulers")
+        show_rulers.pack(anchor = "n")
+        grid_snap = ttk.Checkbutton(option_frames,text="Snap to grid")
+        grid_snap.pack(anchor = "n")
+        use_max_friendly = ttk.Checkbutton(option_frames,text="Use variable-size friendly X/Y values")
+        use_max_friendly.pack(anchor = "n")
+        tool_text = tkinter.Label(option_frames,text="Options")
+        tool_text.pack(side = "bottom",anchor="s",expand=1)
+        grid_size_frame = ttk.Frame(ui_ribbon)
+        grid_size_frame.pack(side="left",anchor="ne")
+        grid_size_text = tkinter.Label(grid_size_frame,text = "Grid snap size (in px):")
+        grid_size_text.pack()
+        grid_size_select = ttk.Spinbox(grid_size_frame,from_ = 1,to = 100)
+        grid_size_select.pack()
 
         vert_frame = ttk.PanedWindow(main, orient = tkinter.VERTICAL)
         vert_frame.pack(side = "top", fill = "both", expand = 1)
