@@ -13,6 +13,11 @@ changeImage = os.path.join(IconDir,"changedsetting.png")
 run_asset = os.path.join(IconDir,"run.png")
 build_asset = os.path.join(IconDir,"build.png")
 
+select_asset = os.path.join(IconDir,"select.png")
+move_asset = os.path.join(IconDir,"move.png")
+rotate_asset = os.path.join(IconDir,"rotate.png")
+resize_asset = os.path.join(IconDir,"resize.png")
+
 new_layer_asset = os.path.join(IconDir,"newlayer.png")
 new_scene_asset = os.path.join(IconDir,"newscene.png")
 

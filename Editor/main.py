@@ -41,6 +41,15 @@ class app():
         global wins
         global canvas_frame
         global win_mode
+        global move_frames
+        global select_button
+        global move_button
+        global rotate_button
+        global resize_button
+        global quick_select_button
+        global quick_move_button
+        global quick_rotate_button
+        global quick_resize_button
 
         wins = []
         mini_wins = []
@@ -70,6 +79,11 @@ class app():
                 ttk.Style().theme_use('alt')
         # Iconography
         logo_icon = tkinter.PhotoImage(master = main,file = fileHandler.crumbl_logo)
+
+        select_icon = tkinter.PhotoImage(master = main,file = fileHandler.select_asset)
+        move_icon = tkinter.PhotoImage(master = main,file = fileHandler.move_asset)
+        rotate_icon = tkinter.PhotoImage(master = main,file = fileHandler.rotate_asset)
+        resize_icon = tkinter.PhotoImage(master = main,file = fileHandler.resize_asset)
 
         run_icon = tkinter.PhotoImage(master = main,file = fileHandler.run_asset)
         build_icon = tkinter.PhotoImage(master = main,file = fileHandler.build_asset)
@@ -174,8 +188,25 @@ class app():
 
         # Add widgets to "start" ribbon
 
+        quick_move_frames = ttk.Frame(start_ribbon)
+        quick_move_frames.pack(side="left",padx=2,fill = "x")
+        quick_select_button = ttk.Button(quick_move_frames,text="Select",image = select_icon,compound="top",
+                                   style = "Accent.TButton",command=lambda x = 0:app.UIEditMoveModeChange(x))
+        quick_select_button.pack(side = "left",anchor="n")
+        quick_move_button = ttk.Button(quick_move_frames,text="Move",image = move_icon,compound="top",
+                                command=lambda x = 1:app.UIEditMoveModeChange(x))
+        quick_move_button.pack(side = "left",anchor="n")
+        quick_rotate_button = ttk.Button(quick_move_frames,text="Rotate",image = rotate_icon,compound="top",
+                                   command=lambda x = 2:app.UIEditMoveModeChange(x))
+        quick_rotate_button.pack(side = "right",anchor="ne")
+        quick_resize_button = ttk.Button(quick_move_frames,text="Resize",image = resize_icon,compound="top",
+                                   command=lambda x = 3:app.UIEditMoveModeChange(x))
+        quick_resize_button.pack(anchor="ne")
+        quick_move_text = tkinter.Label(quick_move_frames,text="Transform")
+        quick_move_text.pack(side = "bottom",anchor="s",expand=1)
+
         quick_frames = ttk.Frame(start_ribbon)
-        quick_frames.pack(side="left")
+        quick_frames.pack(side="left",padx=2)
         run_button = ttk.Button(quick_frames,text = "Run",image= run_icon, compound= "top")
         run_button.pack(side = "left",anchor = "n")
         build_button = ttk.Button(quick_frames,text = "Build",image= build_icon, compound= "top")
@@ -184,6 +215,23 @@ class app():
         quick_text.pack(side = "bottom",anchor="s",expand=1)
 
         # Add widgets to "UI" ribbon
+
+        move_frames = ttk.Frame(ui_ribbon)
+        move_frames.pack(side="left",padx=2,fill = "x")
+        select_button = ttk.Button(move_frames,text="Select",image = select_icon,compound="top",
+                                   style = "Accent.TButton",command=lambda x = 0:app.UIEditMoveModeChange(x))
+        select_button.pack(side = "left",anchor="n")
+        move_button = ttk.Button(move_frames,text="Move",image = move_icon,compound="top",
+                                command=lambda x = 1:app.UIEditMoveModeChange(x))
+        move_button.pack(side = "left",anchor="n")
+        rotate_button = ttk.Button(move_frames,text="Rotate",image = rotate_icon,compound="top",
+                                   command=lambda x = 2:app.UIEditMoveModeChange(x))
+        rotate_button.pack(side = "right",anchor="ne")
+        resize_button = ttk.Button(move_frames,text="Resize",image = resize_icon,compound="top",
+                                   command=lambda x = 3:app.UIEditMoveModeChange(x))
+        resize_button.pack(anchor="ne")
+        move_text = tkinter.Label(move_frames,text="Transform")
+        move_text.pack(side = "bottom",anchor="s",expand=1)
 
         layer_frames = ttk.Frame(ui_ribbon)
         layer_frames.pack(side="left",padx=2,fill = "x")
@@ -267,6 +315,52 @@ class app():
         start_page.NotebookPage.start_page(nbPage)
 
         main.mainloop()
+
+    def UIEditMoveModeChange(mode):
+            global select_button
+            global move_button
+            global rotate_button
+            global resize_button
+            global quick_select_button
+            global quick_move_button
+            global quick_rotate_button
+            global quick_resize_button
+            if mode == 0:
+                select_button.config(style = "Accent.TButton")
+                move_button.config(style = "")
+                rotate_button.config(style = "")
+                resize_button.config(style = "")
+                quick_select_button.config(style = "Accent.TButton")
+                quick_move_button.config(style = "")
+                quick_rotate_button.config(style = "")
+                quick_resize_button.config(style = "")
+            if mode == 1:
+                select_button.config(style = "")
+                move_button.config(style = "Accent.TButton")
+                rotate_button.config(style = "")
+                resize_button.config(style = "")
+                quick_select_button.config(style = "")
+                quick_move_button.config(style = "Accent.TButton")
+                quick_rotate_button.config(style = "")
+                quick_resize_button.config(style = "")
+            if mode == 2:
+                select_button.config(style = "")
+                move_button.config(style = "")
+                rotate_button.config(style = "Accent.TButton")
+                resize_button.config(style = "")
+                quick_select_button.config(style = "")
+                quick_move_button.config(style = "")
+                quick_rotate_button.config(style = "Accent.TButton")
+                quick_resize_button.config(style = "")
+            if mode == 3:
+                select_button.config(style = "")
+                move_button.config(style = "")
+                rotate_button.config(style = "")
+                resize_button.config(style = "Accent.TButton")
+                quick_select_button.config(style = "")
+                quick_move_button.config(style = "")
+                quick_rotate_button.config(style = "")
+                quick_resize_button.config(style = "Accent.TButton")
 
     def runMod(mod):
         if mod == "start_page":
