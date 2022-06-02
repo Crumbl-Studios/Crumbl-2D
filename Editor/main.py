@@ -50,6 +50,8 @@ class app():
         global quick_move_button
         global quick_rotate_button
         global quick_resize_button
+        global engine_icon
+        global studio_icon
 
         wins = []
         mini_wins = []
@@ -159,7 +161,7 @@ class app():
 
         helpmenu = tkinter.Menu(menubar, tearoff=0)
         helpmenu.add_command(label="Documentation",command= lambda doc= "help/toc.crhd":start_page.NotebookPage.load_page(page = doc))
-        helpmenu.add_command(label="About...")
+        helpmenu.add_command(label="About...",command=app.about)
         menubar.add_cascade(label="Help", menu=helpmenu)
 
         main.config(menu = menubar)
@@ -661,4 +663,15 @@ class app():
             winFocus.moveBar.config(bg = ac)
             winFocus.moveText.config(bg = ac)
             print("window %s focused"%win)
+    def about():
+        about = tkinter.Tk()
+        about.winfo_toplevel().title("About the Crumbl Engine")
+        about.geometry("640x480+0+0")
+        about.resizable(False,False)
+        engine_icon = tkinter.PhotoImage(master = about,file = fileHandler.engine_logo)
+        studio_icon = tkinter.PhotoImage(master = about,file = fileHandler.studio_logo)
+        logo = tkinter.Label(about,image = engine_icon)
+        logo.pack(side = "top")
+        text = tkinter.Label(about,text="Version: 0.1B")
+        text.pack(side = "top")
 engine = app()

@@ -7,6 +7,8 @@ raw = os.path.join(os.getcwd(),"Editor")
 IconDir = os.path.join(raw,"UIAssets")
 
 crumbl_logo = os.path.join(IconDir,"favicon.png")
+engine_logo = os.path.join(IconDir,"logo.png")
+studio_logo = os.path.join(IconDir,"corp_logo.png")
 
 changeImage = os.path.join(IconDir,"changedsetting.png")
 
