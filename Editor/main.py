@@ -316,7 +316,8 @@ class app():
         winModeTabbed.pack(side="right")
         progress_stat = ttk.Progressbar(status_bar)
         progress_stat.pack(side = "right")
-        status_text = ttk.Label(status_bar,text = "Ready")
+        stat_var = tkinter.StringVar(status_bar,"Ready")
+        status_text = ttk.Label(status_bar,textvariable=stat_var)
         status_text.pack(side = "right")
 
         canvas_frame = tkinter.Frame(main_frame)
@@ -343,7 +344,7 @@ class app():
         module_tabs.bind("<<NotebookTabChanged>>", app.windowTitleChange)
 
         nbPage = app.notebookAdd("Start Page")
-        start_page.NotebookPage.start_page(nbPage)
+        start_page.NotebookPage.start_page(nbPage,stat_var,progress_stat)
 
         main.mainloop()
 
@@ -670,8 +671,8 @@ class app():
         about.resizable(False,False)
         engine_icon = tkinter.PhotoImage(master = about,file = fileHandler.engine_logo)
         studio_icon = tkinter.PhotoImage(master = about,file = fileHandler.studio_logo)
-        logo = tkinter.Label(about,image = engine_icon)
+        logo = tkinter.Label(about,image = engine_icon,text="Version: 0.1B",compound="top")
         logo.pack(side = "top")
-        text = tkinter.Label(about,text="Version: 0.1B")
+        text = tkinter.Label(about,text="Engine Version: 0.1B")
         text.pack(side = "top")
 engine = app()

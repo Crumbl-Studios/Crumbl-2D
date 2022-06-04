@@ -6,6 +6,7 @@ import tkinter
 from tkinter import ttk
 from PIL import ImageTk,Image
 import os
+import webbrowser
 
 maintext: tkinter.Frame
 refresh: ttk.Button
@@ -73,9 +74,8 @@ def loadpage(helpdi):
     currenthelpdir.set(helpdi)
     app.configure(cursor = "watch")
     maintext.configure(state="normal")
-    loadbar.pack(side = "top",fill = "x")
     maintext.delete(1.0, tkinter.END)
-    loads = tkinter.ttk.Progressbar(loadbar)
+    loads = loadbar
     loads.pack(fill = "x")
     END = tkinter.INSERT
     refresh.config(text = "X")
@@ -160,6 +160,19 @@ def loadpage(helpdi):
                 maintext.insert(END,"(Image not found [ERROR 05])",)
                 linesrendered += 2
                 app.update()
+        elif line == "=!@WEBLINK\n":
+            linktext = helpdoc.readline().rstrip("\n")
+            currentop.set("text: "+linktext)
+            link = helpdoc.readline().rstrip("\n")
+            linklo = link
+            currentop.set("location:" +link + "("+str(Linepercent*100)+"%)")
+            maintext.tag_add(link,END)
+            maintext.tag_config(link,foreground="blue",underline = 1)
+            maintext.tag_bind(link,"<Enter>",lambda e,linkloc = linklo: enter(linkloc))
+            maintext.tag_bind(link,"<Leave>",lambda e,linkloc = linklo: leave(linkloc))
+            maintext.tag_bind(link,"<Button-1>",lambda e,linkloc = linklo: webclick(linkloc))
+            maintext.insert(END,"%s➚"%linktext,link)
+            linesrendered += 2
         elif line == "=!@ERRCON\n":
             maintext.insert(END,errorcon,"normal")
             linesrendered += 1
@@ -198,12 +211,11 @@ def loadpage(helpdi):
             helpdoc = open(cwd+"/home/errors/error2.crhd",mode = "r")
             app.update()
             errorcon = "Command "+line+" is not a real filescript command"
-    loads.destroy()
-    loadbar.pack_forget()
     maintext.config(state = "disabled")
     app.configure(cursor = "")
     refresh.config(text = "↺")
     refresh.config(command = lambda helpdir = None: reload(helpdir))
+    loads["value"] = 100
     cancel = 0
 
 def handle(obj):
@@ -273,6 +285,14 @@ def click(link):
     currentop.set(helpdir)
     errorcon = "no errors found"
     loadpage(helpdir)
+
+def webclick(link):
+    global errorcon
+    global page_dir
+    helpdir = page_dir+link # This somehow didnt work with os.path.join()
+    currentop.set("GOING TO PAGE: "+str(helpdir))
+    webbrowser.open(link)
+    errorcon = "no errors found"
 
 def stop(helpdir):
     global maintext

@@ -6,7 +6,7 @@ helpdir = "home.crhd"
 previousdir = "home.crhd"
 
 class NotebookPage():
-    def start_page(nbPage,startHelp = False):
+    def start_page(nbPage,starttext,progressbar,startHelp = False):
         global addressbar
         # Toolbar and text sytem
         toolFrame = tkinter.Frame(nbPage,highlightbackground = "gray", highlightthickness = 1)
@@ -15,7 +15,7 @@ class NotebookPage():
         maintext.pack(fill = "both",expand = 1)
 
         # Progress text
-        currentop = tkinter.StringVar(nbPage)
+        currentop = starttext
         currentpage = tkinter.StringVar(nbPage)
         currenthelpdir = tkinter.StringVar(nbPage)
 
@@ -33,7 +33,7 @@ class NotebookPage():
         refresh.pack(side = "right")
 
         # Progress bar
-        loader = ttk.Progressbar(toolFrame)
+        loader = progressbar
 
         page_renderer.set_tkVars(maintext,refresh,back,loader,nbPage,currentop,currentpage,currenthelpdir)
         if startHelp:
