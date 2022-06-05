@@ -4,6 +4,7 @@ import fileHandler
 from PIL import ImageTk
 import sv_ttk
 import os
+from tkinter import scrolledtext
 
 # UI Module imports
 import UIModules.start_page as start_page
@@ -50,8 +51,7 @@ class app():
         global quick_move_button
         global quick_rotate_button
         global quick_resize_button
-        global engine_icon
-        global studio_icon
+        global isFullscreen
 
         wins = []
         mini_wins = []
@@ -60,6 +60,7 @@ class app():
         win_mode = "tabbed"
         main = tkinter.Tk(None,None," Start Page - Crumbl Engine Editor")
         main.geometry("1366x720")
+        isFullscreen = False
 
         # Theme system (Sun Valley clone)
         if settings_wizard.theme == "sun_valley":
@@ -143,6 +144,8 @@ class app():
         viewmenu.add_radiobutton(label="➚ Detached")
         viewmenu.add_separator()
         viewmenu.add_command(label="X Close current tab/window")
+        viewmenu.add_separator()
+        viewmenu.add_command(label="Fullscreen mode",command = app.fullscreen)
         menubar.add_cascade(label="View", menu=viewmenu)
 
         winmenu = tkinter.Menu(menubar, tearoff=0)
@@ -150,7 +153,7 @@ class app():
         winmenu.add_command(label="UI editor",command = lambda mod = "ui_editor":app.runMod(mod))
         winmenu.add_command(label="Asset preview",command = lambda mod = "asset_preview":app.runMod(mod))
         winmenu.add_separator()
-        winmenu.add_command(label = "Asset viewer")
+        winmenu.add_command(label = "File viewer")
         winmenu.add_command(label = "Python console")
         winmenu.add_command(label = "Objects")
         menubar.add_cascade(label="Window", menu=winmenu)
@@ -347,6 +350,16 @@ class app():
         start_page.NotebookPage.start_page(nbPage,stat_var,progress_stat)
 
         main.mainloop()
+
+    def fullscreen():
+        global main
+        global isFullscreen
+        if not isFullscreen:
+            main.attributes('-fullscreen',True)
+            isFullscreen = True
+        else:
+            main.attributes('-fullscreen',False)
+            isFullscreen = False
 
     def UIEditMoveModeChange(mode):
             global select_button
@@ -667,12 +680,23 @@ class app():
     def about():
         about = tkinter.Tk()
         about.winfo_toplevel().title("About the Crumbl Engine")
-        about.geometry("640x480+0+0")
+        about.geometry("640x600+0+0")
         about.resizable(False,False)
         engine_icon = tkinter.PhotoImage(master = about,file = fileHandler.engine_logo)
         studio_icon = tkinter.PhotoImage(master = about,file = fileHandler.studio_logo)
         logo = tkinter.Label(about,image = engine_icon,text="Version: 0.1B",compound="top")
-        logo.pack(side = "top")
+        logo.pack(side = "top",expand = 0)
         text = tkinter.Label(about,text="Engine Version: 0.1B")
-        text.pack(side = "top")
+        text.pack(side = "top",expand = 0)
+        names = scrolledtext.ScrolledText(about)
+        names.pack(side = "top",expand = 0)
+        names.tag_add("title",tkinter.INSERT,tkinter.END)
+        names.tag_config("title",font = ("TkDefaultFont",48,"bold"))
+        names.tag_add("title",tkinter.INSERT,tkinter.END)
+        names.tag_config("normal",font = ("TkDefaultFont",12))
+        names.insert(tkinter.END,"Made by these contributors:\n","title")
+        names.insert(tkinter.END,"FROM CRUMBL STUDIOS:\nRJ Carter\nEshan Tahir\n","normal")
+        names.insert(tkinter.END,"Did you contribute to this project? Add your name here!","normal")
+        clsBtn = ttk.Button(about,text = "⮾ Close")
+        clsBtn.pack(side = "top",anchor="se",expand = 1)
 engine = app()

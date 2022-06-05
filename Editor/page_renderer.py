@@ -92,7 +92,7 @@ def loadpage(helpdi):
         helpdoc = open(cwd+"/Editor/docs/errors/error.crhd",mode = "r")
         isinfile = True
         currentop.set("An error occured")
-    while isinfile == True:
+    for i in range(linecount):
         line = helpdoc.readline()
         Linepercent = linesrendered/linecount
         loads['value'] = Linepercent*100
@@ -168,7 +168,7 @@ def loadpage(helpdi):
             currentop.set("location:" +link + "("+str(Linepercent*100)+"%)")
             maintext.tag_add(link,END)
             maintext.tag_config(link,foreground="blue",underline = 1)
-            maintext.tag_bind(link,"<Enter>",lambda e,linkloc = linklo: enter(linkloc))
+            maintext.tag_bind(link,"<Enter>",lambda e,linkloc = linklo: enter(linkloc,True))
             maintext.tag_bind(link,"<Leave>",lambda e,linkloc = linklo: leave(linkloc))
             maintext.tag_bind(link,"<Button-1>",lambda e,linkloc = linklo: webclick(linkloc))
             maintext.insert(END,"%s➚"%linktext,link)
@@ -207,10 +207,8 @@ def loadpage(helpdi):
             linesrendered += 1
             app.update()
         else:
-            currentop.set("Error found")
-            helpdoc = open(cwd+"/home/errors/error2.crhd",mode = "r")
+            print("Invalid command or text ran out")
             app.update()
-            errorcon = "Command "+line+" is not a real filescript command"
     maintext.config(state = "disabled")
     app.configure(cursor = "")
     refresh.config(text = "↺")
@@ -239,7 +237,7 @@ def handle(obj):
     helpdir = loc
     loadpage(loc)
 
-def enter(place):
+def enter(place,external = False): # Show warning if enteing links to external website
     global maintext
     global refresh
     global back
@@ -249,7 +247,10 @@ def enter(place):
     maintext.config(cursor = "hand2")
     maintext.tag_config(place,foreground="magenta",underline = 0)
     app.update()
-    currentop.set("Link to: "+str(place)+" (click to navigate)")
+    if not external:
+        currentop.set("Link to: "+str(place)+" (click to navigate)")
+    else:
+        currentop.set("External link to: "+str(place)+" (click to navigate, this will take you outside the Crumbl Engine Editor)")
 
 def leave(place):
     maintext.config(cursor = "xterm")
