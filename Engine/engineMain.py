@@ -1,7 +1,7 @@
 from ctypes import cdll
 import os
 
-sdlHandler = cdll.LoadLibrary("./build/sdlWrapper.so") # COMPILE ENGINE BEFORE RUNNING
+sdlHandler = cdll.LoadLibrary("./sdlWrapper.so") # COMPILE ENGINE BEFORE RUNNING
 
 class Engine():
     def __init__(title,xres,yres,fullscreen = False,fullscreenDesk = False,gDriver = 0,
@@ -12,3 +12,5 @@ class Engine():
         sdl = sdlHandler.main(title,xres,yres,fullscreen,fullscreenDesk,gDriver,invisible,noDecoration,
                         canResize,minimized,maximized,foreignWindow,highDPI,skipTaskbar,utilWin,
                         tooltipWin,popup)
+        print("Crumbl engine started")
+        return sdl
