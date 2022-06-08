@@ -1,6 +1,8 @@
 #include <SDL2/SDL.h>
 
-int main(const char* title,int xres, int yres,bool fullscreen = false,bool fullscreenDesk = false,int gDriver = 0,
+SDL_Window* window;
+
+int main(const char* title,int xres, int yres,bool fullscreen = false,bool fullscreenDesk = false,int gDriver = 0, // Init engine
         bool invisible = false, bool noDecoration = false, bool canResize = false,bool minimized = false,
         bool maximized = false, bool foreignWindow = false, bool highDPI = true,bool skipTaskbar = false,
         bool utilWin = false, bool tooltipWin = false, bool popup = false){
@@ -71,8 +73,20 @@ int main(const char* title,int xres, int yres,bool fullscreen = false,bool fulls
         flags += SDL_WINDOW_POPUP_MENU;
     }
     // Generate window
-    SDL_Window* win = SDL_CreateWindow(title,
+    SDL_Window* window = SDL_CreateWindow(title,
                                        SDL_WINDOWPOS_CENTERED,
                                        SDL_WINDOWPOS_CENTERED,
                                        xres, yres,flags);
+    
+}
+
+void updateCrumblTasks(bool cursor = true,bool debugWin = true){
+    if(cursor){
+        SDL_Cursor* cur = SDL_CreateSystemCursor(SDL_SYSTEM_CURSOR_ARROW);
+    }
+    SDL_UpdateWindowSurface(window);
+}
+
+void sdlShutdown(){
+    SDL_DestroyWindow(window);
 }
