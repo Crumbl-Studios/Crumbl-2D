@@ -1,10 +1,9 @@
 #include <SDL2/SDL.h>
 
-SDL_Window* window;
-
 class engine{
     public:
-        SDL_Window* window;
+        SDL_Window *window;
+        SDL_Surface *winSurface;
         Uint32 flags = 0;
 };
 int main(const char* title,int xres, int yres,bool fullscreen = false,bool fullscreenDesk = false,int gDriver = 0, // Init engine
@@ -17,6 +16,7 @@ int main(const char* title,int xres, int yres,bool fullscreen = false,bool fulls
     if (SDL_Init(SDL_INIT_EVERYTHING) != 0) 
     {
         printf("SDL Error: %s\n", SDL_GetError());
+        return -1;
     }
     // Setup SDL object.flags
     if (fullscreen == true)
@@ -80,28 +80,46 @@ int main(const char* title,int xres, int yres,bool fullscreen = false,bool fulls
     }
     // Generate window
     object.window = SDL_CreateWindow(title,
-                                    SDL_WINDOWPOS_CENTERED,
-                                    SDL_WINDOWPOS_CENTERED,
+                                    SDL_WINDOWPOS_UNDEFINED,
+                                    SDL_WINDOWPOS_UNDEFINED,
                                     xres, yres,object.flags);
+    // Check for new window
+    if(!object.window){
+        printf("Critical: SDL failed to init");
+        return -1;
+    }
+
+    // Create surface
+    object.winSurface = SDL_GetWindowSurface(object.window);
+
+    // Check surface
+    if(!object.window){
+        printf("Critical: No surface generated");
+        return -1;
+    }
 }
 
 extern "C"{
-    void getPos(){
+    void getPos(SDL_Window *window){
         return SDL_GetWindowPosition(window,0,0);
     }
 
-    void setPos(int x,int y){
+    void setPos(SDL_Window *window,int x,int y){
         SDL_SetWindowPosition(window,x,y);
     }
 
-    void updateCrumblTasks(bool cursor = true,bool debugWin = true){
+    void updateCrumblTasks(SDL_Window *winSurface,bool cursor = true,bool debugWin = true){
         if(cursor){
             SDL_Cursor* cur = SDL_CreateSystemCursor(SDL_SYSTEM_CURSOR_ARROW);
         }
-        SDL_UpdateWindowSurface(window);
+        SDL_UpdateWindowSurface(winSurface);
     }
 
-    void sdlShutdown(){
+    void sdlShutdown(SDL_Window *window){
         SDL_DestroyWindow(window);
+    }
+
+    void blitObject(SDL_Surface *object,SDL_Rect *rect,SDL_Surface* surface,SDL_Rect *endrect){
+        SDL_BlitSurface(object,rect,surface,endrect);
     }
 }
