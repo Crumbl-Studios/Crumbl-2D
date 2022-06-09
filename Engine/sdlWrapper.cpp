@@ -1,9 +1,14 @@
+// SDL imports
 #include <SDL2/SDL.h>
+// Wrapper module imports
+#include "eventHandler.h"
+#include "uiHandler.h"
 
 class engine{
     public:
         SDL_Window *window;
         SDL_Surface *winSurface;
+        SDL_Event *events;
         Uint32 flags = 0;
 };
 int main(const char* title,int xres, int yres,bool fullscreen = false,bool fullscreenDesk = false,int gDriver = 0, // Init engine
@@ -93,7 +98,7 @@ int main(const char* title,int xres, int yres,bool fullscreen = false,bool fulls
     object.winSurface = SDL_GetWindowSurface(object.window);
 
     // Check surface
-    if(!object.window){
+    if(!object.winSurface){
         printf("Critical: No surface generated");
         return -1;
     }
@@ -108,7 +113,8 @@ extern "C"{
         SDL_SetWindowPosition(window,x,y);
     }
 
-    void updateCrumblTasks(SDL_Window *winSurface,bool cursor = true,bool debugWin = true){
+    void updateCrumblTasks(SDL_Window *winSurface,SDL_Event *event,bool cursor = true,bool debugWin = true){
+        pollInputs(event);
         if(cursor){
             SDL_Cursor* cur = SDL_CreateSystemCursor(SDL_SYSTEM_CURSOR_ARROW);
         }
