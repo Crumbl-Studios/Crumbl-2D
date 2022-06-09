@@ -10,14 +10,20 @@ class Engine():
         utilWin = False,tooltipWin = False,popup = False):
         print("Starting engine")
         enginePath = os.path.join(os.getcwd(),"build/sdlWrapper.so")
-        sdlHandler = ctypes.CDLL(enginePath) # COMPILE ENGINE BEFORE RUNNING
-        self = sdlHandler.main(title,xres,yres,fullscreen,fullscreenDesk,gDriver,invisible,noDecoration,
+        self.sdlHandler = ctypes.CDLL(enginePath) # COMPILE ENGINE BEFORE RUNNING
+        self = self.sdlHandler.main(title,xres,yres,fullscreen,fullscreenDesk,gDriver,invisible,noDecoration,
                         canResize,minimized,maximized,foreignWindow,highDPI,skipTaskbar,utilWin,
                         tooltipWin,popup)
         print("Crumbl Engine started")
     
-    def updateCrumblTasks(self,mouse = True,debug = True):
-        self.updateCrumblTasks(mouse,debug)
+    def UpdateCrumblTasks(self,mouse = True,debug = True):
+        self.sdlHandler.updateCrumblTasks(mouse,debug)
+
+    def getPosition(self):
+        self.sdlHandler.getPos()
+    
+    def setPosition(self,x,y):
+        self.sdlHandler.setPos(x,y)
 
     def destroyWindow(self):
-        self.destroyWindow()
+        self.sdlHandler.sdlShutdown()

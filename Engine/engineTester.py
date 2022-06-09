@@ -4,10 +4,7 @@
 
 import engineMain
 
-Engine = engineMain.Engine("Crumbl Engine test program",400,200)
+Engine = engineMain.Engine("Crumbl Engine test program",1366,768,canResize=True,noDecoration=False)
 
-input("Press enter to exit")
-Engine.destroyWindow()
-
-# while 1:                               # Commented out due to recursion error
-#   Engine.updateCrumblTasks(mouse=False)
+while 1:                              
+    Engine.UpdateCrumblTasks(mouse=False)
