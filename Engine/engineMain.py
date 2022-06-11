@@ -28,5 +28,8 @@ class Engine():
     def destroyWindow(self):
         self.sdlHandler.sdlShutdown()
     
+    def changeTitle(self,title):
+        self.sdlHandler.changeTitle(self,title)
+
     def blit(self,object,rect,endrect):
         self.sdlHandler.blit(self,object,rect,endrect)
