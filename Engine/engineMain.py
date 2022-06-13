@@ -11,7 +11,8 @@ class Engine():
         print("Starting engine")
         enginePath = os.path.join(os.getcwd(),"build/sdlWrapper.so")
         self.sdlHandler = ctypes.CDLL(enginePath) # COMPILE ENGINE BEFORE RUNNING
-        self = self.sdlHandler.main(title,xres,yres,fullscreen,fullscreenDesk,gDriver,invisible,noDecoration,
+        newTitle = bytes(title,encoding='utf8')
+        self = self.sdlHandler.main(newTitle,xres,yres,fullscreen,fullscreenDesk,gDriver,invisible,noDecoration,
                         canResize,minimized,maximized,foreignWindow,highDPI,skipTaskbar,utilWin,
                         tooltipWin,popup)
         print("Crumbl Engine started")
@@ -29,7 +30,7 @@ class Engine():
         self.sdlHandler.sdlShutdown()
     
     def changeTitle(self,title):
-        self.sdlHandler.changeTitle(self,title)
+        self.sdlHandler.changeTitle(self,bytes(title,encoding='utf8'))
 
     def blit(self,object,rect,endrect):
         self.sdlHandler.blit(self,object,rect,endrect)
