@@ -8,7 +8,6 @@ class engine{
     public:
         SDL_Window *window;
         SDL_Surface *winSurface;
-        SDL_Event *events;
         Uint32 flags = 0;
 };
 int main(const char *title,int xres, int yres,bool fullscreen = false,bool fullscreenDesk = false,int gDriver = 0, // Init engine
@@ -116,6 +115,7 @@ extern "C"{
     }
 
     void sdlShutdown(SDL_Window *window){
+        printf("Closing Crumbl engine, tearing down SDL");
         SDL_DestroyWindow(window);
     }
 
@@ -125,14 +125,14 @@ extern "C"{
     void changeTitle(SDL_Window *window, char *title){
         SDL_SetWindowTitle(window,title);
     }
-    void updateCrumblTasks(SDL_Window *winSurface,SDL_Event *event,bool cursor = true,bool debugWin = true){
-        int pollReturn =  pollInputs(event);
+    void updateCrumblTasks(SDL_Window *window,bool cursor = true,bool debugWin = true){
+        int pollReturn =  pollInputs();
         if(pollReturn == -1){
-            sdlShutdown(winSurface);
+            sdlShutdown(window);
         }
         if(cursor){
             SDL_Cursor* cur = SDL_CreateSystemCursor(SDL_SYSTEM_CURSOR_ARROW);
         }
-        SDL_UpdateWindowSurface(winSurface);
+        SDL_UpdateWindowSurface(window);
     }
 }
