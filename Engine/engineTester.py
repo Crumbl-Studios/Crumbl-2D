@@ -6,4 +6,5 @@ import engineMain
 
 Engine = engineMain.Engine("Crumbl Engine test program",1366,768,canResize=True,noDecoration=False)
 while 1:
-    Engine.UpdateCrumblTasks(mouse=False)
+    Engine.uiRenderText("Test text",0,0,100)
+    Engine.UpdateCrumblTasks()

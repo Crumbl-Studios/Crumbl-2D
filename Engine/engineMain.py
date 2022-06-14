@@ -34,3 +34,9 @@ class Engine():
 
     def blit(self,object,rect,endrect):
         self.sdlHandler.blit(self,object,rect,endrect)
+    
+    def uiRenderText(self,text,x,y,w,size = 12,r = 255,g = 255,b = 255,
+                    fontFile = "stockAssets/SourceSansPro-Regular.ttf"):
+        textBytes = bytes(text,encoding="utf8")
+        self.sdlHandler.generateText(textBytes,x,y,w,size,r,g,b,fontFile)
+        

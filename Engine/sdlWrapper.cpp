@@ -1,5 +1,6 @@
 // SDL imports
 #include <SDL2/SDL.h>
+#include <SDL2/SDL_image.h>
 // Wrapper module imports
 #include "eventHandler.h"
 #include "uiHandler.h"
@@ -16,6 +17,13 @@ int main(const char *title,int xres, int yres,bool fullscreen = false,bool fulls
         bool utilWin = false, bool tooltipWin = false, bool popup = false){
     // Create class
     engine object;
+    // Attempt init
+    if (SDL_Init(SDL_INIT_VIDEO)) // Redundancy for initialization
+    if (SDL_Init(SDL_INIT_EVERYTHING) != 0) 
+    {
+        printf("SDL Error: %s\n", SDL_GetError());
+        return -1;
+    }
     // Setup SDL object.flags
     if (fullscreen == true)
     { // Fullscreen object.flags
@@ -76,19 +84,11 @@ int main(const char *title,int xres, int yres,bool fullscreen = false,bool fulls
     {
         object.flags += SDL_WINDOW_POPUP_MENU;
     }
-    // Attempt init
-    if (SDL_Init(SDL_INIT_VIDEO)) // Redundancy for initialization
-    if (SDL_Init(SDL_INIT_EVERYTHING) != 0) 
-    {
-        printf("SDL Error: %s\n", SDL_GetError());
-        return -1;
-    }
     // Generate window
     object.window = SDL_CreateWindow(title,
                                     SDL_WINDOWPOS_UNDEFINED,
                                     SDL_WINDOWPOS_UNDEFINED,
                                     xres, yres,0); //,object.flags used to be here, disabled for testing
-    SDL_SetWindowTitle(object.window,title);
     // Check for new window
     if(!object.window){
         printf("Critical: SDL failed to init");
@@ -96,8 +96,7 @@ int main(const char *title,int xres, int yres,bool fullscreen = false,bool fulls
     }
 
     // Create surface
-    object.winSurface = SDL_GetWindowSurface(object.window); //Commented out for error
-
+    object.winSurface = SDL_GetWindowSurface(object.window);
     // Check surface
     if(!object.winSurface){
         printf("Critical: No surface generated (Could it be uncommented in source code?)");
@@ -125,14 +124,23 @@ extern "C"{
     void changeTitle(SDL_Window *window, char *title){
         SDL_SetWindowTitle(window,title);
     }
-    void updateCrumblTasks(SDL_Window *window,bool cursor = true,bool debugWin = true){
+    void updateCrumblTasks(SDL_Window *window,SDL_Surface surface,bool cursor = true,bool debugWin = true){
         int pollReturn =  pollInputs();
         if(pollReturn == -1){
             sdlShutdown(window);
         }
         if(cursor){
-            SDL_Cursor* cur = SDL_CreateSystemCursor(SDL_SYSTEM_CURSOR_ARROW);
-        }
+            SDL_Cursor *cur;
+            // Generate cursor image
+            SDL_Surface *cursorImage = IMG_Load("/stockAssets/defaultCursor");
+            cur = SDL_CreateColorCursor(cursorImage,0,0);
+            SDL_SetCursor(cur);
+        }   
         SDL_UpdateWindowSurface(window);
+    }
+
+    void passText(const char *text,int x,int y,int w,int size = 12,int r = 255,int g = 255,
+                    int b = 255,const char *fontFile = "stockAssets/SourceSansPro-Regular.ttf"){
+        generateText(text,x,y,w,size,r,g,b,fontFile);
     }
 }
