@@ -1,3 +1,4 @@
+#include <iostream>
 #include <SDL2/SDL.h>
 
 int onEvent(SDL_Event &event){

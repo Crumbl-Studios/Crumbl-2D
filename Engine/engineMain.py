@@ -12,7 +12,7 @@ class Engine():
         enginePath = os.path.join(os.getcwd(),"build/sdlWrapper.so")
         self.sdlHandler = ctypes.CDLL(enginePath) # COMPILE ENGINE BEFORE RUNNING
         newTitle = bytes(title,encoding='utf8')
-        self = self.sdlHandler.main(newTitle,xres,yres,fullscreen,fullscreenDesk,gDriver,invisible,noDecoration,
+        self = self.sdlHandler.main(0,"",newTitle,xres,yres,fullscreen,fullscreenDesk,gDriver,invisible,noDecoration,
                         canResize,minimized,maximized,foreignWindow,highDPI,skipTaskbar,utilWin,
                         tooltipWin,popup)
         print("Crumbl Engine started")
@@ -34,6 +34,9 @@ class Engine():
 
     def blit(self,object,rect,endrect):
         self.sdlHandler.blit(self,object,rect,endrect)
+
+    def fillRect(self,r,g,b,rect = None):
+        self.sdlHandler.fillRect(rect,r,g,b)
     
     def uiRenderText(self,text,x,y,w,size = 12,r = 255,g = 255,b = 255,
                     fontFile = "stockAssets/SourceSansPro-Regular.ttf"):

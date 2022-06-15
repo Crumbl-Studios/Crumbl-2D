@@ -4,19 +4,13 @@
 // Wrapper module imports
 #include "eventHandler.h"
 #include "uiHandler.h"
-
-class engine{
-    public:
-        SDL_Window *window;
-        SDL_Surface *winSurface;
-        Uint32 flags = 0;
-};
-int main(const char *title,int xres, int yres,bool fullscreen = false,bool fullscreenDesk = false,int gDriver = 0, // Init engine
+int main(int argc, char** args,const char *title,int xres, int yres,bool fullscreen = false,bool fullscreenDesk = false,int gDriver = 0, // Init engine
         bool invisible = false, bool noDecoration = false, bool canResize = false,bool minimized = false,
         bool maximized = false, bool foreignWindow = false, bool highDPI = true,bool skipTaskbar = false,
         bool utilWin = false, bool tooltipWin = false, bool popup = false){
-    // Create class
-    engine object;
+    SDL_Window *window;
+    SDL_Surface *winSurface;
+    Uint32 flags = 0;
     // Attempt init
     if (SDL_Init(SDL_INIT_VIDEO)) // Redundancy for initialization
     if (SDL_Init(SDL_INIT_EVERYTHING) != 0) 
@@ -27,81 +21,85 @@ int main(const char *title,int xres, int yres,bool fullscreen = false,bool fulls
     // Setup SDL object.flags
     if (fullscreen == true)
     { // Fullscreen object.flags
-        object.flags += SDL_WINDOW_FULLSCREEN;
+        flags += SDL_WINDOW_FULLSCREEN;
     }
     if (fullscreenDesk == true){
-        object.flags += SDL_WINDOW_FULLSCREEN_DESKTOP;
+        flags += SDL_WINDOW_FULLSCREEN_DESKTOP;
     }
     if (gDriver == 1)
     { //Choose gpu driver 0 = default, 1 = openGL 2 = Vulkan
-        object.flags += SDL_WINDOW_OPENGL;
+        flags += SDL_WINDOW_OPENGL;
     }
     if (gDriver == 2)
     {
-        object.flags += SDL_WINDOW_VULKAN;
+        flags += SDL_WINDOW_VULKAN;
     }
     if (invisible == true)
     {
-        object.flags += SDL_WINDOW_HIDDEN;
+        flags += SDL_WINDOW_HIDDEN;
     }
     if (noDecoration == true)
     {
-        object.flags += SDL_WINDOW_BORDERLESS;
+        flags += SDL_WINDOW_BORDERLESS;
     }
     if (canResize == true)
     {
-        object.flags += SDL_WINDOW_RESIZABLE;
+        flags += SDL_WINDOW_RESIZABLE;
     }
     if (minimized == true)
     {
-        object.flags += SDL_WINDOW_MINIMIZED;
+        flags += SDL_WINDOW_MINIMIZED;
     }
     if (maximized == true)
     {
-        object.flags += SDL_WINDOW_MAXIMIZED;
+        flags += SDL_WINDOW_MAXIMIZED;
     }
     if (foreignWindow == true)
     {
-        object.flags += SDL_WINDOW_FOREIGN;
+        flags += SDL_WINDOW_FOREIGN;
     }
     if (highDPI == true)
     {
-        object.flags += SDL_WINDOW_ALLOW_HIGHDPI;
+        flags += SDL_WINDOW_ALLOW_HIGHDPI;
     }
     if (skipTaskbar == true)
     {
-        object.flags += SDL_WINDOW_SKIP_TASKBAR;
+        flags += SDL_WINDOW_SKIP_TASKBAR;
     }
     if (utilWin == true)
     {
-        object.flags += SDL_WINDOW_UTILITY;
+        flags += SDL_WINDOW_UTILITY;
     }
     if (tooltipWin == true)
     {
-        object.flags += SDL_WINDOW_TOOLTIP;
+        flags += SDL_WINDOW_TOOLTIP;
     }
     if (popup = true)
     {
-        object.flags += SDL_WINDOW_POPUP_MENU;
+        flags += SDL_WINDOW_POPUP_MENU;
     }
     // Generate window
-    object.window = SDL_CreateWindow(title,
+    window = SDL_CreateWindow(title,
                                     SDL_WINDOWPOS_UNDEFINED,
                                     SDL_WINDOWPOS_UNDEFINED,
                                     xres, yres,0); //,object.flags used to be here, disabled for testing
     // Check for new window
-    if(!object.window){
+    if(!window){
         printf("Critical: SDL failed to init");
         return -1;
     }
 
     // Create surface
-    object.winSurface = SDL_GetWindowSurface(object.window);
+    winSurface = SDL_GetWindowSurface(window);
     // Check surface
-    if(!object.winSurface){
+    if(!winSurface){
         printf("Critical: No surface generated (Could it be uncommented in source code?)");
         return -1;
     }
+    printf("Window generated, filling surface");
+    // Fill window with default
+    SDL_FillRect(winSurface,NULL,SDL_MapRGB(winSurface->format, 0, 0, 0 ) );
+    SDL_UpdateWindowSurface(window);
 }
 
 extern "C"{
@@ -116,6 +114,7 @@ extern "C"{
     void sdlShutdown(SDL_Window *window){
         printf("Closing Crumbl engine, tearing down SDL");
         SDL_DestroyWindow(window);
+        SDL_Quit();
     }
 
     void blitObject(SDL_Surface *object,SDL_Rect *rect,SDL_Surface* surface,SDL_Rect *endrect){
@@ -127,6 +126,7 @@ extern "C"{
     void updateCrumblTasks(SDL_Window *window,SDL_Surface surface,bool cursor = true,bool debugWin = true){
         int pollReturn =  pollInputs();
         if(pollReturn == -1){
+            printf("Shutdown called");
             sdlShutdown(window);
         }
         if(cursor){
@@ -137,6 +137,10 @@ extern "C"{
             SDL_SetCursor(cur);
         }   
         SDL_UpdateWindowSurface(window);
+    }
+
+    void fillRect(SDL_Surface *surface,int r,int g, int b,SDL_Rect *rect = NULL){
+        SDL_FillRect(surface,rect,SDL_MapRGB( surface->format, r, g, b ));
     }
 
     void passText(const char *text,int x,int y,int w,int size = 12,int r = 255,int g = 255,
