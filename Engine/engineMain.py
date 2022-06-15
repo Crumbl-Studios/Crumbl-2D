@@ -38,8 +38,13 @@ class Engine():
     def fillRect(self,r,g,b,rect = None):
         self.sdlHandler.fillRect(rect,r,g,b)
     
-    def uiRenderText(self,text,x,y,w,size = 12,r = 255,g = 255,b = 255,
-                    fontFile = "stockAssets/SourceSansPro-Regular.ttf"):
+    def changeBG(self,r,g,b):
+        self.sdlHandler.changeBGColor(r,g,b)
+    
+    def loadFont(self,fontFile,size = 12):
+        return self.sdlHandler.loadFont(bytes(fontFile,encoding="utf8"),size)
+
+    def uiRenderText(self,text,x,y,font,size = 12,r = 255,g = 255,b = 255):
         textBytes = bytes(text,encoding="utf8")
-        self.sdlHandler.generateText(textBytes,x,y,w,size,r,g,b,fontFile)
+        self.sdlHandler.generateText(textBytes,int(x),int(y),font,size,r,g,b)
         

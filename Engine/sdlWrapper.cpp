@@ -1,16 +1,19 @@
 // SDL imports
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
+#include <SDL2/SDL_ttf.h>
 // Wrapper module imports
 #include "eventHandler.h"
 #include "uiHandler.h"
+// Variables
+SDL_Window *window;
+SDL_Surface *winSurface;
+Uint32 flags = 0;
+
 int main(int argc, char** args,const char *title,int xres, int yres,bool fullscreen = false,bool fullscreenDesk = false,int gDriver = 0, // Init engine
         bool invisible = false, bool noDecoration = false, bool canResize = false,bool minimized = false,
         bool maximized = false, bool foreignWindow = false, bool highDPI = true,bool skipTaskbar = false,
         bool utilWin = false, bool tooltipWin = false, bool popup = false){
-    SDL_Window *window;
-    SDL_Surface *winSurface;
-    Uint32 flags = 0;
     // Attempt init
     if (SDL_Init(SDL_INIT_VIDEO)) // Redundancy for initialization
     if (SDL_Init(SDL_INIT_EVERYTHING) != 0) 
@@ -137,14 +140,33 @@ extern "C"{
             SDL_SetCursor(cur);
         }   
         SDL_UpdateWindowSurface(window);
+        SDL_Delay(.06);
+    }
+
+    void delay(float time){
+        SDL_Delay(time);
     }
 
     void fillRect(SDL_Surface *surface,int r,int g, int b,SDL_Rect *rect = NULL){
         SDL_FillRect(surface,rect,SDL_MapRGB( surface->format, r, g, b ));
     }
 
-    void passText(const char *text,int x,int y,int w,int size = 12,int r = 255,int g = 255,
-                    int b = 255,const char *fontFile = "stockAssets/SourceSansPro-Regular.ttf"){
-        generateText(text,x,y,w,size,r,g,b,fontFile);
+    void changeBGColor(int r,int g, int b){
+        SDL_FillRect(winSurface,NULL,SDL_MapRGB( winSurface->format, r, g, b ));
+        SDL_UpdateWindowSurface(window);
+    }
+
+    TTF_Font *loadFont(const char *fontFile,int size){
+        return TTF_OpenFont(fontFile, size);
+    }
+
+    void passText(const char *text,int x,int y,TTF_Font *font,int r = 255,int g = 255,
+                    int b = 255){
+        SDL_Rect dest;
+        dest.x = x;
+        dest.y = y;
+        SDL_Surface *textSurface = generateText(text,font,r,g,b);
+        SDL_BlitSurface(textSurface, NULL, winSurface, &dest);
+        SDL_UpdateWindowSurface(window);
     }
 }
