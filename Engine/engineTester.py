@@ -10,7 +10,7 @@ import os
 w = 1366
 h = 768
 # Generate window
-Engine = engineMain.Engine("Crumbl Engine test program",w,h,canResize=True,noDecoration=False)
+Engine = engineMain.Engine("Crumbl Engine test program",w,h)
 # Generate default font
 defaultFont = Engine.loadFont(os.path.join(os.getcwd(),"build","stockAssets","SourceSansPro-Regular.ttf"),12)
 # Logo image
@@ -39,6 +39,6 @@ while 1:
     if b == 255:
         colorchange = 0
     Engine.changeBG(r,g,b)
-    Engine.blit(logo,None,Engine.surface,0,0)
+    Engine.blit(logo,None,Engine.window,0,0,scaled = True)
     Engine.uiRenderText("RGB TEST",w/2,h/2,defaultFont)
     Engine.UpdateCrumblTasks(mouse=False)

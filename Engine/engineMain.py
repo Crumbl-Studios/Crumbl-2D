@@ -4,7 +4,7 @@ import os
 
 class Engine():
     global sdlHandler
-    def __init__(self,title,xres,yres,fullscreen = False,fullscreenDesk = False,gDriver = 0,
+    def __init__(self,title,xres,yres,noFlags = True,fullscreen = False,fullscreenDesk = False,gDriver = 0,
         invisible = False,noDecoration = False,canResize = False,minimized = False,
         maximized = False,foreignWindow = False,highDPI = True,skipTaskbar = False,
         utilWin = False,tooltipWin = False,popup = False):
@@ -12,11 +12,12 @@ class Engine():
         enginePath = os.path.join(os.getcwd(),"build/sdlWrapper.so")
         self.sdlHandler = ctypes.CDLL(enginePath) # COMPILE ENGINE BEFORE RUNNING
         newTitle = bytes(title,encoding='utf8')
-        self.sdlHandler.main(0,"",newTitle,xres,yres,fullscreen,fullscreenDesk,gDriver,invisible,noDecoration,
+        self.sdlHandler.main(0,"",newTitle,xres,yres,noFlags,fullscreen,fullscreenDesk,gDriver,invisible,noDecoration,
                         canResize,minimized,maximized,foreignWindow,highDPI,skipTaskbar,utilWin,
                         tooltipWin,popup)
-        print("Crumbl Engine started, getting surface")
+        print("Crumbl Engine started, getting surface and window")
         self.surface = self.sdlHandler.getSurface()
+        self.window = self.sdlHandler.getWindow()
         print("Surface obtained\nCrumbl Engine has successfully initialized!")
     
     def UpdateCrumblTasks(self,mouse = True,debug = True):
@@ -37,8 +38,8 @@ class Engine():
     def createRect(self,x,y,w,h):
         return self.sdlHandler.makeRect(x,y,w,h)
 
-    def blit(self,object,rect,surface,x,y):
-        self.sdlHandler.blitObject(object,rect,surface,x,y)
+    def blit(self,object,rect,surface,x,y,scaled = False,w = None, h = None): # Blits surface to window, rect can be None
+        self.sdlHandler.blitObject(object,rect,surface,x,y,scaled,w,h)
 
     def fillRect(self,r,g,b,rect = None):
         self.sdlHandler.fillRect(rect,r,g,b)
