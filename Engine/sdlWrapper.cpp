@@ -22,11 +22,11 @@ int main(int argc, char** args,const char *title,int xres, int yres,bool noFlags
         return -1;
     }
     // Setup SDL object.flags
-    if (fullscreen == true)
+    if (fullscreen)
     { // Fullscreen object.flags
         flags = flags | SDL_WINDOW_FULLSCREEN;
     }
-    if (fullscreenDesk == true){
+    if (fullscreenDesk){
         flags = flags | SDL_WINDOW_FULLSCREEN_DESKTOP;
     }
     if (gDriver == 1)
@@ -37,47 +37,47 @@ int main(int argc, char** args,const char *title,int xres, int yres,bool noFlags
     {
         flags = flags | SDL_WINDOW_VULKAN;
     }
-    if (invisible == true)
+    if (invisible)
     {
         flags = flags | SDL_WINDOW_HIDDEN;
     }
-    if (noDecoration == true)
+    if (noDecoration)
     {
         flags = flags | SDL_WINDOW_BORDERLESS;
     }
-    if (canResize == true)
+    if (canResize)
     {
         flags = flags | SDL_WINDOW_RESIZABLE;
     }
-    if (minimized == true)
+    if (minimized)
     {
         flags = flags | SDL_WINDOW_MINIMIZED;
     }
-    if (maximized == true)
+    if (maximized)
     {
         flags = flags | SDL_WINDOW_MAXIMIZED;
     }
-    if (foreignWindow == true)
+    if (foreignWindow)
     {
         flags = flags | SDL_WINDOW_FOREIGN;
     }
-    if (highDPI == true)
+    if (highDPI)
     {
         flags = flags | SDL_WINDOW_ALLOW_HIGHDPI;
     }
-    if (skipTaskbar == true)
+    if (skipTaskbar)
     {
         flags = flags | SDL_WINDOW_SKIP_TASKBAR;
     }
-    if (utilWin == true)
+    if (utilWin)
     {
         flags = flags | SDL_WINDOW_UTILITY;
     }
-    if (tooltipWin == true)
+    if (tooltipWin)
     {
         flags = flags | SDL_WINDOW_TOOLTIP;
     }
-    if (popup = true)
+    if (popup)
     {
         flags = flags | SDL_WINDOW_POPUP_MENU;
     }
