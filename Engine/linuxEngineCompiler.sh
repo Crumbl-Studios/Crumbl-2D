@@ -1,7 +1,7 @@
 #!/bin/bash
 echo "Crumbl engine builder (linux)"
 {
-    cd /Engine/
+    cd ./Engine/
 }||{
     echo "Already in directory, compiling"
 }
