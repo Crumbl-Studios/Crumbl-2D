@@ -125,16 +125,35 @@ extern "C"{
         SDL_Quit();
     }
 
-    void blitObject(SDL_Surface *object,SDL_Rect *rect,SDL_Surface* surface,int x, int y){
+    void blitObject(SDL_Surface *object,SDL_Rect *rect,SDL_Surface* surface,int x, int y,
+                    bool scaled = false,int w = 100, int h = 100){
         SDL_Rect endrect;
         endrect.x = x;
         endrect.y = y;
-        SDL_BlitSurface(object,rect,surface,&endrect);
+        endrect.w = w;
+        endrect.h = h;
+        if(!scaled){
+            SDL_BlitSurface(object,rect,surface,&endrect);
+        }
+        else{
+            SDL_BlitScaled(object,rect,surface,&endrect);
+        }
         SDL_UpdateWindowSurface(window);
     }
+
+    SDL_Rect makeRect(int x,int y,int w,int h){
+        SDL_Rect rect;
+        rect.x = x;
+        rect.y = y;
+        rect.w = w;
+        rect.h = h;
+        return rect;
+    }
+
     void changeTitle(SDL_Window *window, char *title){
         SDL_SetWindowTitle(window,title);
     }
+
     void updateCrumblTasks(SDL_Window *window,SDL_Surface surface,bool cursor = true,bool debugWin = true){
         int pollReturn =  pollInputs();
         if(pollReturn == -1){

@@ -33,6 +33,9 @@ class Engine():
     
     def changeTitle(self,title):
         self.sdlHandler.changeTitle(self,bytes(title,encoding='utf8'))
+    
+    def createRect(self,x,y,w,h):
+        return self.sdlHandler.makeRect(x,y,w,h)
 
     def blit(self,object,rect,surface,x,y):
         self.sdlHandler.blitObject(object,rect,surface,x,y)
@@ -42,7 +45,9 @@ class Engine():
     
     def changeBG(self,r,g,b):
         self.sdlHandler.changeBGColor(r,g,b)
-    
+
+    #Text
+
     def loadFont(self,fontFile,size = 12):
         return self.sdlHandler.loadFont(bytes(fontFile,encoding="utf8"),size)
 
@@ -50,6 +55,8 @@ class Engine():
         textBytes = bytes(text,encoding="utf8")
         self.sdlHandler.generateText(textBytes,int(x),int(y),font,size,r,g,b)
     
+    #Images
+
     def loadImage(self,file): # Generates image, uses relative path
         fileBytes = bytes(file,encoding="utf8")
         self.sdlHandler.generateImage(file)
