@@ -103,9 +103,14 @@ int main(int argc, char** args,const char *title,int xres, int yres,bool fullscr
     // Fill window with default
     SDL_FillRect(winSurface,NULL,SDL_MapRGB(winSurface->format, 0, 0, 0 ) );
     SDL_UpdateWindowSurface(window);
+    return 0;
 }
 
 extern "C"{
+    SDL_Surface *getSurface(){
+        return winSurface;
+    }
+
     void getPos(SDL_Window *window){
         return SDL_GetWindowPosition(window,0,0);
     }
@@ -120,8 +125,12 @@ extern "C"{
         SDL_Quit();
     }
 
-    void blitObject(SDL_Surface *object,SDL_Rect *rect,SDL_Surface* surface,SDL_Rect *endrect){
-        SDL_BlitSurface(object,rect,surface,endrect);
+    void blitObject(SDL_Surface *object,SDL_Rect *rect,SDL_Surface* surface,int x, int y){
+        SDL_Rect endrect;
+        endrect.x = x;
+        endrect.y = y;
+        SDL_BlitSurface(object,rect,surface,&endrect);
+        SDL_UpdateWindowSurface(window);
     }
     void changeTitle(SDL_Window *window, char *title){
         SDL_SetWindowTitle(window,title);
@@ -155,6 +164,9 @@ extern "C"{
         SDL_FillRect(winSurface,NULL,SDL_MapRGB( winSurface->format, r, g, b ));
         SDL_UpdateWindowSurface(window);
     }
+    
+    // uiHandler wrap
+    // Text
 
     TTF_Font *loadFont(const char *fontFile,int size){
         return TTF_OpenFont(fontFile, size);
@@ -169,4 +181,11 @@ extern "C"{
         SDL_BlitSurface(textSurface, NULL, winSurface, &dest);
         SDL_UpdateWindowSurface(window);
     }
+
+    // Images
+
+    SDL_Surface *generateImage(const char *fileLocation){
+        return loadImage(fileLocation);
+    }
+
 }
