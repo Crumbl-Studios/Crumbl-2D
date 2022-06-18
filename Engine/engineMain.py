@@ -20,6 +20,9 @@ class Engine():
         self.window = self.sdlHandler.getWindow()
         print("Surface obtained\nCrumbl Engine has successfully initialized!")
     
+    def UpdateFrameStartTasks(self):
+        self.sdlHandler.updateframestarttasks()
+
     def UpdateCrumblTasks(self,mouse = True,debug = True):
         self.sdlHandler.updateCrumblTasks(mouse,debug)
 

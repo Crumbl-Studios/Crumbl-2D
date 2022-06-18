@@ -7,6 +7,7 @@
 #include "uiHandler.h"
 // Variables
 SDL_Window *window;
+SDL_Renderer *renderer;
 SDL_Surface *winSurface;
 Uint32 flags = 0;
 
@@ -97,6 +98,9 @@ int main(int argc, char** args,const char *title,int xres, int yres,bool noFlags
         return -1;
     }
 
+    // Create renderer
+    renderer = SDL_CreateRenderer(window,-1,0);
+
     // Create surface
     winSurface = SDL_GetWindowSurface(window);
     // Check surface
@@ -163,6 +167,10 @@ extern "C"{
         SDL_SetWindowTitle(window,title);
     }
 
+    void updateframestarttasks(){
+        SDL_RenderClear(renderer);
+    }
+
     void updateCrumblTasks(SDL_Window *window,SDL_Surface surface,bool cursor = true,bool debugWin = true){
         int pollReturn =  pollInputs();
         if(pollReturn == -1){
@@ -176,8 +184,8 @@ extern "C"{
             cur = SDL_CreateColorCursor(cursorImage,0,0);
             SDL_SetCursor(cur);
         }   
-        SDL_UpdateWindowSurface(window);
-        SDL_Delay(.06);
+        SDL_RenderPresent(renderer);
+        SDL_Delay(.06); //Temporary framelimit
     }
 
     void delay(float time){
@@ -189,8 +197,9 @@ extern "C"{
     }
 
     void changeBGColor(int r,int g, int b,int a){
-        SDL_FillRect(winSurface,NULL,SDL_MapRGBA( winSurface->format, r, g, b, a));
-        SDL_UpdateWindowSurface(window);
+        SDL_SetRenderDrawColor(renderer,r, g, b, a);
+        // SDL_UpdateWindowSurface(window); // Former update routine
+        //SDL_RenderPresent(renderer);
     }
     
     // uiHandler wrap
@@ -207,7 +216,7 @@ extern "C"{
         dest.y = y;
         SDL_Surface *textSurface = generateText(text,font,r,g,b,a);
         SDL_BlitSurface(textSurface, NULL, winSurface, &dest);
-        SDL_UpdateWindowSurface(window);
+        //SDL_UpdateWindowSurface(window);
     }
 
     // Images
