@@ -41,20 +41,20 @@ class Engine():
     def blit(self,object,rect,surface,x,y,scaled = False,w = None, h = None): # Blits surface to window, rect can be None
         self.sdlHandler.blitObject(object,rect,surface,x,y,scaled,w,h)
 
-    def fillRect(self,r,g,b,rect = None):
-        self.sdlHandler.fillRect(rect,r,g,b)
+    def fillRect(self,r,g,b,a = 255,rect = None):
+        self.sdlHandler.fillRect(rect,r,g,b,a)
     
-    def changeBG(self,r,g,b):
-        self.sdlHandler.changeBGColor(r,g,b)
+    def changeBG(self,r,g,b,a = 255):
+        self.sdlHandler.changeBGColor(r,g,b,a)
 
     #Text
 
     def loadFont(self,fontFile,size = 12):
         return self.sdlHandler.loadFont(bytes(fontFile,encoding="utf8"),size)
 
-    def uiRenderText(self,text,x,y,font,size = 12,r = 255,g = 255,b = 255):
+    def uiRenderText(self,text,x,y,font,size = 12,r = 255,g = 255,b = 255,a = 255):
         textBytes = bytes(text,encoding="utf8")
-        self.sdlHandler.generateText(textBytes,int(x),int(y),font,size,r,g,b)
+        self.sdlHandler.generateText(textBytes,int(x),int(y),font,size,r,g,b,a)
     
     #Images
 

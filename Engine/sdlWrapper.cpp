@@ -17,6 +17,7 @@ int main(int argc, char** args,const char *title,int xres, int yres,bool noFlags
     // Attempt init
     if (SDL_Init(SDL_INIT_VIDEO)) // Redundancy for initialization
     if (SDL_Init(SDL_INIT_EVERYTHING) != 0) 
+    // IMG_Init(IMG_INIT_JPG|IMG_INIT_PNG|IMG_INIT_TIF|IMG_INIT_WEBP);
     {
         printf("SDL Error: %s\n", SDL_GetError());
         return -1;
@@ -105,7 +106,7 @@ int main(int argc, char** args,const char *title,int xres, int yres,bool noFlags
     }
     printf("Window generated, Filling background");
     // Fill window with default
-    SDL_FillRect(winSurface,NULL,SDL_MapRGB(winSurface->format, 0, 0, 0 ) );
+    SDL_FillRect(winSurface,NULL,SDL_MapRGBA(winSurface->format, 0, 0, 0, 255) );
     SDL_UpdateWindowSurface(window);
     return 0;
 }
@@ -183,12 +184,12 @@ extern "C"{
         SDL_Delay(time);
     }
 
-    void fillRect(SDL_Surface *surface,int r,int g, int b,SDL_Rect *rect = NULL){
-        SDL_FillRect(surface,rect,SDL_MapRGB( surface->format, r, g, b ));
+    void fillRect(SDL_Surface *surface,int r,int g, int b,int a,SDL_Rect *rect = NULL){
+        SDL_FillRect(surface,rect,SDL_MapRGBA( surface->format, r, g, b , a));
     }
 
-    void changeBGColor(int r,int g, int b){
-        SDL_FillRect(winSurface,NULL,SDL_MapRGB( winSurface->format, r, g, b ));
+    void changeBGColor(int r,int g, int b,int a){
+        SDL_FillRect(winSurface,NULL,SDL_MapRGBA( winSurface->format, r, g, b, a));
         SDL_UpdateWindowSurface(window);
     }
     
@@ -200,11 +201,11 @@ extern "C"{
     }
 
     void passText(const char *text,int x,int y,TTF_Font *font,int r = 255,int g = 255,
-                    int b = 255){
+                    int b = 255,int a = 255){
         SDL_Rect dest;
         dest.x = x;
         dest.y = y;
-        SDL_Surface *textSurface = generateText(text,font,r,g,b);
+        SDL_Surface *textSurface = generateText(text,font,r,g,b,a);
         SDL_BlitSurface(textSurface, NULL, winSurface, &dest);
         SDL_UpdateWindowSurface(window);
     }
