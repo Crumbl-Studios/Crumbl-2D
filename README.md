@@ -27,5 +27,6 @@ Currently the software is incomplete, so this guide only is to get the "demo" pr
 - libsdl2-mixer-dev
 - libsdl2-net-dev
 
+#### To run demo:
 - Run ``./Engine/linuxEngineCompiler.sh``
 - When asked to run demo file, type ``y`` and press enter
