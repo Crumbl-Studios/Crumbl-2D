@@ -173,7 +173,7 @@ extern "C"{
         SDL_RenderClear(renderer);
     }
 
-    void updateCrumblTasks(SDL_Window *window,SDL_Surface surface,bool cursor = true,bool debugWin = true){
+    void updateCrumblTasks(SDL_Window *window,SDL_Surface surface,bool cursor = true,bool debugWin = true,int framelimit = NULL){ // Update all engine tasks. Use this to set framelimits
         int pollReturn =  pollInputs();
         if(pollReturn == -1){
             printf("Shutdown called");
@@ -187,7 +187,9 @@ extern "C"{
             SDL_SetCursor(cur);
         }   
         SDL_RenderPresent(renderer);
-        SDL_Delay(16.67); //Temporary framelimit
+        if(!framelimit == NULL)
+            float msFPS = 1/framelimit;
+            SDL_Delay(msFPS);
         SDL_RenderClear(renderer);
     }
 
