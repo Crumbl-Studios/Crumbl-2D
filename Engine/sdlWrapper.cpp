@@ -1,5 +1,6 @@
 // SDL imports
 #include <SDL2/SDL.h>
+#include <SDL2/SDL_timer.h>
 #include <SDL2/SDL_image.h>
 #include <SDL2/SDL_ttf.h>
 // Wrapper module imports
@@ -111,7 +112,7 @@ int main(int argc, char** args,const char *title,int xres, int yres,bool noFlags
     printf("Window generated, Filling background");
     // Fill window with default
     SDL_FillRect(winSurface,NULL,SDL_MapRGBA(winSurface->format, 0, 0, 0, 255) );
-    SDL_UpdateWindowSurface(window);
+    SDL_RenderPresent(renderer);
     return 0;
 }
 
@@ -200,6 +201,11 @@ extern "C"{
         SDL_SetRenderDrawColor(renderer,r, g, b, a);
         // SDL_UpdateWindowSurface(window); // Former update routine
         //SDL_RenderPresent(renderer);
+    }
+
+    // SDL_Timer wrap
+    SDL_TimerID addTimer(Uint32 interval,SDL_TimerCallback callback,void *param){
+        return SDL_AddTimer(interval,callback,param);
     }
     
     // uiHandler wrap
