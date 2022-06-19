@@ -23,7 +23,6 @@ colorchange = 0
 
 Engine.changeBG(r,g,b)
 while 1:
-    Engine.UpdateFrameStartTasks()
     if not r == 255 and colorchange == 0:
         b -= 1
         r += 1

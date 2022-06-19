@@ -101,6 +101,7 @@ int main(int argc, char** args,const char *title,int xres, int yres,bool noFlags
 
     // Create renderer
     renderer = SDL_CreateRenderer(window,-1,0);
+    SDL_RenderClear(renderer);
 
     // Create surface
     winSurface = SDL_GetWindowSurface(window);
@@ -186,7 +187,8 @@ extern "C"{
             SDL_SetCursor(cur);
         }   
         SDL_RenderPresent(renderer);
-        SDL_Delay(.06); //Temporary framelimit
+        SDL_Delay(16.67); //Temporary framelimit
+        SDL_RenderClear(renderer);
     }
 
     void delay(float time){

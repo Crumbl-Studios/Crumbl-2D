@@ -10,8 +10,8 @@
 
 extern "C"{
     // Text generator (Commented out because compiler was not linking TTF module)
-    SDL_Surface *generateText(const char *text,TTF_Font *font,int r = 255,int g = 255,
-                            int b = 255,int a = 255){
+    SDL_Surface *generateText(const char *text,TTF_Font *font,Uint8 r = 255,Uint8 g = 255,
+                            Uint8 b = 255,Uint8 a = 255){
         SDL_Color color = {r,g,b,a};
         SDL_Surface *surfaceObject = TTF_RenderText_Solid(font,text,color);
         return surfaceObject;
