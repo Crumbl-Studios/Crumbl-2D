@@ -188,8 +188,7 @@ extern "C"{
         }   
         SDL_RenderPresent(renderer);
         if(!framelimit == NULL)
-            float msFPS = 1/framelimit;
-            SDL_Delay(msFPS);
+            SDL_Delay(1/framelimit);
         SDL_RenderClear(renderer);
     }
 
