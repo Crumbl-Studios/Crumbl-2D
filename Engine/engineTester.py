@@ -40,6 +40,6 @@ while 1:
     if b == 255:
         colorchange = 0
     Engine.changeBG(r,g,b)
-    Engine.blit(logo,None,Engine.surface,0,0,scaled = True)
+    Engine.blit(logo,None,Engine.surface,0,0)
     Engine.uiRenderText("RGB TEST",w/2,h/2,defaultFont)
     Engine.UpdateCrumblTasks(mouse = True,framelimit = 60)

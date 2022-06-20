@@ -41,8 +41,8 @@ class Engine():
     def createRect(self,x,y,w,h):
         return self.sdlHandler.makeRect(x,y,w,h)
 
-    def blit(self,object,rect,surface,x,y,scaled = False,w = None, h = None): # Blits surface to window, rect can be None
-        self.sdlHandler.blitObject(object,rect,surface,x,y,scaled,w,h)
+    def blit(self,object,rect,surface,x,y,w = None, h = None): # Blits surface to window, rect can be None
+        self.sdlHandler.blitObject(object,rect,surface,x,y,w,h)
 
     def fillRect(self,r,g,b,a = 255,rect = None):
         self.sdlHandler.fillRect(rect,r,g,b,a)

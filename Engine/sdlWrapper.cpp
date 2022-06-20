@@ -142,19 +142,14 @@ extern "C"{
     }
 
     void blitObject(SDL_Surface *object,SDL_Rect *rect,SDL_Surface* surface,int x, int y,
-                    bool scaled = false,int w =  NULL, int h = NULL){
+                    int w =  NULL, int h = NULL){
         SDL_Rect endrect;
         endrect.x = x;
         endrect.y = y;
         endrect.w = w;
         endrect.h = h;
-        if(!scaled){
-            SDL_BlitSurface(object,rect,surface,&endrect);
-        }
-        else{
-            SDL_BlitScaled(object,rect,surface,&endrect);
-        }
-        SDL_UpdateWindowSurface(window);
+        SDL_Texture *objectTexture = SDL_CreateTextureFromSurface(renderer,object);
+        SDL_RenderCopy(renderer,objectTexture,rect,&endrect);
     }
 
     SDL_Rect makeRect(int x,int y,int w,int h){
@@ -226,7 +221,8 @@ extern "C"{
         dest.x = x;
         dest.y = y;
         SDL_Surface *textSurface = generateText(text,font,r,g,b,a);
-        SDL_BlitSurface(textSurface, NULL, winSurface, &dest);
+        SDL_Texture *textTexture = SDL_CreateTextureFromSurface(renderer,textSurface);
+        SDL_RenderCopy(renderer,textTexture, NULL, &dest);
         //SDL_UpdateWindowSurface(window);
     }
 
