@@ -113,6 +113,7 @@ int main(int argc, char** args,const char *title,int xres, int yres,bool noFlags
     printf("Window generated, Filling background");
     // Fill window with default
     SDL_FillRect(winSurface,NULL,SDL_MapRGBA(winSurface->format, 0, 0, 0, 255) );
+    SDL_RenderClear(renderer);
     SDL_RenderPresent(renderer);
     return 0;
 }
@@ -186,10 +187,10 @@ extern "C"{
             cur = SDL_CreateColorCursor(cursorImage,0,0);
             SDL_SetCursor(cur);
         }   
+        SDL_RenderClear(renderer);
         SDL_RenderPresent(renderer);
         if(!framelimit == NULL)
             SDL_Delay(1/framelimit);
-        SDL_RenderClear(renderer);
     }
 
     void delay(float time){
@@ -202,8 +203,9 @@ extern "C"{
 
     void changeBGColor(int r,int g, int b,int a){
         SDL_SetRenderDrawColor(renderer,r, g, b, a);
+        SDL_RenderClear(renderer);
         // SDL_UpdateWindowSurface(window); // Former update routine
-        //SDL_RenderPresent(renderer);
+        SDL_RenderPresent(renderer);
     }
 
     // SDL_Timer wrap
