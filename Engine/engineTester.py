@@ -42,4 +42,4 @@ while 1:
     Engine.changeBG(r,g,b)
     Engine.blit(logo,None,Engine.surface,0,0,scaled = True)
     Engine.uiRenderText("RGB TEST",w/2,h/2,defaultFont)
-    Engine.UpdateCrumblTasks(mouse = False,framelimit = 60)
+    Engine.UpdateCrumblTasks(mouse = True,framelimit = 60)
