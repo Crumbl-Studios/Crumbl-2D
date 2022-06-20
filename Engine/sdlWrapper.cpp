@@ -150,6 +150,8 @@ extern "C"{
         endrect.h = h;
         SDL_Texture *objectTexture = SDL_CreateTextureFromSurface(renderer,object);
         SDL_RenderCopy(renderer,objectTexture,rect,&endrect);
+        SDL_RenderClear(renderer);
+        SDL_RenderPresent(renderer);
     }
 
     SDL_Rect makeRect(int x,int y,int w,int h){
@@ -223,6 +225,8 @@ extern "C"{
         SDL_Surface *textSurface = generateText(text,font,r,g,b,a);
         SDL_Texture *textTexture = SDL_CreateTextureFromSurface(renderer,textSurface);
         SDL_RenderCopy(renderer,textTexture, NULL, &dest);
+        SDL_RenderClear(renderer);
+        SDL_RenderPresent(renderer);
         //SDL_UpdateWindowSurface(window);
     }
 
