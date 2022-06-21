@@ -15,6 +15,8 @@ Engine = engineMain.Engine("Crumbl Engine test program",w,h)
 defaultFont = Engine.loadFont(os.path.join(os.getcwd(),"build","stockAssets","SourceSansPro-Regular.ttf"),12)
 # Logo image
 logo = Engine.loadImage("stockAssets/build/CrumblLogo.png")
+# Rect generator
+cutRect = Engine.createRect(0,0,128,128)
 
 r = 0
 g = 0
@@ -40,6 +42,6 @@ while 1:
     if b == 255:
         colorchange = 0
     Engine.changeBG(r,g,b)
-    Engine.blit(logo,None,Engine.surface,0,0)
+    Engine.blit(logo,cutRect,100,200,128,128)
     Engine.uiRenderText("RGB TEST",w/2,h/2,defaultFont)
     Engine.UpdateCrumblTasks(mouse = True,framelimit = 60)

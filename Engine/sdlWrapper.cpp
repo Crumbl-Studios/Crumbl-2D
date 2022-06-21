@@ -101,16 +101,13 @@ int main(int argc, char** args,const char *title,int xres, int yres,bool noFlags
 
     // Create renderer
     renderer = SDL_CreateRenderer(window,-1,0);
-    SDL_RenderClear(renderer);
 
-    // Create surface
-    winSurface = SDL_GetWindowSurface(window);
     // Check surface
     if(!winSurface){
         printf("Critical: No surface generated (Could it be uncommented in source code?)");
         return -1;
     }
-    printf("Window generated, Filling background");
+    printf("Window generated, Filling background\n");
     // Fill window with default
     SDL_FillRect(winSurface,NULL,SDL_MapRGBA(winSurface->format, 0, 0, 0, 255) );
     SDL_RenderClear(renderer);
@@ -123,8 +120,8 @@ extern "C"{
         return window;
     }
 
-    SDL_Surface *getSurface(){
-        return winSurface;
+    SDL_Renderer *getRenderer(){
+        return renderer;
     }
 
     void getPos(SDL_Window *window){
@@ -141,7 +138,7 @@ extern "C"{
         SDL_Quit();
     }
 
-    void blitObject(SDL_Surface *object,SDL_Rect *rect,SDL_Surface* surface,int x, int y,
+    void blitObject(SDL_Surface *object,SDL_Rect *rect,int x, int y,
                     int w =  NULL, int h = NULL){
         SDL_Rect endrect;
         endrect.x = x;
@@ -149,8 +146,12 @@ extern "C"{
         endrect.w = w;
         endrect.h = h;
         SDL_Texture *objectTexture = SDL_CreateTextureFromSurface(renderer,object);
-        SDL_RenderCopy(renderer,objectTexture,rect,&endrect);
         SDL_RenderClear(renderer);
+        int error = SDL_RenderCopy(renderer,objectTexture,rect,&endrect);
+        if (error == -1){
+            const char *error = SDL_GetError();
+            printf("Warning: SDL blit error%s\n" %error);
+        }
         SDL_RenderPresent(renderer);
     }
 
@@ -199,8 +200,8 @@ extern "C"{
     }
 
     void changeBGColor(int r,int g, int b,int a){
-        SDL_SetRenderDrawColor(renderer,r, g, b, a);
         SDL_RenderClear(renderer);
+        SDL_SetRenderDrawColor(renderer,r, g, b, a);
         // SDL_UpdateWindowSurface(window); // Former update routine
         SDL_RenderPresent(renderer);
     }
@@ -224,8 +225,9 @@ extern "C"{
         dest.y = y;
         SDL_Surface *textSurface = generateText(text,font,r,g,b,a);
         SDL_Texture *textTexture = SDL_CreateTextureFromSurface(renderer,textSurface);
-        SDL_RenderCopy(renderer,textTexture, NULL, &dest);
+        SDL_FreeSurface(textSurface);
         SDL_RenderClear(renderer);
+        SDL_RenderCopy(renderer,textTexture, NULL, &dest);
         SDL_RenderPresent(renderer);
         //SDL_UpdateWindowSurface(window);
     }

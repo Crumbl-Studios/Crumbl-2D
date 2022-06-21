@@ -1,23 +1,30 @@
 import ctypes
 from ctypes import cdll
+from io import StringIO
+from wurlitzer import pipes,STDOUT
 import os
 
 class Engine():
     global sdlHandler
+    global STDOUT
     def __init__(self,title,xres,yres,noFlags = True,fullscreen = False,fullscreenDesk = False,gDriver = 0,
         invisible = False,noDecoration = False,canResize = False,minimized = False,
         maximized = False,foreignWindow = False,highDPI = True,skipTaskbar = False,
         utilWin = False,tooltipWin = False,popup = False):
+        global STDOUT
         print("Starting engine")
         enginePath = os.path.join(os.getcwd(),"build/sdlWrapper.so")
         self.sdlHandler = ctypes.CDLL(enginePath) # COMPILE ENGINE BEFORE RUNNING
         newTitle = bytes(title,encoding='utf8')
-        self.sdlHandler.main(0,"",newTitle,xres,yres,noFlags,fullscreen,fullscreenDesk,gDriver,invisible,noDecoration,
-                        canResize,minimized,maximized,foreignWindow,highDPI,skipTaskbar,utilWin,
-                        tooltipWin,popup)
+        out = StringIO()
+        with pipes() as (out,err):
+            self.sdlHandler.main(0,"",newTitle,xres,yres,noFlags,fullscreen,fullscreenDesk,gDriver,invisible,noDecoration,
+                            canResize,minimized,maximized,foreignWindow,highDPI,skipTaskbar,utilWin,
+                            tooltipWin,popup)
+        STDOUT = out.read()
         print("Crumbl Engine started, getting surface and window")
-        self.surface = self.sdlHandler.getSurface()
-        self.window = self.sdlHandler.getWindow()
+        self.surface = self.sdlHandler.getWindow()
+        self.window = self.sdlHandler.getRenderer()
         print("Surface obtained\nCrumbl Engine has successfully initialized!")
     
     def UpdateFrameStartTasks(self):
@@ -41,8 +48,8 @@ class Engine():
     def createRect(self,x,y,w,h):
         return self.sdlHandler.makeRect(x,y,w,h)
 
-    def blit(self,object,rect,surface,x,y,w = None, h = None): # Blits surface to window, rect can be None
-        self.sdlHandler.blitObject(object,rect,surface,x,y,w,h)
+    def blit(self,object,rect,x,y,w = None, h = None): # Blits surface to window, rect can be None
+        self.sdlHandler.blitObject(object,rect,x,y,w,h)
 
     def fillRect(self,r,g,b,a = 255,rect = None):
         self.sdlHandler.fillRect(rect,r,g,b,a)
