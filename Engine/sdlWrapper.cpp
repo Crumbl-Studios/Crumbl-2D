@@ -150,7 +150,9 @@ extern "C"{
         int error = SDL_RenderCopy(renderer,objectTexture,rect,&endrect);
         if (error == -1){
             const char *error = SDL_GetError();
-            printf("Warning: SDL blit error%s\n" %error);
+            printf("Warning: SDL blit error ");
+            printf(error);
+            printf("\n");
         }
         SDL_RenderPresent(renderer);
     }
@@ -227,8 +229,14 @@ extern "C"{
         SDL_Texture *textTexture = SDL_CreateTextureFromSurface(renderer,textSurface);
         SDL_FreeSurface(textSurface);
         SDL_RenderClear(renderer);
-        SDL_RenderCopy(renderer,textTexture, NULL, &dest);
+        int error = SDL_RenderCopy(renderer,textTexture, NULL, &dest);
         SDL_RenderPresent(renderer);
+        if (error == -1){
+            const char *error = SDL_GetError();
+            printf("Warning: SDL text render error ");
+            printf(error);
+            printf("\n");
+        }
         //SDL_UpdateWindowSurface(window);
     }
 
