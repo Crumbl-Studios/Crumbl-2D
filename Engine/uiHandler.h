@@ -21,12 +21,17 @@ extern "C"{
         return access( imageLocation.c_str(), 0 ) == 0;
     }
     SDL_Surface *loadImage(const char *imageLocation){
+        SDL_Surface *imageSurface;
         bool imageLocationExists = imageLocationExists;
         if(imageLocationExists){
-            return SDL_LoadBMP(imageLocation);
+            SDL_Surface *imageSurface = SDL_LoadBMP(imageLocation);
         }
         else{
-            return SDL_LoadBMP("stockAssets/missingasset.png");
+            printf("Warning: Image ");
+            printf(imageLocation);
+            printf(" has not been found\n");
+            SDL_Surface *imageSurface = SDL_LoadBMP("stockAssets/missingasset.png");
         }
+        return imageSurface;
     }
 }

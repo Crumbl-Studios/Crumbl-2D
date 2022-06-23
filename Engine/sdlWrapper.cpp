@@ -146,6 +146,8 @@ extern "C"{
         endrect.w = w;
         endrect.h = h;
         SDL_Texture *objectTexture = SDL_CreateTextureFromSurface(renderer,object);
+        printf(SDL_GetError());
+        printf("\n");
         SDL_RenderClear(renderer);
         int error = SDL_RenderCopy(renderer,objectTexture,rect,&endrect);
         if (error == -1){
