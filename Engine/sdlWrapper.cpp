@@ -12,110 +12,110 @@ SDL_Renderer *renderer;
 SDL_Surface *winSurface;
 Uint32 flags = 0;
 
-int main(int argc, char** args,const char *title,int xres, int yres,bool noFlags = true,bool fullscreen = false,bool fullscreenDesk = false,int gDriver = 0, // Init engine
-        bool invisible = false, bool noDecoration = false, bool canResize = false,bool minimized = false,
-        bool maximized = false, bool foreignWindow = false, bool highDPI = true,bool skipTaskbar = false,
-        bool utilWin = false, bool tooltipWin = false, bool popup = false){
-    // Attempt init
-    if (SDL_Init(SDL_INIT_VIDEO)) // Redundancy for initialization
-    if (SDL_Init(SDL_INIT_EVERYTHING) != 0) 
-    // IMG_Init(IMG_INIT_JPG|IMG_INIT_PNG|IMG_INIT_TIF|IMG_INIT_WEBP);
-    {
-        printf("SDL Error: %s\n", SDL_GetError());
-        return -1;
-    }
-    // Setup SDL object.flags
-    if (fullscreen)
-    { // Fullscreen object.flags
-        flags = flags | SDL_WINDOW_FULLSCREEN;
-    }
-    if (fullscreenDesk){
-        flags = flags | SDL_WINDOW_FULLSCREEN_DESKTOP;
-    }
-    if (gDriver == 1)
-    { //Choose gpu driver 0 = default, 1 = openGL 2 = Vulkan
-        flags = flags | SDL_WINDOW_OPENGL;
-    }
-    if (gDriver == 2)
-    {
-        flags = flags | SDL_WINDOW_VULKAN;
-    }
-    if (invisible)
-    {
-        flags = flags | SDL_WINDOW_HIDDEN;
-    }
-    if (noDecoration)
-    {
-        flags = flags | SDL_WINDOW_BORDERLESS;
-    }
-    if (canResize)
-    {
-        flags = flags | SDL_WINDOW_RESIZABLE;
-    }
-    if (minimized)
-    {
-        flags = flags | SDL_WINDOW_MINIMIZED;
-    }
-    if (maximized)
-    {
-        flags = flags | SDL_WINDOW_MAXIMIZED;
-    }
-    if (foreignWindow)
-    {
-        flags = flags | SDL_WINDOW_FOREIGN;
-    }
-    if (highDPI)
-    {
-        flags = flags | SDL_WINDOW_ALLOW_HIGHDPI;
-    }
-    if (skipTaskbar)
-    {
-        flags = flags | SDL_WINDOW_SKIP_TASKBAR;
-    }
-    if (utilWin)
-    {
-        flags = flags | SDL_WINDOW_UTILITY;
-    }
-    if (tooltipWin)
-    {
-        flags = flags | SDL_WINDOW_TOOLTIP;
-    }
-    if (popup)
-    {
-        flags = flags | SDL_WINDOW_POPUP_MENU;
-    }
-    if (noFlags)
-    {
-        flags = 0;
-    }
-    // Generate window
-    window = SDL_CreateWindow(title,
-                                    SDL_WINDOWPOS_UNDEFINED,
-                                    SDL_WINDOWPOS_UNDEFINED,
-                                    xres, yres,flags);
-    // Check for new window
-    if(!window){
-        printf("Critical: SDL failed to init");
-        return -1;
-    }
-
-    // Create renderer
-    renderer = SDL_CreateRenderer(window,-1,0);
-
-    // Check surface
-    if(!winSurface){
-        printf("Critical: No surface generated (Could it be uncommented in source code?)");
-        return -1;
-    }
-    printf("Window generated, Filling background\n");
-    // Fill window with default
-    SDL_FillRect(winSurface,NULL,SDL_MapRGBA(winSurface->format, 0, 0, 0, 255) );
-    SDL_RenderClear(renderer);
-    SDL_RenderPresent(renderer);
-    return 0;
-}
-
 extern "C"{
+    int main(int argc, char** args,const char *title,int xres, int yres,bool noFlags = true,bool fullscreen = false,bool fullscreenDesk = false,int gDriver = 0, // Init engine
+            bool invisible = false, bool noDecoration = false, bool canResize = false,bool minimized = false,
+            bool maximized = false, bool foreignWindow = false, bool highDPI = true,bool skipTaskbar = false,
+            bool utilWin = false, bool tooltipWin = false, bool popup = false){
+        // Attempt init
+        if (SDL_Init(SDL_INIT_VIDEO)) // Redundancy for initialization
+        if (SDL_Init(SDL_INIT_EVERYTHING) != 0) 
+        // IMG_Init(IMG_INIT_JPG|IMG_INIT_PNG|IMG_INIT_TIF|IMG_INIT_WEBP);
+        {
+            printf("SDL Error: %s\n", SDL_GetError());
+            return -1;
+        }
+        // Setup SDL object.flags
+        if (fullscreen)
+        { // Fullscreen object.flags
+            flags = flags | SDL_WINDOW_FULLSCREEN;
+        }
+        if (fullscreenDesk){
+            flags = flags | SDL_WINDOW_FULLSCREEN_DESKTOP;
+        }
+        if (gDriver == 1)
+        { //Choose gpu driver 0 = default, 1 = openGL 2 = Vulkan
+            flags = flags | SDL_WINDOW_OPENGL;
+        }
+        if (gDriver == 2)
+        {
+            flags = flags | SDL_WINDOW_VULKAN;
+        }
+        if (invisible)
+        {
+            flags = flags | SDL_WINDOW_HIDDEN;
+        }
+        if (noDecoration)
+        {
+            flags = flags | SDL_WINDOW_BORDERLESS;
+        }
+        if (canResize)
+        {
+            flags = flags | SDL_WINDOW_RESIZABLE;
+        }
+        if (minimized)
+        {
+            flags = flags | SDL_WINDOW_MINIMIZED;
+        }
+        if (maximized)
+        {
+            flags = flags | SDL_WINDOW_MAXIMIZED;
+        }
+        if (foreignWindow)
+        {
+            flags = flags | SDL_WINDOW_FOREIGN;
+        }
+        if (highDPI)
+        {
+            flags = flags | SDL_WINDOW_ALLOW_HIGHDPI;
+        }
+        if (skipTaskbar)
+        {
+            flags = flags | SDL_WINDOW_SKIP_TASKBAR;
+        }
+        if (utilWin)
+        {
+            flags = flags | SDL_WINDOW_UTILITY;
+        }
+        if (tooltipWin)
+        {
+            flags = flags | SDL_WINDOW_TOOLTIP;
+        }
+        if (popup)
+        {
+            flags = flags | SDL_WINDOW_POPUP_MENU;
+        }
+        if (noFlags)
+        {
+            flags = 0;
+        }
+        // Generate window
+        window = SDL_CreateWindow(title,
+                                        SDL_WINDOWPOS_UNDEFINED,
+                                        SDL_WINDOWPOS_UNDEFINED,
+                                        xres, yres,flags);
+        // Check for new window
+        if(!window){
+            printf("Critical: SDL failed to init");
+            return -1;
+        }
+        // winSurface = SDL_GetWindowSurface(window);
+        // Create renderer
+        renderer = SDL_CreateRenderer(window,-1,0);
+
+        // Check renderer
+        if(!renderer){
+            printf("Critical: No renderer generated (Could it be uncommented in source code?)");
+            return -1;
+        }
+        printf("Window generated, Filling background\n");
+        // Fill window with default
+        SDL_FillRect(winSurface,NULL,SDL_MapRGBA(winSurface->format, 0, 0, 0, 255) );
+        SDL_RenderClear(renderer);
+        SDL_RenderPresent(renderer);
+        return 0;
+    }
+
     SDL_Window *getWindow(){
         return window;
     }

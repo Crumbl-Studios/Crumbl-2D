@@ -3,6 +3,7 @@ from ctypes import cdll
 from io import StringIO
 from wurlitzer import pipes,STDOUT
 import os
+import time
 
 class Engine():
     global sdlHandler
@@ -23,8 +24,8 @@ class Engine():
                             tooltipWin,popup)
         STDOUT = out.read()
         print("Crumbl Engine started, getting surface and window")
-        self.surface = self.sdlHandler.getWindow()
-        self.window = self.sdlHandler.getRenderer()
+        self.window = self.sdlHandler.getWindow()
+        self.renderer = self.sdlHandler.getRenderer()
         print("Surface obtained\nCrumbl Engine has successfully initialized!")
     
     def UpdateFrameStartTasks(self):
