@@ -1,5 +1,5 @@
 #!/bin/bash
-echo "Crumbl engine builder (linux)"
+echo "Crumbl Engine Builder (linux)"
 {
     cd ./Engine/
 }||{

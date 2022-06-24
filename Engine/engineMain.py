@@ -1,8 +1,7 @@
 import ctypes
 from ctypes import cdll
-from io import StringIO
-from wurlitzer import pipes,STDOUT
 import os
+import platform
 import time
 
 class Engine():
@@ -14,15 +13,15 @@ class Engine():
         utilWin = False,tooltipWin = False,popup = False):
         global STDOUT
         print("Starting engine")
-        enginePath = os.path.join(os.getcwd(),"build/sdlWrapper.so")
+        if not platform.system == "Windows":
+            enginePath = os.path.join(os.getcwd(),"build/sdlWrapper.so")
+        else:
+            enginePath = os.path.join(os.getcwd(),"build/sdlWrapper.dll")
         self.sdlHandler = ctypes.CDLL(enginePath) # COMPILE ENGINE BEFORE RUNNING
         newTitle = bytes(title,encoding='utf8')
-        out = StringIO()
-        with pipes() as (out,err):
-            self.sdlHandler.main(0,"",newTitle,xres,yres,noFlags,fullscreen,fullscreenDesk,gDriver,invisible,noDecoration,
-                            canResize,minimized,maximized,foreignWindow,highDPI,skipTaskbar,utilWin,
-                            tooltipWin,popup)
-        STDOUT = out.read()
+        self.sdlHandler.main(0,"",newTitle,xres,yres,noFlags,fullscreen,fullscreenDesk,gDriver,invisible,noDecoration,
+                        canResize,minimized,maximized,foreignWindow,highDPI,skipTaskbar,utilWin,
+                        tooltipWin,popup)
         print("Crumbl Engine started, getting surface and window")
         self.window = self.sdlHandler.getWindow()
         self.renderer = self.sdlHandler.getRenderer()
