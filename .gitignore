@@ -7,4 +7,5 @@
 .vscode/
 /Engine/__pycache__
 /Engine/build/sdlWrapper.so
+/Engine/build/sdlWrapper.dll
 /Engine/SDL2/
