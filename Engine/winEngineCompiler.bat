@@ -1,3 +1,4 @@
+@ECHO OFF
 echo Crumbl Engine Builder (windows)
 %@try%
     set Path=C:\MinGW\bin;%PATH%
@@ -7,7 +8,7 @@ echo Crumbl Engine Builder (windows)
 :@Catch
     echo Already in directory, Compiling
 :@EndCatch
-gcc -o %CD%/build/sdlWrapper.dll %CD%/sdlWrapper.cpp -lSDL2 -lSDL2main -lSDL2_ttf -lSDL2_image -shared -W -g -fPIC -Wall -Wpedantic
+gcc -o %CD%/build/sdlWrapper.dll %CD%/sdlWrapper.cpp -I%CD%/SDL2 -shared -W -g -fPIC -Wall -Wpedantic
 echo Engine built
 
 :choice

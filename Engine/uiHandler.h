@@ -1,11 +1,14 @@
-#include <SDL2/SDL.h>
-#include <SDL2/SDL_image.h>
-#include <SDL2/SDL_ttf.h>
 #ifdef _WIN32 
+    #include "SDL2/SDL.h"
+    #include "SDL2/SDL_image.h"
+    #include "SDL2/SDL_ttf.h"
     #include <io.h> 
     #define access    _access_s
 #else
     #include <unistd.h>
+    #include <SDL2/SDL.h>
+    #include <SDL2/SDL_image.h>
+    #include <SDL2/SDL_ttf.h>
 #endif
 
 extern "C"{

@@ -1,8 +1,14 @@
 // SDL imports
-#include <SDL2/SDL.h>
-#include <SDL2/SDL_timer.h>
-#include <SDL2/SDL_image.h>
-#include <SDL2/SDL_ttf.h>
+#if _WIN32
+    #include "SDL2/SDL.h"
+    #include "SDL2/SDL_image.h"
+    #include "SDL2/SDL_ttf.h"
+#else
+    #include <SDL2/SDL.h>
+    #include <SDL2/SDL_timer.h>
+    #include <SDL2/SDL_image.h>
+    #include <SDL2/SDL_ttf.h>
+#endif
 // Wrapper module imports
 #include "eventHandler.h"
 #include "uiHandler.h"

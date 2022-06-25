@@ -1,5 +1,9 @@
+#ifdef _WIN32
+    #include "SDL2/SDL.h"
+#else
+    #include <SDL2/SDL.h>
+#endif
 #include <iostream>
-#include <SDL2/SDL.h>
 
 int pollInputs(){
     SDL_Event events; // Generate events in function

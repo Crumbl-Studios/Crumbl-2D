@@ -13,7 +13,7 @@ CrumblEngine is a 2d (and 3d in the future) game engine written in c++, with pyt
 
 ## Installation
 
-Currently the software is incomplete, so this guide only is to get the "demo" program running
+Currently the software is incomplete, so this guide only is to get the "demo" program running, and is assuming you have already cloned this repo.
 
 ### Mac/Linux/Unix
 
@@ -27,6 +27,25 @@ Currently the software is incomplete, so this guide only is to get the "demo" pr
 - libsdl2-mixer-dev
 - libsdl2-net-dev
 
-#### To run demo:
+#### To compile and run demo:
+- Install the above packages (Debian based distros: use `sudo apt install <package>`)
 - Run ``./Engine/linuxEngineCompiler.sh``
+- When asked to run the demo file, type ``y`` and press enter
+
+### Windows
+
+#### Prerequisites:
+- [MinGW with GCC/G++ binaries installed](https://sourceforge.net/projects/mingw/)
+- [SDL2 development source code](https://www.libsdl.org/download-2.0.php)
+- [SDL2 Image header](https://www.libsdl.org/projects/SDL_image/)
+- [SDL2 TTF header](https://github.com/libsdl-org/SDL_ttf/releases)
+
+#### Future:
+- SDL2 Network headers
+
+#### To compile and run demo
+- Unzip all of the downloaded SDL development files
+- Create a folder titled SDL2 in /Engine/
+- Copy all SDL2 dev files from `SDL2-2.X.YYY/include` into `SDL2` folder
+- Run ``./Engine/winEngineCompiler.bat``
 - When asked to run the demo file, type ``y`` and press enter
