@@ -24,7 +24,6 @@ extern "C"{
             bool maximized = false, bool foreignWindow = false, bool highDPI = true,bool skipTaskbar = false,
             bool utilWin = false, bool tooltipWin = false, bool popup = false){
         // Attempt init
-        if (SDL_Init(SDL_INIT_VIDEO)) // Redundancy for initialization
         if (SDL_Init(SDL_INIT_EVERYTHING) != 0) 
         // IMG_Init(IMG_INIT_JPG|IMG_INIT_PNG|IMG_INIT_TIF|IMG_INIT_WEBP);
         {
