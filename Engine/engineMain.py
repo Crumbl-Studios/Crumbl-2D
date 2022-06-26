@@ -13,7 +13,7 @@ class Engine():
         utilWin = False,tooltipWin = False,popup = False):
         global STDOUT
         print("Starting engine")
-        if not platform.system == "Windows":
+        if os.name == "posix":
             enginePath = os.path.join(os.getcwd(),"build/sdlWrapper.so")
         else:
             enginePath = os.path.join(os.getcwd(),"build/sdlWrapper.dll")
