@@ -21,7 +21,7 @@ extern "C"{
     }
     // BMP image support
     bool imageLocationExists( const std::string &imageLocation ){
-        return access( imageLocation.c_str(), 0 ) == 0;
+        return _access( imageLocation.c_str(), 0 ) == 0;
     }
     SDL_Surface *loadImage(const char *imageLocation){
         SDL_Surface *imageSurface;
