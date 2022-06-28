@@ -8,4 +8,5 @@
 /Engine/__pycache__
 /Engine/build/sdlWrapper.so
 /Engine/build/sdlWrapper.dll
+/Engine/build/sdlTest
 /Engine/SDL2/
