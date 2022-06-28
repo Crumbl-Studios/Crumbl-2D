@@ -1,15 +1,35 @@
 #!/bin/bash
 echo "Crumbl Engine Builder (Mac/Unix/Linux)"
-{
-    cd ./Engine/
-}||{
-    echo "Already in directory, compiling"
-}
-gcc -o build/sdlWrapper.so sdlWrapper.cpp -lSDL2 -lSDL2main -lSDL2_ttf -lSDL2_image -shared -W -g -fPIC -Wall -Wpedantic
-echo "Engine built"
-read -p "Would you like to run the test python program? [Yn]" yn
-case $yn in
-    [Yy]* )/bin/python3 engineTester.py;;
-    [Nn]* )exit;; 
-    * )/bin/python3 engineTester.py;;
+echo "Select an option:"
+echo "1.) Build engine"
+echo "2.) Build engine and run Python test script"
+echo "3.) Build C++ test script and run"
+read -p "Please type the option number and press Enter " option
+case $option in
+    [1]* )
+        {
+            cd ./Engine/
+        }||{
+            echo "Already in directory"
+        }
+        gcc -o build/sdlWrapper.so sdlWrapper.cpp -lSDL2 -lSDL2main -lSDL2_ttf -lSDL2_image -shared -W -g -fPIC -Wall -Wpedantic
+        echo "Engine built";;
+    [2]* )
+        {
+            cd ./Engine/
+        }||{
+            echo "Already in directory"
+        }
+        gcc -o build/sdlWrapper.so sdlWrapper.cpp -lSDL2 -lSDL2main -lSDL2_ttf -lSDL2_image -shared -W -g -fPIC -Wall -Wpedantic
+        echo "Engine built, running test script"
+        /bin/python3 engineTester.py;;
+    [3]* )
+        {
+            cd ./Engine/
+        }||{
+            echo "Already in directory"
+        }
+        gcc -o build/sdlTest cppTester.cpp -lSDL2 -lSDL2main -lSDL2_ttf -lSDL2_image -shared -W -g -fPIC -Wall -Wpedantic
+        echo "Engine built, running test script"
+        ./build/sdlTest;;
 esac

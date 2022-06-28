@@ -19,7 +19,7 @@ class Engine():
             enginePath = os.path.join(os.getcwd(),"build/sdlWrapper.dll")
         self.sdlHandler = ctypes.CDLL(enginePath) # COMPILE ENGINE BEFORE RUNNING
         newTitle = bytes(title,encoding='utf8')
-        self.sdlHandler.main(0,"",newTitle,xres,yres,noFlags,fullscreen,fullscreenDesk,gDriver,invisible,noDecoration,
+        self.sdlHandler.main(newTitle,xres,yres,noFlags,fullscreen,fullscreenDesk,gDriver,invisible,noDecoration,
                         canResize,minimized,maximized,foreignWindow,highDPI,skipTaskbar,utilWin,
                         tooltipWin,popup)
         print("Crumbl Engine started, getting surface and window")

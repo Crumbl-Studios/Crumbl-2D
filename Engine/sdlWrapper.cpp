@@ -20,7 +20,7 @@ Uint32 flags = 0;
 SDL_Renderer *renderer;
 
 extern "C"{
-    int main(int argc, char** args,const char *title,int xres, int yres,bool noFlags = true,bool fullscreen = false,bool fullscreenDesk = false,int gDriver = 0, // Init engine
+    int start_engine(const char *title,int xres, int yres,bool noFlags = true,bool fullscreen = false,bool fullscreenDesk = false,int gDriver = 0, // Init engine
             bool invisible = false, bool noDecoration = false, bool canResize = false,bool minimized = false,
             bool maximized = false, bool foreignWindow = false, bool highDPI = true,bool skipTaskbar = false,
             bool utilWin = false, bool tooltipWin = false, bool popup = false){
