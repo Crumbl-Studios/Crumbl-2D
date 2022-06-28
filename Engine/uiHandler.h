@@ -26,8 +26,8 @@ extern "C"{
     }
     SDL_Surface *loadImage(const char *imageLocation){
         SDL_Surface *imageSurface;
-        bool imageLocationExists = imageLocationExists;
-        if(imageLocationExists){
+        bool imageLocationFound = imageLocationExists(imageLocation);
+        if(imageLocationFound){
             SDL_Surface *imageSurface = SDL_LoadBMP(imageLocation);
         }
         else{

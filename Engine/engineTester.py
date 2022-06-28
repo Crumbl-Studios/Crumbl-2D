@@ -14,7 +14,7 @@ Engine = engineMain.Engine("Crumbl Engine test program",w,h)
 # Generate default font
 defaultFont = Engine.loadFont(os.path.join(os.getcwd(),"build","stockAssets","SourceSansPro-Regular.ttf"),12)
 # Logo image
-logo = Engine.loadImage("stockAssets/build/CrumblLogo.png")
+logo = Engine.loadImage("/stockAssets/build/CrumblLogo.png")
 # Rect generator
 cutRect = Engine.createRect(0,0,128,128)
 

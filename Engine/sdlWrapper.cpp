@@ -15,9 +15,9 @@
 #include "uiHandler.h"
 // Variables
 SDL_Window *window;
-SDL_Renderer *renderer;
 SDL_Surface *winSurface;
 Uint32 flags = 0;
+SDL_Renderer *renderer;
 
 extern "C"{
     int main(int argc, char** args,const char *title,int xres, int yres,bool noFlags = true,bool fullscreen = false,bool fullscreenDesk = false,int gDriver = 0, // Init engine
@@ -105,7 +105,7 @@ extern "C"{
             printf("Critical: SDL failed to init");
             return -1;
         }
-        // winSurface = SDL_GetWindowSurface(window);
+        winSurface = SDL_GetWindowSurface(window);
         // Create renderer
         renderer = SDL_CreateRenderer(window,-1,0);
 
@@ -116,7 +116,7 @@ extern "C"{
         }
         printf("Window generated, Filling background\n");
         // Fill window with default
-        SDL_FillRect(winSurface,NULL,SDL_MapRGBA(winSurface->format, 0, 0, 0, 255) );
+        SDL_SetRenderDrawColor(renderer,0, 0, 0, 255);
         SDL_RenderClear(renderer);
         SDL_RenderPresent(renderer);
         return 0;

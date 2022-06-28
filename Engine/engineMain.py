@@ -70,6 +70,6 @@ class Engine():
 
     def loadImage(self,file): # Generates image, uses relative path
         fileBytes = bytes(file,encoding="utf8")
-        return self.sdlHandler.generateImage(file)
+        return self.sdlHandler.generateImage(fileBytes)
 
         
