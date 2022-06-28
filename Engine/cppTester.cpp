@@ -13,7 +13,7 @@
     #include <SDL2/SDL_ttf.h>
 #endif
 
-int main(){
+int main(int argv,char *argc){
     int loaded = start_engine("Crumbl Engine test program (C++)",1366,768);
     SDL_Window *win = getWindow();
     SDL_Renderer *render = getRenderer();

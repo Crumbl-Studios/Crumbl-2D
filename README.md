@@ -30,7 +30,7 @@ Currently the software is incomplete, so this guide only is to get the "demo" pr
 #### To compile and run demo:
 - Install the above packages (Debian based distros: use `sudo apt install <package>`)
 - Run ``./Engine/linuxEngineCompiler.sh``
-- When asked to run the demo file, type ``y`` and press enter
+- When it gives the list of options, type `2` if you want to run the Python version or `3` for the C++ version
 
 ### Windows
 
@@ -48,4 +48,4 @@ Currently the software is incomplete, so this guide only is to get the "demo" pr
 - Create a folder titled SDL2 in /Engine/
 - Copy all SDL2 dev files from `SDL2-2.X.YYY/include` into `SDL2` folder
 - Run ``./Engine/winEngineCompiler.bat``
-- When asked to run the demo file, type ``y`` and press enter
+- When it gives the list of options, type `2` if you want to run the Python version or `3` for the C++ version
