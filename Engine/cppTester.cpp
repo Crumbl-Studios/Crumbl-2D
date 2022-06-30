@@ -15,8 +15,6 @@
 
 int main(int argv,char *argc){
     int loaded = start_engine("Crumbl Engine test program (C++)",1366,768);
-    SDL_Window *win = getWindow();
-    SDL_Renderer *render = getRenderer();
 
     int r = 0;
     int g = 0;
