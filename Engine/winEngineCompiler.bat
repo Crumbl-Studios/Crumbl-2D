@@ -5,11 +5,14 @@ echo Select an option:
 echo 1.) Build engine
 echo 2.) Build engine and run Python test script
 echo 3.) Build C++ test script and run
+echo 4.) Quit this compiler
 set /p c=Please type the option number and press Enter 
 
 if /i "%c%" EQU "1" goto :buildCPP
 if /i "%c%" EQU "2" goto :runPython
 if /i "%c%" EQU "3" goto :runCPP
+if /i "%c%" EQU "4" exit
+
 goto :choice
 
 :buildCPP
