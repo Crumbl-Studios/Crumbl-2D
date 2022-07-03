@@ -2,7 +2,7 @@
 #include  "sdlWrapper.cpp"
 
 //SDL required for special pointer types
-#if _WIN32
+#if _WIN32 || _WIN64
     #include "SDL2\SDL.h"
     #include "SDL2\SDL_image.h"
     #include "SDL2\SDL_ttf.h"
@@ -13,8 +13,8 @@
     #include <SDL2/SDL_ttf.h>
 #endif
 
-int main(int argv,char *argc){
-    int loaded = start_engine("Crumbl Engine test program (C++)",1366,768);
+int main(int argv,char **argc){
+    int loaded = start_engine("Crumbl Engine test program",1366,768);
 
     int r = 0;
     int g = 0;
@@ -46,5 +46,6 @@ int main(int argv,char *argc){
             colorchange = 0;
         }
         changeBGColor(r,g,b,255);
+        updateCrumblTasks(window,winSurface);
     }
 }

@@ -158,9 +158,7 @@ extern "C"{
         int error = SDL_RenderCopy(renderer,objectTexture,rect,&endrect);
         if (error == -1){
             const char *error = SDL_GetError();
-            printf("Warning: SDL blit error ");
-            printf(error);
-            printf("\n");
+            std::cout<<"Warning: SDL blit error "<<error<<"\n";
         }
         SDL_RenderPresent(renderer);
     }
@@ -182,7 +180,7 @@ extern "C"{
         SDL_RenderClear(renderer);
     }
 
-    void updateCrumblTasks(SDL_Window *window,SDL_Surface surface,bool cursor = true,bool debugWin = true,int framelimit = NULL){ // Update all engine tasks. Use this to set framelimits
+    void updateCrumblTasks(SDL_Window *window,SDL_Surface *surface,bool cursor = true,bool debugWin = true,int framelimit = NULL){ // Update all engine tasks. Use this to set framelimits
         int pollReturn =  pollInputs();
         if(pollReturn == -1){
             printf("Shutdown called");
@@ -197,8 +195,9 @@ extern "C"{
         }   
         SDL_RenderClear(renderer);
         SDL_RenderPresent(renderer);
-        if(!framelimit == NULL)
+        if(!framelimit == NULL){
             SDL_Delay(1/framelimit);
+        }
     }
 
     void delay(float time){
