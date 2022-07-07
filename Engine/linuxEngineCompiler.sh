@@ -13,7 +13,7 @@ case $option in
         }||{
             echo "Already in directory"
         }
-        gcc -o build/sdlWrapper.so sdlWrapper.cpp -lSDL2 -lSDL2main -lSDL2_ttf -lSDL2_image -shared -W -g -fPIC -Wall -Wpedantic
+        g++ -o build/sdlWrapper.so sdlWrapper.cpp -lSDL2 -lSDL2main -lSDL2_ttf -lSDL2_image -shared -W -g -fPIC -Wall -Wpedantic
         echo "Engine built";;
     [2]* )
         {
@@ -21,7 +21,7 @@ case $option in
         }||{
             echo "Already in directory"
         }
-        gcc -o build/sdlWrapper.so sdlWrapper.cpp -lSDL2 -lSDL2main -lSDL2_ttf -lSDL2_image -shared -W -g -fPIC -Wall -Wpedantic
+        g++ -o build/sdlWrapper.so sdlWrapper.cpp -lSDL2 -lSDL2main -lSDL2_ttf -lSDL2_image -shared -W -g -fPIC -Wall -Wpedantic
         echo "Engine built, running test script"
         /bin/python3 engineTester.py;;
     [3]* )
@@ -30,7 +30,7 @@ case $option in
         }||{
             echo "Already in directory"
         }
-        gcc -o build/sdlTest cppTester.cpp -lSDL2 -lSDL2main -lSDL2_ttf -lSDL2_image -shared -W -g -fPIC -Wall -Wpedantic
+        g++ -o build/sdlTest cppTester.cpp -lSDL2 -lSDL2main -lSDL2_ttf -lSDL2_image -shared -W -g -fPIC -Wall -Wpedantic
         echo "Engine built, running test script"
         ./build/sdlTest;;
     [4]* )

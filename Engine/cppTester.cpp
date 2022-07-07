@@ -46,6 +46,6 @@ int main(int argv,char **argc){
             colorchange = 0;
         }
         changeBGColor(r,g,b,255);
-        updateCrumblTasks(window,winSurface);
+        updateCrumblTasks(window,winSurface,true,true,60);
     }
 }

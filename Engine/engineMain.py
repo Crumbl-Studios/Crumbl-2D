@@ -30,7 +30,7 @@ class Engine():
     def UpdateFrameStartTasks(self):
         self.sdlHandler.updateframestarttasks()
 
-    def UpdateCrumblTasks(self,mouse = True,debug = True,framelimit = None): # Update SDL window, and set framelimits. Mouse: enable cursor; debug: allow debugger menu , framelimit: Set framelimit (Omit or set to None if no framelimit is needed)
+    def UpdateCrumblTasks(self,mouse = True,debug = True,framelimit = 0): # Update SDL window, and set framelimits. Mouse: enable cursor; debug: allow debugger menu , framelimit: Set framelimit (Omit or set to None if no framelimit is needed)
         self.sdlHandler.updateCrumblTasks(mouse,debug,framelimit)
 
     def getPosition(self):
