@@ -1,4 +1,4 @@
-#ifdef _WIN32 
+#ifdef _WIN32 || _WIN64
     #include "SDL2/SDL.h"
     #include "SDL2/SDL_image.h"
     #include "SDL2/SDL_ttf.h"
@@ -19,6 +19,9 @@ extern "C"{
         SDL_Color color = {r,g,b,a};
         SDL_Surface *surfaceObject = TTF_RenderText_Solid(font,text,color);
         return surfaceObject;
+    }
+    TTF_Font *loadUIFont(const char *fontFile,int size){
+        return TTF_OpenFont(fontFile, size);
     }
     // BMP image support
     bool imageLocationExists( const std::string &imageLocation ){

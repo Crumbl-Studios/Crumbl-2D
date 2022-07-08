@@ -1,3 +1,4 @@
+// Crumbl Engine
 // SDL imports
 #if _WIN32
     #include "SDL2\SDL.h"
@@ -11,6 +12,7 @@
     #include <SDL2/SDL_ttf.h>
 #endif
 // Wrapper module imports
+#include "debugSystem.h"
 #include "eventHandler.h"
 #include "uiHandler.h"
 // Variables
@@ -18,6 +20,7 @@ SDL_Window *window;
 SDL_Surface *winSurface;
 Uint32 flags = 0;
 SDL_Renderer *renderer;
+bool debugMenuEnable = false;
 
 extern "C"{
     int start_engine(const char *title,int xres, int yres,bool noFlags = true,bool fullscreen = false,bool fullscreenDesk = false,int gDriver = 0, // Init engine
@@ -185,6 +188,14 @@ extern "C"{
             printf("Shutdown called");
             sdlShutdown(window);
         }
+        if(keys[SDLK_F3]){ // Bind F3 to Debug menu
+            if(debugMenuEnable){
+                debugMenuEnable = false;
+            }
+            else{
+                debugMenuEnable = true;
+            }
+        }
         if(cursor){
             SDL_Cursor *cur;
             // Generate cursor image
@@ -192,8 +203,11 @@ extern "C"{
             cur = SDL_CreateColorCursor(cursorImage,0,0);
             SDL_SetCursor(cur);
         }   
-        SDL_RenderClear(renderer);
-        SDL_RenderPresent(renderer);
+        if (debugWin && debugMenuEnable){
+            showDebug(renderer);
+            SDL_RenderClear(renderer);
+            SDL_RenderPresent(renderer);
+        }
         if(!framelimit == 0){
             SDL_Delay(1/framelimit);
         }
