@@ -20,9 +20,6 @@ extern "C"{
         SDL_Surface *surfaceObject = TTF_RenderText_Solid(font,text,color);
         return surfaceObject;
     }
-    TTF_Font *loadUIFont(const char *fontFile,int size){
-        return TTF_OpenFont(fontFile, size);
-    }
     // BMP image support
     bool imageLocationExists( const std::string &imageLocation ){
         return _access( imageLocation.c_str(), 0 ) == 0;
@@ -35,7 +32,7 @@ extern "C"{
         }
         else{
             SDL_Surface *imageSurface = SDL_LoadBMP("stockAssets/missingasset.png");
-            std::cout<<"Warning: Image"<<imageLocation<<"has not been found\n";
+            std::cout<<"Warning: Image "<<imageLocation<<" has not been found\n";
         }
         return imageSurface;
     }

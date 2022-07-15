@@ -12,7 +12,7 @@
     #include <SDL2/SDL_ttf.h>
 #endif
 // Wrapper module imports
-#include "debugSystem.h"
+#include "debug/debugSystem.h"
 #include "eventHandler.h"
 #include "uiHandler.h"
 // Variables
