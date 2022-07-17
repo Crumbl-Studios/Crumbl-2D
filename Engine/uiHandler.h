@@ -1,4 +1,4 @@
-#ifdef _WIN32 || _WIN64
+#ifdef _WIN64
     #include "SDL2/SDL.h"
     #include "SDL2/SDL_image.h"
     #include "SDL2/SDL_ttf.h"
@@ -31,7 +31,7 @@ extern "C"{
             SDL_Surface *imageSurface = SDL_LoadBMP(imageLocation);
         }
         else{
-            SDL_Surface *imageSurface = SDL_LoadBMP("stockAssets/missingasset.png");
+            SDL_Surface *imageSurface = SDL_LoadBMP("/stockAssets/missingasset.png");
             std::cout<<"Warning: Image "<<imageLocation<<" has not been found\n";
         }
         return imageSurface;

@@ -182,13 +182,23 @@ extern "C"{
         SDL_RenderClear(renderer);
     }
 
+    bool getKey(SDL_KeyCode key){
+        if(keys[key]){
+            return true;
+        }
+        else{
+            return false;
+        }
+    }
+
     void updateCrumblTasks(SDL_Window *window,SDL_Surface *surface,bool cursor = true,bool debugWin = true,int framelimit = 0){ // Update all engine tasks. Use this to set framelimits
         int pollReturn =  pollInputs();
         if(pollReturn == -1){
-            printf("Shutdown called");
+            printf("Shutdown called\n");
             sdlShutdown(window);
         }
-        if(keys[SDLK_F3]){ // Bind F3 to Debug menu
+        if(keys[SDLK_F3]==true){ // Bind F3 to Debug menu
+            printf("F3 pressed\n");
             if(debugMenuEnable){
                 debugMenuEnable = false;
             }

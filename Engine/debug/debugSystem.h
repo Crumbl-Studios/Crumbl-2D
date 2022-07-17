@@ -1,6 +1,6 @@
 // Crumbl Engine Debug menu
 // SDL imports
-#ifdef _WIN32 || _WIN64
+#ifdef _WIN64
     #include "SDL2/SDL.h"
     #include "SDL2/SDL_image.h"
     #include "SDL2/SDL_ttf.h"
