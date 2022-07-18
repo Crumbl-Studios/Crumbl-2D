@@ -20,6 +20,8 @@ SDL_Window *window;
 SDL_Surface *winSurface;
 Uint32 flags = 0;
 SDL_Renderer *renderer;
+int MX = 0;
+int MY = 0;
 bool debugMenuEnable = false;
 
 extern "C"{
@@ -197,6 +199,10 @@ extern "C"{
             printf("Shutdown called\n");
             sdlShutdown(window);
         }
+        if (pollReturn == 4){
+            MX = returnMouseX();
+            MY = returnMouseY();
+        }
         if(keys[SDLK_F3]==true){ // Bind F3 to Debug menu
             printf("F3 pressed\n");
             if(debugMenuEnable){
@@ -214,7 +220,7 @@ extern "C"{
             SDL_SetCursor(cur);
         }   
         if (debugWin && debugMenuEnable){
-            showDebug(renderer);
+            showDebug(renderer,MX,MY);
             SDL_RenderClear(renderer);
             SDL_RenderPresent(renderer);
         }

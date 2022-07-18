@@ -5,6 +5,9 @@
 #endif
 #include <iostream>
 
+int mouse_x;
+int mouse_y;
+
 bool keys[322];
 
 
@@ -30,9 +33,21 @@ int pollInputs(){
                 keys[events.key.keysym.sym] = true;
                 return 3;
                 break;
+            case SDL_MOUSEMOTION:
+                mouse_x = events.motion.x;
+                mouse_y = events.motion.y;
+                return 4;
+                break;
         }
         return 0; 
     }
     return 0;
 }
 
+int returnMouseX(){
+    return mouse_x;
+}
+
+int returnMouseY(){
+    return mouse_y;
+}
