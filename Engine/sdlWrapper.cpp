@@ -20,6 +20,8 @@ SDL_Window *window;
 SDL_Surface *winSurface;
 Uint32 flags = 0;
 SDL_Renderer *renderer;
+SDL_Event events;
+
 int MX = 0;
 int MY = 0;
 bool debugMenuEnable = false;
@@ -194,7 +196,8 @@ extern "C"{
     }
 
     void updateCrumblTasks(SDL_Window *window,SDL_Surface *surface,bool cursor = true,bool debugWin = true,int framelimit = 0){ // Update all engine tasks. Use this to set framelimits
-        int pollReturn =  pollInputs();
+        SDL_PumpEvents();
+        int pollReturn =  pollInputs(events);
         if(pollReturn == -1){
             printf("Shutdown called\n");
             sdlShutdown(window);
@@ -203,24 +206,25 @@ extern "C"{
             MX = returnMouseX();
             MY = returnMouseY();
         }
-        if(keys[SDLK_F3]==true){ // Bind F3 to Debug menu
-            printf("F3 pressed\n");
-            if(debugMenuEnable){
-                debugMenuEnable = false;
-            }
-            else{
+        if(pollReturn == 2 && keys[SDLK_F3]){ // Bind F3 to Debug menu
+            printf("F3 pressed, debugger");
+            if(!debugMenuEnable){
                 debugMenuEnable = true;
+                printf(" ON\n");
+            }else{
+                debugMenuEnable = false;
+                printf(" OFF\n");
             }
         }
         if(cursor){
             SDL_Cursor *cur;
             // Generate cursor image
-            SDL_Surface *cursorImage = IMG_Load("/stockAssets/defaultCursor");
+            SDL_Surface *cursorImage = IMG_Load("/stockAssets/defaultcursor.bmp");
             cur = SDL_CreateColorCursor(cursorImage,0,0);
             SDL_SetCursor(cur);
         }   
         if (debugWin && debugMenuEnable){
-            showDebug(renderer,MX,MY);
+            showDebug(renderer,60,framelimit,MX,MY);
             SDL_RenderClear(renderer);
             SDL_RenderPresent(renderer);
         }
@@ -253,6 +257,7 @@ extern "C"{
     // Text
 
     TTF_Font *loadFont(const char *fontFile,int size){
+        std::cout<<"Fonts loading"<<std::endl;
         return TTF_OpenFont(fontFile, size);
     }
 
@@ -263,7 +268,6 @@ extern "C"{
         dest.y = y;
         SDL_Surface *textSurface = generateText(text,font,r,g,b,a);
         SDL_Texture *textTexture = SDL_CreateTextureFromSurface(renderer,textSurface);
-        SDL_FreeSurface(textSurface);
         SDL_RenderClear(renderer);
         int error = SDL_RenderCopy(renderer,textTexture, NULL, &dest);
         SDL_RenderPresent(renderer);

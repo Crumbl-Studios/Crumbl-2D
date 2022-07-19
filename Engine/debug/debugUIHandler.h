@@ -1,4 +1,5 @@
 // Crumbl Engine Debug UI handler
+// Somewhat unmodified version of uiHandler, built to avoid recursion with sdlWrapper
 // SDL imports
 #ifdef _WIN64
     #include "SDL2/SDL.h"
@@ -41,5 +42,6 @@ SDL_Surface *generateDebugText(const char *text,TTF_Font *font,Uint8 r = 255,Uin
 }
 //Font loader
 TTF_Font *loadDebugFont(const char *fontFile,int size){
+    std::cout<<"Debugger fonts loading"<<std::endl;
     return TTF_OpenFont(fontFile, size);
 }
