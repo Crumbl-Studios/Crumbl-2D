@@ -11,38 +11,50 @@ int mouse_y;
 bool keys[322];
 
 
-int pollInputs(SDL_Event events){
+int pollInputs(SDL_Event events,bool verbose = false){
     for(int i = 0; i < 322; i++) { // reset keys
         keys[i] = false;
     }
     while(SDL_PollEvent(&events)){
         switch(events.type){
             case SDL_QUIT:
-                std::cout<<"EventHandler: Shutdown called\n";
+                if(verbose){
+                    std::cout<<"\033[31mEventHandler: Shutdown called\033[0m\n";
+                }
                 return -1;
                 break;
             case SDL_USEREVENT:
-                std::cout<<"EventHandler: User event (likely timer)\n";
+                if(verbose){
+                    std::cout<<"\033[36mEventHandler: User event (likely timer)\033[0m\n";
+                }
                 return 1;
                 break;
             case SDL_KEYDOWN:
-                std::cout<<"EventHandler: Key pressed\n";
+                if(verbose){
+                    std::cout<<"\033[36mEventHandler: Key pressed\033[0m\n";
+                }
                 keys[events.key.keysym.sym] = true;
                 return 2;
                 break;
             case SDL_KEYUP:
-                std::cout<<"EventHandler: Key released\n";
+                if(verbose){
+                    std::cout<<"\033[36mEventHandler: Key released\033[0m\n";
+                }
                 keys[events.key.keysym.sym] = false;
                 return 3;
                 break;
             case SDL_MOUSEMOTION:
-                std::cout<<"EventHandler: Mouse moved\n";
+                if(verbose){
+                    std::cout<<"\033[36mEventHandler: Mouse moved\033[0m\n";
+                }
                 mouse_x = events.motion.x;
                 mouse_y = events.motion.y;
                 return 4;
                 break;
         }
-        std::cout<<"EventHandler: No events\n";
+        if(verbose){
+            std::cout<<"\033[36mEventHandler: No events\033[0m\n";
+        }
         return 0; 
     }
     return 0;

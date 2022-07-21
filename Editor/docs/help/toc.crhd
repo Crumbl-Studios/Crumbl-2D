@@ -38,6 +38,7 @@ TABLE OF CONTENTS (all articles)
 
 2.1)    The Basics (Project 1: Terminal Chatbot)
 2.1.1)      Print commands
+2.1.1.a)        Extracurricular: Color in the terminal
 2.1.2)      Variables and lists
 2.1.3)      Inputs
 2.1.4)      % Statements (Hard Mode Print Commands)
@@ -63,3 +64,33 @@ TABLE OF CONTENTS (all articles)
 3.5)    Adding complexities to the game
 3.6)    Finalizing for release
 3.7)    More advanced info
+=!@LINK
+4.) Testing and debugging games
+/help/chapter4/chapter4.crhd
+
+=!@LINK
+4.1)    The terminal outputs
+/help/chapter4/errorcodes.crhd
+
+=!@LINK
+4.1.1)      Running thigs in a terminal
+/help/chapter4/errorcodes.crhd
+
+4.1.2)      Error code colors
+/help/chapter4/errorcodes.crhd
+
+4.2)    The debug menu
+=!@LINK
+5.) Editor development refrence
+/help/chapter5/chapter5.crhd
+
+5.1) Start Page module
+5.1.1)   About CrumblScript
+5.1.2)   CrumblScript markup language refrence   
+5.2) UI Editor module
+5.3) Asset preview module
+5.4) Plugins
+5.5) Windowing modes
+5.5.1)   Default (tabbed)
+5.5.2)   miniWindowed
+5.5.3)   Detached

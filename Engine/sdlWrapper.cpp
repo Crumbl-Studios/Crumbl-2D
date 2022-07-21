@@ -24,20 +24,23 @@ SDL_Event events;
 
 int MX = 0;
 int MY = 0;
-bool debugMenuEnable = false;
-
+bool debugMenuEnable = true;
+bool verboseOut = false;
+int objectCount = 0; 
 extern "C"{
     int start_engine(const char *title,int xres, int yres,bool noFlags = true,bool fullscreen = false,bool fullscreenDesk = false,int gDriver = 0, // Init engine
             bool invisible = false, bool noDecoration = false, bool canResize = false,bool minimized = false,
             bool maximized = false, bool foreignWindow = false, bool highDPI = true,bool skipTaskbar = false,
-            bool utilWin = false, bool tooltipWin = false, bool popup = false){
+            bool utilWin = false, bool tooltipWin = false, bool popup = false,bool verboseOuts = false){
         // Attempt init
         if (SDL_Init(SDL_INIT_EVERYTHING) != 0) 
         // IMG_Init(IMG_INIT_JPG|IMG_INIT_PNG|IMG_INIT_TIF|IMG_INIT_WEBP);
         {
-            printf("SDL Error: %s\n", SDL_GetError());
+            printf("\033[31m\nSDL Error: %s\033[0m\n", SDL_GetError());
             return -1;
         }
+        // Set verbosity level
+        verboseOut = verboseOuts;
         // Setup SDL object.flags
         if (fullscreen)
         { // Fullscreen object.flags
@@ -109,7 +112,7 @@ extern "C"{
                                         xres, yres,flags);
         // Check for new window
         if(!window){
-            printf("Critical: SDL failed to init");
+            printf("\033[31mCritical: SDL failed to init\033[0m\n");
             return -1;
         }
         winSurface = SDL_GetWindowSurface(window);
@@ -118,10 +121,10 @@ extern "C"{
 
         // Check renderer
         if(!renderer){
-            printf("Critical: No renderer generated (Could it be uncommented in source code?)");
+            printf("\033[31mCritical: No renderer generated (Could it be uncommented in source code?)\033[0m\n");
             return -1;
         }
-        printf("Window generated, Filling background\n");
+        printf("\033[32mWindow generated, Filling background\033[0m\n");
         // Fill window with default
         SDL_SetRenderDrawColor(renderer,0, 0, 0, 255);
         SDL_RenderClear(renderer);
@@ -146,27 +149,32 @@ extern "C"{
     }
 
     void sdlShutdown(SDL_Window *window){
-        printf("Closing Crumbl engine, tearing down SDL");
+        printf("\033[31mClosing Crumbl engine, tearing down SDL\033[0m\n");
         SDL_DestroyWindow(window);
         SDL_Quit();
+        printf("\033[35mCrumbl Engine closed, thank you for using Crumbl Engine\033[0m\n");
     }
 
     void blitObject(SDL_Surface *object,SDL_Rect *rect,int x, int y,
                     int w =  64, int h = 64){
+        if(object == nullptr){
+            std::cout<<"\033[33mWarning: A surface has been detected as NULL, you will have errors\033[0m"<<std::endl;
+        }
         SDL_Rect endrect;
         endrect.x = x;
         endrect.y = y;
         endrect.w = w;
         endrect.h = h;
         SDL_Texture *objectTexture = SDL_CreateTextureFromSurface(renderer,object);
-        std::cout<<SDL_GetError()<<"\n";
+        std::cout<<"\033[33m "<<SDL_GetError()<<"\033[0m\n";
         SDL_RenderClear(renderer);
         int error = SDL_RenderCopy(renderer,objectTexture,rect,&endrect);
         if (error == -1){
             const char *error = SDL_GetError();
-            std::cout<<"Warning: SDL blit error "<<error<<"\n";
+            std::cout<<"\033[31mError: SDL blit error "<<error<<"\033[0m\n";
         }
         SDL_RenderPresent(renderer);
+        objectCount += 1;
     }
 
     SDL_Rect makeRect(int x,int y,int w,int h){
@@ -197,9 +205,9 @@ extern "C"{
 
     void updateCrumblTasks(SDL_Window *window,SDL_Surface *surface,bool cursor = true,bool debugWin = true,int framelimit = 0){ // Update all engine tasks. Use this to set framelimits
         SDL_PumpEvents();
-        int pollReturn =  pollInputs(events);
+        int pollReturn =  pollInputs(events,verboseOut);
         if(pollReturn == -1){
-            printf("Shutdown called\n");
+            printf("\033[31mShutdown called\033[0m\n");
             sdlShutdown(window);
         }
         if (pollReturn == 4){
@@ -207,13 +215,13 @@ extern "C"{
             MY = returnMouseY();
         }
         if(pollReturn == 2 && keys[SDLK_F3]){ // Bind F3 to Debug menu
-            printf("F3 pressed, debugger");
+            printf("\033[32mF3 pressed, debugger");
             if(!debugMenuEnable){
                 debugMenuEnable = true;
-                printf(" ON\n");
+                printf(" ON\033[0m\n");
             }else{
                 debugMenuEnable = false;
-                printf(" OFF\n");
+                printf(" OFF\033[0m\n");
             }
         }
         if(cursor){
@@ -224,13 +232,17 @@ extern "C"{
             SDL_SetCursor(cur);
         }   
         if (debugWin && debugMenuEnable){
-            showDebug(renderer,60,framelimit,MX,MY);
+            showDebug(renderer,60,framelimit,MX,MY,objectCount);
             SDL_RenderClear(renderer);
             SDL_RenderPresent(renderer);
         }
         if(!framelimit == 0){
             SDL_Delay(1/framelimit);
         }
+        if(verboseOut){
+            std::cout<<"\033[32mFrame finished, "<<objectCount<<" visible object(s) blitted\033[0m\n";
+        }
+        objectCount = 0;
     }
 
     void delay(float time){
@@ -273,8 +285,9 @@ extern "C"{
         SDL_RenderPresent(renderer);
         if (error == -1){
             const char *error = SDL_GetError();
-            std::cout<<"Warning: SDL text render error "<<error<<"\n";
+            std::cout<<"\033[33mWarning: SDL text render error "<<error<<"\033[0m\n";
         }
+        objectCount += 1;
         //SDL_UpdateWindowSurface(window);
     }
 

@@ -10,7 +10,7 @@ import os
 w = 1366
 h = 768
 # Generate window
-Engine = engineMain.Engine("Crumbl Engine test program",w,h)
+Engine = engineMain.Engine("Crumbl Engine test program",w,h,verboseOuts=True)
 # Generate default font
 defaultFont = Engine.loadFont(os.path.join(os.getcwd(),"build","stockAssets","SourceSansPro-Regular.ttf"),12)
 # Logo image

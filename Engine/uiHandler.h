@@ -32,7 +32,7 @@ extern "C"{
         }
         else{
             SDL_Surface *imageSurface = SDL_LoadBMP("/stockAssets/missingasset.png");
-            std::cout<<"Warning: Image "<<imageLocation<<" has not been found\n";
+            std::cout<<"\033[33m\nWarning: Image "<<imageLocation<<" has not been found\033[0m\n";
         }
         return imageSurface;
     }

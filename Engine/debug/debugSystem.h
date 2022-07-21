@@ -23,12 +23,12 @@ uint8_t fpscolorG = 255;
 uint8_t fpscolorB = 0;
 
 // Show the debug menu
-void showDebug(SDL_Renderer *renderer,int framerate,int framelimit,int x,int y){
+void showDebug(SDL_Renderer *renderer,int framerate,int framelimit,int x,int y,int objects){
     SDL_Surface *vText = generateDebugText("Crumbl Engine v1.0a, built on SDL2",debugFont);
     blitMenuObject(renderer,vText,NULL,0,0,500,12);
     // Framerate color key system
     if(framerate <= 10){
-        fpscolorR = 255; += std::to_string(framerate);
+        fpscolorR = 255;
         fpscolorG = 0;
         fpscolorB = 0;
     }
@@ -45,24 +45,28 @@ void showDebug(SDL_Renderer *renderer,int framerate,int framelimit,int x,int y){
     // Text concenteations: labels 
     const char *fpsConjugate = "FPS: ";
     const char *framelimitConjugate = "Framelimit: ";
+    const char *objectConjugate = "Objects(2D): ";
 
     const char *mouseXConjugate = "X: ";
     const char *mouseYConjugate = "Y: ";
 
-    fpsConjugate  += std::__int_to_char(framerate);
-    framelimitConjugate +=  += std::__int_to_char(framelimit);
+    fpsConjugate  += static_cast<char>(framerate);
+    framelimitConjugate += static_cast<char>(framelimit);
+    objectConjugate += static_cast<char>(objects);
 
-    mouseXConjugate += std::__int_to_char(x);
-    mouseYConjugate += std::__int_to_char(y);
+    mouseXConjugate += static_cast<char>(x);
+    mouseYConjugate += static_cast<char>(y);
 
     SDL_Surface *fText = generateDebugText(fpsConjugate,debugFont,fpscolorR,fpscolorG,fpscolorB);
     blitMenuObject(renderer,fText,NULL,0,0,100,24);
     SDL_Surface *lText = generateDebugText(framelimitConjugate,debugFont);
     blitMenuObject(renderer,fText,NULL,0,0,100,36);
+    SDL_Surface *oText = generateDebugText(objectConjugate,debugFont);
+    blitMenuObject(renderer,fText,NULL,0,0,100,36);
     SDL_Surface *mText = generateDebugText("Mouse:",debugFont);
-    blitMenuObject(renderer,vText,NULL,0,0,100,48);
+    blitMenuObject(renderer,vText,NULL,0,0,100,60);
     SDL_Surface *xText = generateDebugText(mouseXConjugate,debugFont);
-    blitMenuObject(renderer,vText,NULL,0,0,12,60);
-    SDL_Surface *yText = generateDebugText(mouseYConjugate,debugFont);
     blitMenuObject(renderer,vText,NULL,0,0,12,72);
+    SDL_Surface *yText = generateDebugText(mouseYConjugate,debugFont);
+    blitMenuObject(renderer,vText,NULL,0,0,12,84);
 }

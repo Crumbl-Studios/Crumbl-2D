@@ -1,0 +1,36 @@
+=!@TITLE
+The terminal outputs
+=!@SUBTITLE
+Part of Chapter 4
+4.1)    The terminal outputs
+4.1.1)      Running executables in a terminal
+4.1.2)      Error code colors
+4.2)    The debug menu
+
+The Crumbl Engine, much like other development APIs, includes debugging systems to find and fix errors effectively. One of the easiest options is to use the Terminal.
+Both executables (if run in a terminal-see below), and apps being tested in the Engine output data to some kind of Terminal. Our system includes a color code system to narrow down bugs, which is currently available on Linux and Mac
+=!@SUBTITLE
+4.1.1.a) Runnning things in a terminal (Linux/Mac)
+NOTE: Some desktop environments and ui-based file managers (like KDE Plasma/Dolphin) include context menu options (right click) to run in a terminal. You can use that instead of the following steps
+1.)Open your terminal
+2.)Use 
+=!@CODE 
+cd /yourGamePath/build
+ to get to where your project is stored (remember to replace "yourGamePath" with where your game is really stored)
+3.)Use
+=!@CODE
+./YourGameExecutable
+ to open your game (again, remember to replace "YourGameExecutable" with what you actually named your executable)
+=!@SUBTITLE
+4.1.1.b) Runnning things in a terminal (Windows)
+Unfortunately, color codes are not currently supported on Windows, but the text is still there (if not garbled by the linux color codes), and you cannot run things in a terminal directly.
+To make sure the is a terminal output, when compiling, turn on "Run with command line". This is not recommended if you are compiling the final, retail version of your game, as you may end up with confused customers, and/or leaks.
+=!@SUBTITLE
+4.1.2) Color codes
+🟢Green - Normal operation/ success
+🟦Cyan - Normal output for EventHandler
+🔵Blue - Debugger warning - This is most likely not your fault
+🟣Purple - Debugger error - This is most likely not your fault
+🔴Red - Error - This is an issue in your code
+🟡Yellow - Warning - This could turn into an error in your code
+⚪No color/white/black - Similar to Green, most likely a note

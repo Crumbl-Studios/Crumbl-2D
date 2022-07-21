@@ -10,9 +10,10 @@ class Engine():
     def __init__(self,title,xres,yres,noFlags = True,fullscreen = False,fullscreenDesk = False,gDriver = 0,
         invisible = False,noDecoration = False,canResize = False,minimized = False,
         maximized = False,foreignWindow = False,highDPI = True,skipTaskbar = False,
-        utilWin = False,tooltipWin = False,popup = False):
+        utilWin = False,tooltipWin = False,popup = False,verboseOuts = False):
         global STDOUT
-        print("Starting engine")
+        print("Crumbl Engine v1.0.0a, built on SDL2")
+        print("Copyright (C) 2022 Crumbl Studios \n\nThis program is free software; you can redistribute it and/or modify \nit under the terms of the GNU General Public License as published by \nthe Free Software Foundation; version 2 of the License \nThis program is distributed in the hope that it will be useful,\nbut WITHOUT ANY WARRANTY; without even the implied warranty of\nMERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the\nGNU General Public License for more details.\n\nYou should have received a copy of the GNU General Public License along\nwith this program; if not, write to the Free Software Foundation, Inc.,\n51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA. \n\n See LICENSE or the LICENSE section in the Editor for more info")
         if os.name == "posix":
             enginePath = os.path.join(os.getcwd(),"build/sdlWrapper.so")
         else:
@@ -21,11 +22,11 @@ class Engine():
         newTitle = bytes(title,encoding='utf8')
         self.sdlHandler.start_engine(newTitle,xres,yres,noFlags,fullscreen,fullscreenDesk,gDriver,invisible,noDecoration,
                         canResize,minimized,maximized,foreignWindow,highDPI,skipTaskbar,utilWin,
-                        tooltipWin,popup)
-        print("Crumbl Engine started, getting surface and window")
+                        tooltipWin,popup,verboseOuts)
+        print("\033[32mCrumbl Engine started \033[0m\nGetting surface and window")
         self.window = self.sdlHandler.getWindow()
         self.renderer = self.sdlHandler.getRenderer()
-        print("Surface obtained\nCrumbl Engine has successfully initialized!")
+        print("\033[32mSurface obtained\nCrumbl Engine has successfully initialized!\033[0m")
     
     def UpdateFrameStartTasks(self):
         self.sdlHandler.updateframestarttasks()

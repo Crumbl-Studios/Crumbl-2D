@@ -1,0 +1,14 @@
+=!@TITLE
+Chapter 5: Editor development refrence
+=!@SUBTITLE
+IN THIS CHAPTER
+5.1) Start Page module
+5.1.1)   About CrumblScript
+5.1.2)   CrumblScript markup language refrence   
+5.2) UI Editor module
+5.3) Asset preview module
+5.4) Plugins
+5.5) Windowing modes
+5.5.1)   Default (tabbed)
+5.5.2)   miniWindowed
+5.5.3)   Detached
