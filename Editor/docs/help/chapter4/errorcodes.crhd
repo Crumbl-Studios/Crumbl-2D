@@ -12,12 +12,12 @@ Both executables (if run in a terminal-see below), and apps being tested in the 
 =!@SUBTITLE
 4.1.1.a) Runnning things in a terminal (Linux/Mac)
 NOTE: Some desktop environments and ui-based file managers (like KDE Plasma/Dolphin) include context menu options (right click) to run in a terminal. You can use that instead of the following steps
-1.)Open your terminal
-2.)Use 
-=!@CODE 
+1.) Open your terminal
+2.) Use 
+=!@CODE
 cd /yourGamePath/build
  to get to where your project is stored (remember to replace "yourGamePath" with where your game is really stored)
-3.)Use
+3.) Use
 =!@CODE
 ./YourGameExecutable
  to open your game (again, remember to replace "YourGameExecutable" with what you actually named your executable)
