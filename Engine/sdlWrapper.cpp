@@ -22,11 +22,13 @@ Uint32 flags = 0;
 SDL_Renderer *renderer;
 SDL_Event events;
 
+bool ttf_Initialized = false;
 int MX = 0;
 int MY = 0;
 bool debugMenuEnable = true;
 bool verboseOut = false;
 int objectCount = 0; 
+
 extern "C"{
     int start_engine(const char *title,int xres, int yres,bool noFlags = true,bool fullscreen = false,bool fullscreenDesk = false,int gDriver = 0, // Init engine
             bool invisible = false, bool noDecoration = false, bool canResize = false,bool minimized = false,
@@ -269,6 +271,11 @@ extern "C"{
     // Text
 
     TTF_Font *loadFont(const char *fontFile,int size){
+        if(!ttf_Initialized){
+            std::cout<<"\033[32mInfo: SDL_ttf hasn't initialized yet. Initializing...\033[0m\n";
+            TTF_Init();
+            ttf_Initialized = true;
+        }
         std::cout<<"Fonts loading"<<std::endl;
         return TTF_OpenFont(fontFile, size);
     }

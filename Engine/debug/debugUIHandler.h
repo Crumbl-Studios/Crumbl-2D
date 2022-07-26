@@ -16,6 +16,8 @@
     #define _access    access
 #endif
 
+bool ttf_Initialized = false;
+
 // Same as blitObject, but exists to avoid recursion with sdlWrapper
 void blitMenuObject(SDL_Renderer *renderer,SDL_Surface *object,SDL_Rect *rect,int x, int y,
                 int w =  64, int h = 64){
@@ -39,12 +41,27 @@ void blitMenuObject(SDL_Renderer *renderer,SDL_Surface *object,SDL_Rect *rect,in
 }
 SDL_Surface *generateDebugText(const char *text,TTF_Font *font,Uint8 r = 255,Uint8 g = 255,
                         Uint8 b = 255,Uint8 a = 255){
+    if(!ttf_Initialized){
+        std::cout<<"\033[32mInfo: SDL_ttf hasn't initialized yet. Initializing...\033[0m\n";
+        TTF_Init();
+        ttf_Initialized = true;
+    }
     SDL_Color color = {r,g,b,a};
     SDL_Surface *surfaceObject = TTF_RenderText_Solid(font,text,color);
+    if(!surfaceObject){
+        std::cout<<"\033[34mWarning: A debug text output a null surface. Check the following terminal out for more info\033[0m\n";
+        const char *error = SDL_GetError();
+        std::cout<<"\033[32mInfo: SDL text generation error "<<error<<"(on debug)\033[0m\n";
+    }
     return surfaceObject;
 }
 //Font loader
 TTF_Font *loadDebugFont(const char *fontFile,int size){
+    if(!ttf_Initialized){
+        std::cout<<"\033[32mInfo: SDL_ttf hasn't initialized yet. Initializing...\033[0m\n";
+        TTF_Init();
+        ttf_Initialized = true;
+    }
     std::cout<<"\033[32mDebugger fonts loading\033[0m\n";
     return TTF_OpenFont(fontFile, size);
 }
