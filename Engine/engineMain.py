@@ -28,8 +28,8 @@ class Engine():
         self.renderer = self.sdlHandler.getRenderer()
         print("\033[32mSurface obtained\nCrumbl Engine has successfully initialized!\033[0m")
     
-    def UpdateFrameStartTasks(self):
-        self.sdlHandler.updateframestarttasks()
+    def changeCursor(self,file):
+        self.sdlHandler.setCursorImage(file)
 
     def UpdateCrumblTasks(self,mouse = True,debug = True,framelimit = 0): # Update SDL window, and set framelimits. Mouse: enable cursor; debug: allow debugger menu , framelimit: Set framelimit (Omit or set to None if no framelimit is needed)
         self.sdlHandler.updateCrumblTasks(mouse,debug,framelimit)

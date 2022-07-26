@@ -21,6 +21,7 @@ SDL_Surface *winSurface;
 Uint32 flags = 0;
 SDL_Renderer *renderer;
 SDL_Event events;
+SDL_Surface *cursorImage;
 
 bool ttf_Initialized = false;
 int MX = 0;
@@ -128,11 +129,17 @@ extern "C"{
         }
         printf("\033[32mWindow generated, Filling background\033[0m\n");
         // Fill window with default
+        SDL_Surface *cursorImage = IMG_Load("build/stockAssets/defaultcursor.bmp");
         SDL_SetRenderDrawColor(renderer,0, 0, 0, 255);
         SDL_RenderClear(renderer);
         SDL_RenderPresent(renderer);
         return 0;
     }
+
+    bool setCursorImage(const char *image){
+        SDL_Surface *cursorImage = IMG_Load("build/stockAssets/defaultcursor.bmp");
+    }
+
 
     SDL_Window *getWindow(){
         return window;
@@ -229,7 +236,6 @@ extern "C"{
         if(cursor){
             SDL_Cursor *cur;
             // Generate cursor image
-            SDL_Surface *cursorImage = IMG_Load("/stockAssets/defaultcursor.bmp");
             cur = SDL_CreateColorCursor(cursorImage,0,0);
             SDL_SetCursor(cur);
         }   
