@@ -204,7 +204,7 @@ extern "C"{
     }
 
     bool getKey(SDL_KeyCode key){
-        if(keys[key]){
+        if(eventHandlerOut.keyup == key){
             return true;
         }
         else{
@@ -223,7 +223,7 @@ extern "C"{
             MX = returnMouseX();
             MY = returnMouseY();
         }
-        if(pollReturn == 2 && keys[SDLK_F3]){ // Bind F3 to Debug menu
+        if(pollReturn == 3 && eventHandlerOut == SDLK_F3){ // Bind F3 to Debug menu
             printf("\033[32mF3 pressed, debugger");
             if(!debugMenuEnable){
                 debugMenuEnable = true;

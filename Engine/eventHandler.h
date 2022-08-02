@@ -8,19 +8,25 @@
 int mouse_x;
 int mouse_y;
 
-bool keys[322];
+typedef void (*quit_handler_t)(void);
+typedef void (*down_handler_t)(SDL_Keycode);
+typedef void (*up_handler_t)(SDL_Keycode);
+
+struct{
+    quit_handler_t quit;
+    down_handler_t keydown;
+    up_handler_t   keyup;
+}eventHandlerOut;
 
 
 int pollInputs(SDL_Event events,bool verbose = false){
-    for(int i = 0; i < 322; i++) { // reset keys
-        keys[i] = false;
-    }
     while(SDL_PollEvent(&events)){
         switch(events.type){
             case SDL_QUIT:
                 if(verbose){
                     std::cout<<"\033[31mEventHandler: Shutdown called\033[0m\n";
                 }
+                eventHandlerOut.quit();
                 return -1;
                 break;
             case SDL_USEREVENT:
@@ -33,14 +39,14 @@ int pollInputs(SDL_Event events,bool verbose = false){
                 if(verbose){
                     std::cout<<"\033[36mEventHandler: Key pressed\033[0m\n";
                 }
-                keys[events.key.keysym.sym] = true;
+                eventHandlerOut.keydown(events.key.keysym.sym);
                 return 2;
                 break;
             case SDL_KEYUP:
                 if(verbose){
                     std::cout<<"\033[36mEventHandler: Key released\033[0m\n";
                 }
-                keys[events.key.keysym.sym] = false;
+                eventHandlerOut.keyup(events.key.keysym.sym);
                 return 3;
                 break;
             case SDL_MOUSEMOTION:
