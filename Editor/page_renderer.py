@@ -1,12 +1,13 @@
 # Custom markup reader/interpreter
 # It is slightly messy, and recycled from other projects
 
-from pickle import GLOBAL
 import tkinter
 from tkinter import ttk
 from PIL import ImageTk,Image
 import os
 import webbrowser
+import UIModules.create_project
+# import main # avoid circular import error
 
 maintext: tkinter.Frame
 refresh: ttk.Button
@@ -120,6 +121,13 @@ def loadpage(helpdi):
             maintext.tag_bind(link,"<Leave>",lambda e,linkloc = linklo: leave(linkloc))
             maintext.tag_bind(link,"<Button-1>",lambda e,linkloc = linklo: click(linkloc))
             maintext.insert(END,linktext,link)
+            linesrendered += 2
+            app.update()
+        elif line == "=!@ACTIONBUTTON\n":
+            maintext.insert(END,"Create Game","createButton")
+            maintext.tag_bind("createButton","<Enter>",lambda e,linkloc = "createGame": enter(linkloc))
+            maintext.tag_bind("createButton","<Leave>",lambda e,linkloc = "createGame": leave(linkloc))
+            maintext.tag_bind("createButton","<Button-1>",lambda e,linkloc = "createGame": click(linkloc))
             linesrendered += 2
             app.update()
         elif line == "=!@IMAGE\n":
@@ -244,18 +252,26 @@ def enter(place,external = False): # Show warning if enteing links to external w
     global loadbar
     global currentop
     global app
-    maintext.config(cursor = "hand2")
-    maintext.tag_config(place,foreground="magenta",underline = 0)
-    app.update()
-    if not external:
-        currentop.set("Link to: "+str(place)+" (click to navigate)")
+    if not place == "createGame":
+        maintext.config(cursor = "hand2")
+        maintext.tag_config(place,foreground="magenta",underline = 0)
+        app.update()
+        if not external:
+            currentop.set("Link to: "+str(place)+" (click to navigate)")
+        else:
+            currentop.set("External link to: "+str(place)+" (click to navigate, this will take you outside the Crumbl Engine Editor)")
     else:
-        currentop.set("External link to: "+str(place)+" (click to navigate, this will take you outside the Crumbl Engine Editor)")
+        maintext.config(cursor = "hand2")
+        maintext.tag_config("createButton",foreground="white",background="RoyalBlue1",font = ("TkDefaultFont",24))
+        currentop.set("Start a new project")
 
 def leave(place):
     maintext.config(cursor = "xterm")
-    maintext.tag_config(place,foreground="blue",underline = 1)
-    app.update()
+    if not place == "createGame":
+        maintext.tag_config(place,foreground="blue",underline = 1)
+        app.update()
+    else:
+        maintext.tag_config("createButton",foreground="white",background="blue",font = ("TkDefaultFont",24))
     currentop.set("Ready")
 
 def imgenter(e):
@@ -281,11 +297,16 @@ def imgleave(e):
 def click(link):
     global errorcon
     global page_dir
-    helpdir = page_dir+link # This somehow didnt work with os.path.join()
-    currentop.set("GOING TO PAGE: "+str(helpdir))
-    currentop.set(helpdir)
-    errorcon = "no errors found"
-    loadpage(helpdir)
+    if not link == "createGame":    
+        loadpage(helpdir)
+        helpdir = page_dir+link # This somehow didnt work with os.path.join()
+        currentop.set("GOING TO PAGE: "+str(helpdir))
+        currentop.set(helpdir)
+        errorcon = "no errors found"
+    else:
+        # gCreateWin = main.app.notebookAdd("Create Project") #Causes circular import errors
+        # UIModules.create_project.NotebookPage.start_page(gCreateWin)
+        pass
 
 def webclick(link):
     global errorcon

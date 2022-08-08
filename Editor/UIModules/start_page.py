@@ -54,6 +54,8 @@ class NotebookPage():
         maintext.tag_add("code",1.0)
         maintext.tag_config("code",font = ("Courier New",12),background = "gainsboro")
         maintext.config(cursor="xterm")
+        maintext.tag_add("createButton",1.0)
+        maintext.tag_config("createButton",foreground="white",background="blue",font = ("TkDefaultFont",24))
 
     def load_page(event = None,page = None):
         global addressbar

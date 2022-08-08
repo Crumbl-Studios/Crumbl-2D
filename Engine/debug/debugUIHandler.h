@@ -51,7 +51,7 @@ SDL_Surface *generateDebugText(const char *text,TTF_Font *font,Uint8 r = 255,Uin
     if(!surfaceObject){
         std::cout<<"\033[34mWarning: A debug text output a null surface. Check the following terminal out for more info\033[0m\n";
         const char *error = SDL_GetError();
-        std::cout<<"\033[32mInfo: SDL text generation error "<<error<<"(on debug)\033[0m\n";
+        std::cout<<"\033[32mInfo: SDL text generation error: "<<error<<" (on debug)\033[0m\n";
     }
     return surfaceObject;
 }

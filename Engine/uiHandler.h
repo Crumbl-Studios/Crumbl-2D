@@ -28,7 +28,7 @@ extern "C"{
         if(!surfaceObject){
             std::cout<<"\033[33mWarning: Your text output as null. Check the following terminal out for more info\033[0m\n";
             const char *error = SDL_GetError();
-            std::cout<<"\033[32mInfo: SDL text generation error "<<error<<"\033[0m\n";
+            std::cout<<"\033[32mInfo: SDL text generation error: "<<error<<"\033[0m\n";
         }
         return surfaceObject;
     }
