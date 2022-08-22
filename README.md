@@ -15,7 +15,7 @@ CrumblEngine is a 2d (and 3d in the future) game engine written in c++, with pyt
 
 Currently the software is incomplete, so this guide only is to get the "demo" program running, and is assuming you have already cloned this repo.
 
-### Mac/Linux/Unix
+### Linux/Unix
 
 #### Prerequisites: 
 - GCC/G++ (most distros include it)
@@ -29,6 +29,23 @@ Currently the software is incomplete, so this guide only is to get the "demo" pr
 
 #### To compile and run demo:
 - Install the above packages (Debian based distros: use `sudo apt install <package>`)
+- Run ``./Engine/linuxEngineCompiler.sh``
+- When it gives the list of options, type `2` if you want to run the Python version or `3` for the C++ version
+
+### Mac
+
+#### Prerequisites:
+- GCC/G++ (you should have it if you have xcode)
+- libsdl2-2.0-0 (you might have it if you have worked with Unreal or Pygame)
+- libsdl2-dev 
+- libsdl2-image-dev
+- libsdl2-ttf-dev
+
+#### To compile and run demo:
+- Get Xcode and run, close when the devkit has installed
+- Unzip all of the downloaded SDL development files
+- Create a folder titled SDL2 in /Engine/
+- Copy all SDL2 dev files from `SDL2-2.X.YYY/include` into `SDL2` folder
 - Run ``./Engine/linuxEngineCompiler.sh``
 - When it gives the list of options, type `2` if you want to run the Python version or `3` for the C++ version
 

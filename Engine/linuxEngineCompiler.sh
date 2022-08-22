@@ -23,7 +23,7 @@ case $option in
         }
         g++ -o build/sdlWrapper.so sdlWrapper.cpp -lSDL2 -lSDL2main -lSDL2_ttf -lSDL2_image -shared -W -g -fPIC -Wall -Wpedantic
         echo "Engine built, running test script"
-        /bin/python3 engineTester.py;;
+        python3 engineTester.py;;
     [3]* )
         {
             cd ./Engine/
