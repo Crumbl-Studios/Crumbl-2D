@@ -23,7 +23,6 @@ SDL_Renderer *renderer;
 SDL_Event events;
 SDL_Surface *cursorImage;
 
-bool ttf_Initialized = false;
 int MX = 0;
 int MY = 0;
 bool debugMenuEnable = true;
@@ -277,21 +276,17 @@ extern "C"{
     // Text
 
     TTF_Font *loadFont(const char *fontFile,int size){
-        if(!ttf_Initialized){
-            std::cout<<"\033[32mInfo: SDL_ttf hasn't initialized yet. Initializing...\033[0m\n";
-            TTF_Init();
-            ttf_Initialized = true;
-        }
         std::cout<<"Fonts loading"<<std::endl;
         return TTF_OpenFont(fontFile, size);
     }
 
-    void passText(const char *text,int x,int y,TTF_Font *font,int r = 255,int g = 255,
-                    int b = 255,int a = 255){
+    void passText(const char *text,int x,int y,TTF_Font *font,Uint8 r = 255,Uint8 g = 255,
+                    Uint8 b = 255,Uint8 a = 255){
         SDL_Rect dest;
         dest.x = x;
         dest.y = y;
-        SDL_Surface *textSurface = generateText(text,font,r,g,b,a);
+        SDL_Color color = {r,g,b,a};
+        SDL_Surface *textSurface = TTF_RenderText_Solid(font,text,color);
         SDL_Texture *textTexture = SDL_CreateTextureFromSurface(renderer,textSurface);
         SDL_RenderClear(renderer);
         int error = SDL_RenderCopy(renderer,textTexture, NULL, &dest);

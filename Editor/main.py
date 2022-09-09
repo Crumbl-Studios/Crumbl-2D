@@ -27,6 +27,7 @@ import UIModules.start_page as start_page
 import UIModules.ide as ide
 import UIModules.ui_editor as ui_editor
 import UIModules.asset_preview as asset_preview
+import UIModules.create_project as create_project
 import seperatedWindow
 from tkinter.colorchooser import askcolor
 
@@ -129,7 +130,7 @@ class app():
         menubar = tkinter.Menu(main)
 
         filemenu = tkinter.Menu(menubar, tearoff=0)
-        filemenu.add_command(label="New project")
+        filemenu.add_command(label="New project",command=self.generateNew)
         filemenu.add_command(label="Open project")
         filemenu.add_command(label="Save")
         filemenu.add_separator()
@@ -693,6 +694,7 @@ class app():
             winFocus.moveBar.config(bg = ac)
             winFocus.moveText.config(bg = ac)
             print("window %s focused"%win)
+
     def about():
         about = tkinter.Tk()
         about.winfo_toplevel().title("About the Crumbl Engine")
@@ -715,4 +717,9 @@ class app():
         names.insert(tkinter.END,"Did you contribute to this project? Add your name here!","normal")
         clsBtn = ttk.Button(about,text = "⮾ Close")
         clsBtn.pack(side = "top",anchor="se",expand = 1)
+
+    def generateNew(self):
+        tab = self.notebookAdd("Create New Project",closeable=True)
+        create_project.NotebookPage.start_page(tab)
+
 engine = app()
