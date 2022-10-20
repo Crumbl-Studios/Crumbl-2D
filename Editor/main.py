@@ -28,6 +28,7 @@ import UIModules.ide as ide
 import UIModules.ui_editor as ui_editor
 import UIModules.asset_preview as asset_preview
 import UIModules.create_project as create_project
+import UIModules.about as about
 import seperatedWindow
 from tkinter.colorchooser import askcolor
 
@@ -75,28 +76,25 @@ class app():
         windowedTabs = []
         tabMode = 0
         win_mode = "tabbed"
-        main = tkinter.Tk(None,None," Start Page - Crumbl Engine Editor")
+        main = tkinter.Tk(None,None," Loading - Crumbl Engine Editor")
+        
+        # Settings splash screen (Setup and use main window)
+        main.resizable(False,False)
+        main.geometry("200x100")
+        currentoptext = tkinter.StringVar(main,"Loading")
+        currentoplabel = tkinter.Label(main,textvariable = currentoptext)
+        currentoplabel.pack(side="top")
+        loadBar = ttk.Progressbar(main)
+        loadBar.pack(side="top")
+        main.update()
+        settings_wizard.NotebookPage.applySettings(main,currentoptext,loadBar)
+
+        currentoplabel.destroy()
+        loadBar.destroy()
+        main.resizable(True,True)
         main.geometry("1366x720")
         isFullscreen = False
-
-        # Theme system (Sun Valley clone)
-        if settings_wizard.theme == "sun_valley":
-            if settings_wizard.darkMode:
-                sv_ttk.set_theme("dark")
-                sv_ttk.use_dark_theme()
-            else:
-                sv_ttk.set_theme("light")
-                sv_ttk.use_light_theme()
-        elif settings_wizard.theme == "forest":
-            if settings_wizard.darkMode:
-                main.tk.call('source', os.path.join(fileHandler.IconDir,'forest-dark.tcl'))
-                ttk.Style().theme_use('forest-dark')
-            else:
-                main.tk.call('source', os.path.join(fileHandler.IconDir,'forest-light.tcl'))
-                ttk.Style().theme_use('forest-light')
-        else:
-            if settings_wizard.darkMode:
-                ttk.Style().theme_use('alt')
+        
         # Iconography
         logo_icon = tkinter.PhotoImage(master = main,file = fileHandler.crumbl_logo)
 
@@ -138,7 +136,7 @@ class app():
         filemenu.add_command(label="Clone repo")
         filemenu.add_command(label="Push to repo")
         filemenu.add_separator()
-        filemenu.add_command(label="Settings",command = settings_wizard.settingsWin)
+        filemenu.add_command(label="Settings",command = lambda mod = "settings":app.runMod(mod))
         filemenu.add_separator()
         filemenu.add_command(label="Exit", command=main.quit)
         menubar.add_cascade(label="File", menu=filemenu)
@@ -181,7 +179,7 @@ class app():
 
         helpmenu = tkinter.Menu(menubar, tearoff=0)
         helpmenu.add_command(label="Documentation",command= lambda doc= "help/toc.crhd":start_page.NotebookPage.load_page(page = doc))
-        helpmenu.add_command(label="About...",command=app.about)
+        helpmenu.add_command(label="About...",command = lambda mod = "about":app.runMod(mod))
         menubar.add_cascade(label="Help", menu=helpmenu)
 
         main.config(menu = menubar)
@@ -437,6 +435,12 @@ class app():
         if mod == "asset_preview":
             currentTab = app.notebookAdd("Asset Viewer",closeable = True,poppable = True)
             asset_preview.NotebookPage.start_page(currentTab,True)
+        if mod == "settings":
+            tab = app.notebookAdd("Settings",closeable=True)
+            settings_wizard.NotebookPage.start_page(tab)
+        if mod == "about":
+            tab = app.notebookAdd("About",closeable=True)
+            about.NotebookPage.start_page(tab)
 
     def windowTitleChange(event = None,title = None):
         global module_tabs
@@ -695,28 +699,9 @@ class app():
             winFocus.moveText.config(bg = ac)
             print("window %s focused"%win)
 
-    def about():
-        about = tkinter.Tk()
-        about.winfo_toplevel().title("About the Crumbl Engine")
-        about.geometry("640x600+0+0")
-        about.resizable(False,False)
-        engine_icon = tkinter.PhotoImage(master = about,file = fileHandler.engine_logo)
-        studio_icon = tkinter.PhotoImage(master = about,file = fileHandler.studio_logo)
-        logo = tkinter.Label(about,image = engine_icon,text="Version: 0.1B",compound="top")
-        logo.pack(side = "top",expand = 0)
-        text = tkinter.Label(about,text="Engine Version: 0.1B")
-        text.pack(side = "top",expand = 0)
-        names = scrolledtext.ScrolledText(about)
-        names.pack(side = "top",expand = 0)
-        names.tag_add("title",tkinter.INSERT,tkinter.END)
-        names.tag_config("title",font = ("TkDefaultFont",48,"bold"))
-        names.tag_add("title",tkinter.INSERT,tkinter.END)
-        names.tag_config("normal",font = ("TkDefaultFont",12))
-        names.insert(tkinter.END,"Made by these contributors:\n","title")
-        names.insert(tkinter.END,"FROM CRUMBL STUDIOS:\nRJ Carter\nEshan Tahir\n","normal")
-        names.insert(tkinter.END,"Did you contribute to this project? Add your name here!","normal")
-        clsBtn = ttk.Button(about,text = "⮾ Close")
-        clsBtn.pack(side = "top",anchor="se",expand = 1)
+    def about(self):
+        tab = self.notebookAdd("About",closeable=True)
+        about.NotebookPage.start_page(tab)
 
     def generateNew(self):
         tab = self.notebookAdd("Create New Project",closeable=True)

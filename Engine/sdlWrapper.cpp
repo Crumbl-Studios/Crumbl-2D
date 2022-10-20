@@ -137,6 +137,7 @@ extern "C"{
 
     bool setCursorImage(const char *image){
         SDL_Surface *cursorImage = IMG_Load("build/stockAssets/defaultcursor.bmp");
+        return true;
     }
 
 
@@ -203,7 +204,8 @@ extern "C"{
     }
 
     bool getKey(SDL_KeyCode key){
-        if(eventHandlerOut.keyup == key){
+        SDL_KeyCode keyupB = static_cast<SDL_KeyCode>(eventHandlerOut.keyup);
+        if(keyupB == key){
             return true;
         }
         else{
@@ -222,7 +224,8 @@ extern "C"{
             MX = returnMouseX();
             MY = returnMouseY();
         }
-        if(pollReturn == 3 && eventHandlerOut.keyup == SDLK_F3){ // Bind F3 to Debug menu
+        SDL_KeyCode keyupB = static_cast<SDL_KeyCode>(eventHandlerOut.keyup);
+        if(pollReturn == 3 && keyupB == SDLK_F3){ // Bind F3 to Debug menu
             printf("\033[32mF3 pressed, debugger");
             if(!debugMenuEnable){
                 debugMenuEnable = true;

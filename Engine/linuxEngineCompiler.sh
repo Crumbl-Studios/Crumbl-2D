@@ -33,7 +33,7 @@ case $option in
         }||{
             echo -e "\033[32mAlready in directory\033[0m"
         }
-        g++ -o build/sdlTest cppTester.cpp -lSDL2 -lSDL2main -lSDL2_ttf -lSDL2_image -shared -W -g -fPIC -Wall -Wpedantic
+        g++ -o build/sdlTest cppTester.cpp -lSDL2 -lSDL2main -lSDL2_ttf -lSDL2_image -shared -W -g -fPIC
         echo -e "\033[32mEngine built, running test script \a\033[0m"
         ./build/sdlTest;;
     [4]* )

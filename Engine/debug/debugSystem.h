@@ -60,13 +60,13 @@ void showDebug(SDL_Renderer *renderer,int framerate,int framelimit,int x,int y,i
     SDL_Surface *fText = generateDebugText(fpsConjugate,debugFont,fpscolorR,fpscolorG,fpscolorB);
     blitMenuObject(renderer,fText,NULL,0,0,100,24);
     SDL_Surface *lText = generateDebugText(framelimitConjugate,debugFont);
-    blitMenuObject(renderer,fText,NULL,0,0,100,36);
+    blitMenuObject(renderer,lText,NULL,0,0,100,36);
     SDL_Surface *oText = generateDebugText(objectConjugate,debugFont);
-    blitMenuObject(renderer,fText,NULL,0,0,100,36);
+    blitMenuObject(renderer,oText,NULL,0,0,100,36);
     SDL_Surface *mText = generateDebugText("Mouse:",debugFont);
-    blitMenuObject(renderer,vText,NULL,0,0,100,60);
+    blitMenuObject(renderer,mText,NULL,0,0,100,60);
     SDL_Surface *xText = generateDebugText(mouseXConjugate,debugFont);
-    blitMenuObject(renderer,vText,NULL,0,0,12,72);
+    blitMenuObject(renderer,xText,NULL,0,0,12,72);
     SDL_Surface *yText = generateDebugText(mouseYConjugate,debugFont);
-    blitMenuObject(renderer,vText,NULL,0,0,12,84);
+    blitMenuObject(renderer,yText,NULL,0,0,12,84);
 }
