@@ -42,3 +42,6 @@ forest_dark_asset = os.path.join(IconDir,"ForestDarkMode.png")
 forest_light_asset = os.path.join(IconDir,"ForestLightMode.png")
 tk_dark_asset = os.path.join(IconDir,"tkDarkMode.png")
 tk_light_asset = os.path.join(IconDir,"tkLightMode.png")
+
+launcherSplash = os.path.join(IconDir,"normalSplash.png")
+projectSplash = os.path.join(IconDir,"projectSplash.png")

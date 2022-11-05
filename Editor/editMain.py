@@ -27,7 +27,6 @@ import UIModules.start_page as start_page
 import UIModules.ide as ide
 import UIModules.ui_editor as ui_editor
 import UIModules.asset_preview as asset_preview
-import UIModules.create_project as create_project
 import UIModules.about as about
 import seperatedWindow
 from tkinter.colorchooser import askcolor
@@ -702,9 +701,3 @@ class app():
     def about(self):
         tab = self.notebookAdd("About",closeable=True)
         about.NotebookPage.start_page(tab)
-
-    def generateNew(self):
-        tab = self.notebookAdd("Create New Project",closeable=True)
-        create_project.NotebookPage.start_page(tab)
-
-engine = app()
