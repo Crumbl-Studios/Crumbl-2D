@@ -24,24 +24,78 @@ import UIModules.settings_wizard as settings_wizard
 class splash():
     def __init__(self):
         self.splashScreen = tkinter.Tk(None,None," Loading - Crumbl Engine Launcher")
+        self.splashScreen.overrideredirect(True)
         self.splashScreen.geometry("700x420+2000+500")
-        self.splashScreen.overrideredirect(False)
         self.splashImage = ImageTk.PhotoImage(Image.open(fileHandler.launcherSplash).resize((700,400)))
         self.imageText = tkinter.Label(image=self.splashImage)
         self.imageText.pack()
         self.loadStatus = tkinter.StringVar(self.imageText)
         self.loadBar = ttk.Progressbar()
         self.loadBar.pack(side="bottom",fill="x")
+        self.hamburgerEnable = True
     def convertFromSplash(self):
-        self.splashScreen.overrideredirect(False)
+        # Custom window decorations
         self.splashScreen.geometry("1000x600")
         self.imageText.destroy()
         self.loadBar.destroy()
         self.splashScreen.title("Crumbl Engine Launcher")
-        self.menuBar = tkinter.Frame()
-        self.menuBar.pack(side="top")
-        self.splashScreen.mainloop()
+        self.resizeGrip = ttk.Sizegrip(self.splashScreen)
+        self.resizeGrip.pack(side = "bottom",anchor="se")
+        self.menuBar = tkinter.Frame(bd=1)
+        self.menuBar.pack(side="top", fill= "x")
+        self.hamburgerButton = ttk.Button(self.menuBar,text = "X ⬅Menu",command=self.toggleHamburger)
+        self.hamburgerButton.pack(side = "left")
+        self.windowTitle = ttk.Label(self.menuBar,text = "Crumbl Engine Launcher")
+        self.windowTitle.pack(anchor = "s",expand=0)
+        self.closeButton = ttk.Button(self.menuBar,text="X",style="Accent.TButton",command=quit)
+        self.closeButton.pack(side="right",anchor="ne")
+        self.maximizeButton = ttk.Button(self.menuBar,text="🗖",style="Accent.TButton",state="disabled")
+        self.maximizeButton.pack(side="right",anchor="ne")
+        self.minimizeButton = ttk.Button(self.menuBar,text="-",style="Accent.TButton",state="disabled")
+        self.minimizeButton.pack(side="right",anchor="ne")
+        self.windowTitle.bind("<Button-1>",self.clickWindow)
+        self.windowTitle.bind("<B1-Motion>",self.moveWindow)
+        self.menuBar.bind("<Button-1>",self.clickWindow)
+        self.menuBar.bind("<B1-Motion>",self.moveWindow)
 
+        # Hamburger menu options
+        self.hamburgerMenu = tkinter.Frame()
+        self.hamburgerMenu.pack(side="left",fill="y")
+        self.newProjectText = ttk.Label(self.hamburgerMenu,text="NEW")
+        self.newProjectText.pack(side="top",fill = "x")
+        self.newGameButton = ttk.Button(self.hamburgerMenu,text="New Project")
+        self.newGameButton.pack(side = "top",fill = "x")
+        self.newProjectText = ttk.Label(self.hamburgerMenu,text="OPEN")
+        self.newProjectText.pack(side="top",fill = "x")
+        self.newGameButton = ttk.Button(self.hamburgerMenu,text="Open Project")
+        self.newGameButton.pack(side = "top",fill = "x")
+        self.newGameButton = ttk.Button(self.hamburgerMenu,text="Clone from Git")
+        self.newGameButton.pack(side = "top",fill = "x")
+
+        # Final steps
+        self.splashScreen.mainloop()
+    def geomSet(self,event = None):
+        xgeom = self.splashScreen.winfo_screenheight()
+        ygeom = self.splashScreen.winfo_screenwidth()
+    def moveWindow(self,event):
+        global x
+        global y
+        x = self.splashScreen.winfo_pointerx() - self.splashScreen._offsetx
+        y = self.splashScreen.winfo_pointery() - self.splashScreen._offsety
+        self.splashScreen.geometry('+{x}+{y}'.format(x=x,y=y))
+    def clickWindow(self,event):
+        self.splashScreen._offsetx = event.x
+        self.splashScreen._offsety = event.y
+
+    def toggleHamburger(self):
+        if self.hamburgerEnable:
+            self.hamburgerEnable = False
+            self.hamburgerButton.config(text="≡")
+            self.hamburgerMenu.pack_forget()
+        else:
+            self.hamburgerEnable = True
+            self.hamburgerButton.config(text="X")
+            self.hamburgerMenu.pack(side="left",fill="y")
     def createProject(self):
         cProgressBar = ttk.Progressbar(self)
         cProgressBar.pack(side = "top",fill="x")
