@@ -6,12 +6,12 @@ import os
 raw = os.path.join(os.getcwd(),"Editor")
 IconDir = os.path.join(raw,"UIAssets")
 
+# Logos
 crumbl_logo = os.path.join(IconDir,"favicon.png")
 engine_logo = os.path.join(IconDir,"logo.png")
 studio_logo = os.path.join(IconDir,"corp_logo.png")
 
-changeImage = os.path.join(IconDir,"changedsetting.png")
-
+# Ribbon icons
 run_asset = os.path.join(IconDir,"run.png")
 build_asset = os.path.join(IconDir,"build.png")
 
@@ -36,12 +36,21 @@ new_object_asset = os.path.join(IconDir,"newObject.png")
 new_cbutton_asset = os.path.join(IconDir,"checkbutton.png")
 new_switch_asset = os.path.join(IconDir,"switch.png")
 
+# Settings icons
 sv_dark_asset = os.path.join(IconDir,"SVDarkMode.png")
 sv_light_asset = os.path.join(IconDir,"SVLightMode.png")
 forest_dark_asset = os.path.join(IconDir,"ForestDarkMode.png")
 forest_light_asset = os.path.join(IconDir,"ForestLightMode.png")
 tk_dark_asset = os.path.join(IconDir,"tkDarkMode.png")
 tk_light_asset = os.path.join(IconDir,"tkLightMode.png")
+changeImage = os.path.join(IconDir,"changedsetting.png")
 
+# Splash screen assets
 launcherSplash = os.path.join(IconDir,"normalSplash.png")
 projectSplash = os.path.join(IconDir,"projectSplash.png")
+
+# Launcher assets
+new_project_asset = os.path.join(IconDir,"newProject.png")
+open_project_asset = os.path.join(IconDir,"open.png")
+git_clone_asset = os.path.join(IconDir,"git.png")
+settings_asset = os.path.join(IconDir,"settings.png")

@@ -6,7 +6,7 @@ from tkinter import ttk
 from PIL import ImageTk,Image
 import os
 import webbrowser
-import UIModules.create_project
+# import UIModules.create_project
 # import main # avoid circular import error
 
 maintext: tkinter.Frame
@@ -124,10 +124,10 @@ def loadpage(helpdi):
             linesrendered += 2
             app.update()
         elif line == "=!@ACTIONBUTTON\n":
-            maintext.insert(END,"Create Game","createButton")
-            maintext.tag_bind("createButton","<Enter>",lambda e,linkloc = "createGame": enter(linkloc))
-            maintext.tag_bind("createButton","<Leave>",lambda e,linkloc = "createGame": leave(linkloc))
-            maintext.tag_bind("createButton","<Button-1>",lambda e,linkloc = "createGame": click(linkloc))
+            #maintext.insert(END,"Create Game","createButton")
+            #maintext.tag_bind("createButton","<Enter>",lambda e,linkloc = "createGame": enter(linkloc))
+            #maintext.tag_bind("createButton","<Leave>",lambda e,linkloc = "createGame": leave(linkloc))
+            #maintext.tag_bind("createButton","<Button-1>",lambda e,linkloc = "createGame": click(linkloc))
             linesrendered += 2
             app.update()
         elif line == "=!@IMAGE\n":
