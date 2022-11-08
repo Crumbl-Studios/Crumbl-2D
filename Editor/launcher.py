@@ -24,7 +24,7 @@ import UIModules.settings_wizard as settings_wizard
 class splash():
     def __init__(self):
         self.splashScreen = tkinter.Tk(None,None," Loading - Crumbl Engine Launcher")
-        self.splashScreen.overrideredirect(True)
+        self.splashScreen.wm_attributes('-type', 'splash')
         self.splashScreen.geometry("700x420+2000+500")
         self.splashImage = ImageTk.PhotoImage(Image.open(fileHandler.launcherSplash).resize((700,400)))
         self.imageText = tkinter.Label(image=self.splashImage)
@@ -35,31 +35,22 @@ class splash():
         self.hamburgerEnable = True
     def convertFromSplash(self):
         # Custom window decorations
+        self.splashScreen.wm_attributes('-type', 'normal')
         self.splashScreen.geometry("1000x600")
         self.imageText.destroy()
         self.loadBar.destroy()
         self.splashScreen.title("Crumbl Engine Launcher")
-        self.resizeGrip = ttk.Sizegrip(self.splashScreen)
-        self.resizeGrip.pack(side = "bottom",anchor="se")
         self.menuBar = tkinter.Frame(relief="raised",borderwidth=2)
         self.menuBar.pack(side="top", fill= "x")
-        self.hamburgerButton = ttk.Button(self.menuBar,text = "X ⬅Menu",command=self.toggleHamburger)
+        self.hamburgerButton = ttk.Button(self.menuBar,text = "X",command=self.toggleHamburger)
         self.hamburgerButton.pack(side = "left")
         self.backButton = ttk.Button(self.menuBar,text="<Back")
         self.logoImageFile = Image.open(fileHandler.crumbl_logo).resize((24,24))
-        self.logoImage = ImageTk.PhotoImage(self.logoImageFile)
-        self.windowTitle = ttk.Label(self.menuBar,text = "Crumbl Engine Launcher",image=self.logoImage,compound="left")
-        self.windowTitle.pack(side="left",anchor="center",fill=None)
-        self.closeButton = ttk.Button(self.menuBar,text="X",style="Accent.TButton",command=quit)
-        self.closeButton.pack(side="right",anchor="ne")
-        self.maximizeButton = ttk.Button(self.menuBar,text="🗖",style="Accent.TButton",state="disabled")
-        self.maximizeButton.pack(side="right",anchor="ne")
-        self.minimizeButton = ttk.Button(self.menuBar,text="-",style="Accent.TButton",state="disabled")
-        self.minimizeButton.pack(side="right",anchor="ne")
-        self.windowTitle.bind("<Button-1>",self.clickWindow)
-        self.windowTitle.bind("<B1-Motion>",self.moveWindow)
-        self.menuBar.bind("<Button-1>",self.clickWindow)
-        self.menuBar.bind("<B1-Motion>",self.moveWindow)
+        self.splashScreen.iconphoto(True,ImageTk.PhotoImage(self.logoImageFile))
+        self.searchResult = tkinter.StringVar(self.menuBar,"Search projects...")
+        self.searchBar = ttk.Entry(self.menuBar,textvariable=self.searchResult)
+        self.searchBar.pack(side = "right")
+        self.searchBar.bind("<Button-1>",self.clearSearch)
 
         # Hamburger menu options
         self.hamburgerMenu = tkinter.Frame(relief="groove",borderwidth=2)
@@ -94,15 +85,8 @@ class splash():
 
         # Final steps
         self.splashScreen.mainloop()
-    def moveWindow(self,event):
-        global x
-        global y
-        x = self.splashScreen.winfo_pointerx() - self.splashScreen._offsetx
-        y = self.splashScreen.winfo_pointery() - self.splashScreen._offsety
-        self.splashScreen.geometry('+{x}+{y}'.format(x=x,y=y))
-    def clickWindow(self,event):
-        self.splashScreen._offsetx = event.x
-        self.splashScreen._offsety = event.y
+    def clearSearch(self,event = None):
+        self.searchResult.set("")
 
     def toggleHamburger(self):
         if self.hamburgerEnable:
@@ -117,20 +101,29 @@ class splash():
     def createProject(self):
         self.createFrame.pack(fill="both",expand=1)
         self.welcomeFrame.pack_forget()
-        # Temporarily remove window title, rename it, pack back button to be in correct order, repack title 
-        self.windowTitle.pack_forget()
+        # Rename window, place back button
+        self.splashScreen.winfo_toplevel().title = "New project - Crumbl Engine Launcher"
         self.backButton.pack(side="left")
-        self.windowTitle.config(text = "Create New - Crumbl Engine Launcher")
-        self.windowTitle.pack(side="left")
+
         # Remove hamburger button (will be returned if returned to welcome page)
         self.hamburgerEnable = True
         self.toggleHamburger()
         self.hamburgerButton.pack_forget()
+        self.searchResult.set("Search templates...")
         #Generate new widgets
         self.cProgressBar = ttk.Progressbar(self.createFrame)
         self.cProgressBar.pack(side = "top",fill="x")
         self.cText = ttk.Label(self.createFrame,text = "Create New Project",font = ("TkDefaultFont",24,"bold"))
         self.cText.pack(side = "top",fill = "x")
+        self.choiceText = ttk.Label(self.createFrame,text = "Choose a template")
+        self.choiceText.pack(side = "top",fill = "x")
+        self.templateFrame = ttk.Frame(relief="raised",borderwidth=2)
+        self.templateFrame.pack(side = "left",fill= "both")
+        self.choiceFrame = ttk.Frame()
+        self.choiceFrame.pack(side = "right",fill="y")
+        self.continueButton = ttk.Button(self.choiceFrame,text = "Next>",style="Accent.TButton")
+        self.continueButton.pack()
+
 
 splashScreen = splash()
 splashScreen.splashScreen.update()

@@ -38,7 +38,7 @@ def convertRGBcolor(r,g,b):
     return "#%02x%02x%02x" %(r,g,b)
 
 class app():
-    def __init__(self):
+    def __init__(self,projectDir):
         # Globalise vars created here
         global main_frame
         global left_pane
@@ -77,7 +77,7 @@ class app():
         win_mode = "tabbed"
         main = tkinter.Tk(None,None," Loading - Crumbl Engine Editor")
         
-        # Settings splash screen (Setup and use main window)
+        # Project and settings splash screen (Setup and use main window)
         main.resizable(False,False)
         main.geometry("200x100")
         currentoptext = tkinter.StringVar(main,"Loading")
