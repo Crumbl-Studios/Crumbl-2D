@@ -45,10 +45,11 @@ class splash():
         self.menuBar.pack(side="top", fill= "x")
         self.hamburgerButton = ttk.Button(self.menuBar,text = "X ⬅Menu",command=self.toggleHamburger)
         self.hamburgerButton.pack(side = "left")
+        self.backButton = ttk.Button(self.menuBar,text="<Back")
         self.logoImageFile = Image.open(fileHandler.crumbl_logo).resize((24,24))
         self.logoImage = ImageTk.PhotoImage(self.logoImageFile)
         self.windowTitle = ttk.Label(self.menuBar,text = "Crumbl Engine Launcher",image=self.logoImage,compound="left")
-        self.windowTitle.pack(anchor = "s",fill=None)
+        self.windowTitle.pack(side="left",anchor="center",fill=None)
         self.closeButton = ttk.Button(self.menuBar,text="X",style="Accent.TButton",command=quit)
         self.closeButton.pack(side="right",anchor="ne")
         self.maximizeButton = ttk.Button(self.menuBar,text="🗖",style="Accent.TButton",state="disabled")
@@ -66,7 +67,7 @@ class splash():
         self.newProjectText = ttk.Label(self.hamburgerMenu,text="NEW")
         self.newProjectText.pack(side="top",fill = "x")
         self.newProjectImage = ImageTk.PhotoImage(Image.open(fileHandler.new_project_asset))
-        self.newGameButton = ttk.Button(self.hamburgerMenu,text="New Project",image = self.newProjectImage,compound="left")
+        self.newGameButton = ttk.Button(self.hamburgerMenu,text="New Project",image = self.newProjectImage,compound="left",command=self.createProject)
         self.newGameButton.pack(side = "top",fill = "x")
         self.openProjectText = ttk.Label(self.hamburgerMenu,text="OPEN")
         self.openProjectText.pack(side="top",fill = "x")
@@ -81,6 +82,15 @@ class splash():
         self.settingsImage = ImageTk.PhotoImage(Image.open(fileHandler.settings_asset))
         self.settingsButton = ttk.Button(self.hamburgerMenu,text="Settings",image = self.settingsImage,compound="left")
         self.settingsButton.pack(side = "top",fill = "x")
+
+        # Pre-determined widget frames
+        self.welcomeFrame = tkinter.Frame()
+        self.createFrame = tkinter.Frame()
+        self.settingsFrame = tkinter.Frame()
+
+        self.welcomeFrame.pack(fill="both",expand=1)
+        self.wText = ttk.Label(self.welcomeFrame,text = "Welcome to the Crumbl Engine!",font = ("TkDefaultFont",24,"bold"))
+        self.wText.pack(side = "top",fill = "x")
 
         # Final steps
         self.splashScreen.mainloop()
@@ -103,11 +113,24 @@ class splash():
             self.hamburgerEnable = True
             self.hamburgerButton.config(text="X")
             self.hamburgerMenu.pack(side="left",fill="y")
+    
     def createProject(self):
-        cProgressBar = ttk.Progressbar(self)
-        cProgressBar.pack(side = "top",fill="x")
-        cText = ttk.Label(self,text = "Create New Project",font = ("TkDefaultFont",24,"bold"))
-        cText.pack(side = "top",fill = "x")
+        self.createFrame.pack(fill="both",expand=1)
+        self.welcomeFrame.pack_forget()
+        # Temporarily remove window title, rename it, pack back button to be in correct order, repack title 
+        self.windowTitle.pack_forget()
+        self.backButton.pack(side="left")
+        self.windowTitle.config(text = "Create New - Crumbl Engine Launcher")
+        self.windowTitle.pack(side="left")
+        # Remove hamburger button (will be returned if returned to welcome page)
+        self.hamburgerEnable = True
+        self.toggleHamburger()
+        self.hamburgerButton.pack_forget()
+        #Generate new widgets
+        self.cProgressBar = ttk.Progressbar(self.createFrame)
+        self.cProgressBar.pack(side = "top",fill="x")
+        self.cText = ttk.Label(self.createFrame,text = "Create New Project",font = ("TkDefaultFont",24,"bold"))
+        self.cText.pack(side = "top",fill = "x")
 
 splashScreen = splash()
 splashScreen.splashScreen.update()
