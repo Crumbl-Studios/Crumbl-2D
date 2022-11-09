@@ -8,7 +8,10 @@ import os
 settingObjects = ["Personalization","Terminal","Browser","IDE","Asset Viewer","Scene Editor"]
 settingChanged = [False,False,False,False,False,False]
 settingColumns = ["category","changed"]
-settingAmounts = 5
+settingAmounts = 8
+
+settingData = {}
+templateData = {}
 # Object values
 # Personalization
 readableThemeNames = ["Sun Valley","Forest", "Normal TCL/TK theme"]
@@ -27,14 +30,19 @@ class NotebookPage():
         global darkModeIcon
         global lightModeIcon
         # Read settings from json
+        currentOP.set("Checking for data folder")
+        progressBar.step(100/settingAmounts)
+        self.saveLoc = fileHandler.get_save_loc()
+        self.update()
         if not isAfterSave:
-            currentOP.set("Getting setting 1/2")
+            currentOP.set("Getting settings")
+            fileHandler.get_save_data(settingData)
             progressBar.step(100/settingAmounts)
             self.update()
-            print("Loading from JSON not implemented yet, this is merely filler")
-            currentOP.set("Getting setting 2/2")
-            progressBar.step(100/settingAmounts)
-            self.update()
+        currentOP.set("Getting templates")
+        fileHandler.get_template_data(templateData)
+        progressBar.step(100/settingAmounts)
+        self.update()
         # Load theme
         currentOP.set("Loading setting 1/2")
         progressBar.step(100/settingAmounts)
@@ -85,6 +93,7 @@ class NotebookPage():
             lightModeIcon = tkinter.PhotoImage(master = self, file = fileHandler.tk_light_asset)
         currentOP.set("Ready")
         self.update()
+
     def start_page(nbPage,startHelp = False):
         global settingObjects
         global settingColumns

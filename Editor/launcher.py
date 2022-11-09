@@ -97,14 +97,21 @@ class splash():
             self.hamburgerEnable = True
             self.hamburgerButton.config(text="X")
             self.hamburgerMenu.pack(side="left",fill="y")
-    
+
+    def backToMainMenu(self,menu):
+        if menu == "newGame":
+            self.welcomeFrame.pack()
+            self.createFrame.pack_forget()
+        self.backButton.pack_forget()
+        self.hamburgerButton.pack(side="left")
+
     def createProject(self):
         self.createFrame.pack(fill="both",expand=1)
         self.welcomeFrame.pack_forget()
         # Rename window, place back button
         self.splashScreen.winfo_toplevel().title = "New project - Crumbl Engine Launcher"
         self.backButton.pack(side="left")
-
+        self.backButton.config(command=lambda self = self,a = "newGame":self.backToMainMenu(a))
         # Remove hamburger button (will be returned if returned to welcome page)
         self.hamburgerEnable = True
         self.toggleHamburger()
@@ -113,13 +120,15 @@ class splash():
         #Generate new widgets
         self.cProgressBar = ttk.Progressbar(self.createFrame)
         self.cProgressBar.pack(side = "top",fill="x")
+        self.continueButton = ttk.Button(self.createFrame,text = "Install a template")
+        self.continueButton.pack(anchor="ne")
         self.cText = ttk.Label(self.createFrame,text = "Create New Project",font = ("TkDefaultFont",24,"bold"))
-        self.cText.pack(side = "top",fill = "x")
+        self.cText.pack(side = "top")
         self.choiceText = ttk.Label(self.createFrame,text = "Choose a template")
-        self.choiceText.pack(side = "top",fill = "x")
+        self.choiceText.pack(side = "top")
         self.templateFrame = ttk.Frame(relief="raised",borderwidth=2)
         self.templateFrame.pack(side = "left",fill= "both")
-        self.choiceFrame = ttk.Frame()
+        self.choiceFrame = ttk.Frame(self.createFrame)
         self.choiceFrame.pack(side = "right",fill="y")
         self.continueButton = ttk.Button(self.choiceFrame,text = "Next>",style="Accent.TButton")
         self.continueButton.pack()
