@@ -1,6 +1,7 @@
 # Load icons from UIAssets
 import tkinter
 import os
+import platform
 
 # FileHandler locations
 raw = os.path.join(os.getcwd(),"Editor")
@@ -54,3 +55,15 @@ new_project_asset = os.path.join(IconDir,"newProject.png")
 open_project_asset = os.path.join(IconDir,"open.png")
 git_clone_asset = os.path.join(IconDir,"git.png")
 settings_asset = os.path.join(IconDir,"settings.png")
+
+def get_save_loc():
+    userOS = platform.system()
+    usrHome = os.path.expanduser("~")
+    if userOS == "Windows":
+        location = os.path.join(usrHome,"AppData/Roaming/CrumblStudios/crumblEngine")
+        try:
+            os.mkdir(os.path.join(usrHome,"AppData/Roaming/CrumblStudios/"))
+        except FileExistsError:
+            pass
+    else:
+        location = os.path.join(usrHome,".crumblEngine")
