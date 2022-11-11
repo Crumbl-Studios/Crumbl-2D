@@ -30,15 +30,19 @@ class splash():
         self.imageText = tkinter.Label(image=self.splashImage)
         self.imageText.pack()
         self.loadStatus = tkinter.StringVar(self.imageText)
-        self.loadBar = ttk.Progressbar()
-        self.loadBar.pack(side="bottom",fill="x")
+        self.loadArea = tkinter.Frame(self.splashScreen)
+        self.loadArea.pack(side="bottom",fill="x")
+        self.loadText = ttk.Label(self.loadArea,textvariable=self.loadStatus)
+        self.loadText.pack(side="left")
+        self.loadBar = ttk.Progressbar(self.loadArea)
+        self.loadBar.pack(side="right",fill="x")
         self.hamburgerEnable = True
     def convertFromSplash(self):
         # Custom window decorations
         self.splashScreen.wm_attributes('-type', 'normal')
         self.splashScreen.geometry("1000x600")
         self.imageText.destroy()
-        self.loadBar.destroy()
+        self.loadArea.destroy()
         self.splashScreen.title("Crumbl Engine Launcher")
         self.menuBar = tkinter.Frame(relief="raised",borderwidth=2)
         self.menuBar.pack(side="top", fill= "x")

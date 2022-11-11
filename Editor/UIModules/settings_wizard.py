@@ -10,8 +10,10 @@ settingChanged = [False,False,False,False,False,False]
 settingColumns = ["category","changed"]
 settingAmounts = 8
 
-settingData = {}
-templateData = {}
+# JSON defaults
+settingData = {"theme":"sun_valley","darkMode":True}
+templateData = {"templateNames":[],"templateLoctaions":[],"templateThumbnails":[],"templateDescriptions":[]}
+
 # Object values
 # Personalization
 readableThemeNames = ["Sun Valley","Forest", "Normal TCL/TK theme"]
@@ -36,11 +38,11 @@ class NotebookPage():
         self.update()
         if not isAfterSave:
             currentOP.set("Getting settings")
-            fileHandler.get_save_data(settingData)
+            settingDataNew = fileHandler.get_setting_data(settingData)
             progressBar.step(100/settingAmounts)
             self.update()
         currentOP.set("Getting templates")
-        fileHandler.get_template_data(templateData)
+        templateDataNew = fileHandler.get_template_data(templateData)
         progressBar.step(100/settingAmounts)
         self.update()
         # Load theme

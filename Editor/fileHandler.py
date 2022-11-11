@@ -93,7 +93,7 @@ def save_data(data):
     with open(os.path.join(dataLocations, 'settings.json'), 'w') as save_file:
         json.dump(data, save_file)
 
-def get_save_data(data_layout):
+def get_setting_data(data_layout):
     try:
         with open(os.path.join(dataLocations, 'settings.json')) as save_file:
             print("SETTINGS: attempting to load file...")
