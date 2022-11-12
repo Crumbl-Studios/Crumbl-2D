@@ -37,6 +37,9 @@ class splash():
         self.loadBar = ttk.Progressbar(self.loadArea)
         self.loadBar.pack(side="right",fill="x")
         self.hamburgerEnable = True
+        self.splashScreen.update()
+        settings_wizard.NotebookPage.applySettings(self,self.loadStatus,self.loadBar,self.splashScreen)
+        self.convertFromSplash()
     def convertFromSplash(self):
         # Custom window decorations
         self.splashScreen.wm_attributes('-type', 'normal')
@@ -121,7 +124,9 @@ class splash():
         self.toggleHamburger()
         self.hamburgerButton.pack_forget()
         self.searchResult.set("Search templates...")
-        #Generate new widgets
+        # String variables
+        self.filterTypeChoice = tkinter.StringVar(self.createFrame)
+        # Generate new widgets
         self.cProgressBar = ttk.Progressbar(self.createFrame)
         self.cProgressBar.pack(side = "top",fill="x")
         self.continueButton = ttk.Button(self.createFrame,text = "Install a template")
@@ -130,8 +135,15 @@ class splash():
         self.cText.pack(side = "top")
         self.choiceText = ttk.Label(self.createFrame,text = "Choose a template")
         self.choiceText.pack(side = "top")
+        self.filterArea = ttk.Frame(self.createFrame)
+        self.filterArea.pack(side = "top")
+        self.filterMode = ttk.Checkbutton(self.filterArea,style="Switch.TCheckbutton",text="Filter type")
+        self.filterMode.pack(side="left")
+        self.typeMenu = ttk.OptionMenu(self.filterArea,variable=self.filterTypeChoice,values=self.templateDataNew["templateTypes"])
+        self.typeMenu.pack(side="left")
         self.templateFrame = ttk.Frame(relief="raised",borderwidth=2)
         self.templateFrame.pack(side = "left",fill= "both")
+        self.templateObjects = tkinter.Listbox()
         self.choiceFrame = ttk.Frame(self.createFrame)
         self.choiceFrame.pack(side = "right",fill="y")
         self.continueButton = ttk.Button(self.choiceFrame,text = "Next>",style="Accent.TButton")
@@ -139,6 +151,3 @@ class splash():
 
 
 splashScreen = splash()
-splashScreen.splashScreen.update()
-settings_wizard.NotebookPage.applySettings(splashScreen.splashScreen,splashScreen.loadStatus,splashScreen.loadBar)
-splashScreen.convertFromSplash()

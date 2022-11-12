@@ -10,10 +10,6 @@ settingChanged = [False,False,False,False,False,False]
 settingColumns = ["category","changed"]
 settingAmounts = 8
 
-# JSON defaults
-settingData = {"theme":"sun_valley","darkMode":True}
-templateData = {"templateNames":[],"templateLoctaions":[],"templateThumbnails":[],"templateDescriptions":[]}
-
 # Object values
 # Personalization
 readableThemeNames = ["Sun Valley","Forest", "Normal TCL/TK theme"]
@@ -27,7 +23,7 @@ lightModeIcon : ImageTk.PhotoImage
 themeTextVar = ""
 
 class NotebookPage():
-    def applySettings(self,currentOP,progressBar,isAfterSave = False):
+    def applySettings(self,currentOP,progressBar,window,isAfterSave = False):
         global themeTextVar
         global darkModeIcon
         global lightModeIcon
@@ -35,25 +31,25 @@ class NotebookPage():
         currentOP.set("Checking for data folder")
         progressBar.step(100/settingAmounts)
         self.saveLoc = fileHandler.get_save_loc()
-        self.update()
+        window.update()
         if not isAfterSave:
             currentOP.set("Getting settings")
-            settingDataNew = fileHandler.get_setting_data(settingData)
+            self.settingDataNew = fileHandler.get_setting_data()
             progressBar.step(100/settingAmounts)
-            self.update()
+            window.update()
         currentOP.set("Getting templates")
-        templateDataNew = fileHandler.get_template_data(templateData)
+        self.templateDataNew = fileHandler.get_template_data()
         progressBar.step(100/settingAmounts)
-        self.update()
+        window.update()
         # Load theme
         currentOP.set("Loading setting 1/2")
         progressBar.step(100/settingAmounts)
-        self.update()
+        window.update()
         if theme == "sun_valley":
-            themeTextVar = tkinter.StringVar(self,value = "Sun Valley")
+            themeTextVar = tkinter.StringVar(window,value = "Sun Valley")
             currentOP.set("Loading setting 2/2")
             progressBar.step(100/settingAmounts)
-            self.update()
+            window.update()
             if darkMode:
                 sv_ttk.set_theme("dark")
                 sv_ttk.use_dark_theme()
@@ -62,13 +58,13 @@ class NotebookPage():
                 sv_ttk.use_light_theme()
             currentOP.set("Setting theme thumbnails")
             progressBar.step(100/settingAmounts)
-            self.update()
-            darkModeIcon = tkinter.PhotoImage(master = self, file = fileHandler.sv_dark_asset)
-            lightModeIcon = tkinter.PhotoImage(master = self, file = fileHandler.sv_light_asset)
+            window.update()
+            darkModeIcon = tkinter.PhotoImage(master = window, file = fileHandler.sv_dark_asset)
+            lightModeIcon = tkinter.PhotoImage(master = window, file = fileHandler.sv_light_asset)
         elif theme == "forest":
             currentOP.set("Loading setting 2/2")
             progressBar.step(100/settingAmounts)
-            self.update()
+            window.update()
             themeTextVar = tkinter.StringVar(self,value = "Forest")
             if darkMode:
                 self.tk.call('source', os.path.join(fileHandler.IconDir,'forest-dark.tcl'))
@@ -78,23 +74,23 @@ class NotebookPage():
                 ttk.Style().theme_use('forest-light')
             currentOP.set("Setting theme thumbnails")
             progressBar.step(100/settingAmounts)
-            self.update()
+            window.update()
             darkModeIcon = tkinter.PhotoImage(master = self, file = fileHandler.forest_dark_asset)
             lightModeIcon = tkinter.PhotoImage(master = self, file = fileHandler.forest_light_asset)
         else:
             currentOP.set("Loading setting 2/2")
             progressBar.step(100/settingAmounts)
-            self.update()
+            window.update()
             themeTextVar = tkinter.StringVar(self,value = "Normal TCL/TK style")
             if darkMode:
                 ttk.Style().theme_use('alt')
             currentOP.set("Setting theme thumbnails")
             progressBar.step(100/settingAmounts)
-            self.update()
+            window.update()
             darkModeIcon = tkinter.PhotoImage(master = self, file = fileHandler.tk_dark_asset)
             lightModeIcon = tkinter.PhotoImage(master = self, file = fileHandler.tk_light_asset)
         currentOP.set("Ready")
-        self.update()
+        window.update()
 
     def start_page(nbPage,startHelp = False):
         global settingObjects

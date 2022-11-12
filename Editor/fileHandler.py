@@ -60,6 +60,12 @@ open_project_asset = os.path.join(IconDir,"open.png")
 git_clone_asset = os.path.join(IconDir,"git.png")
 settings_asset = os.path.join(IconDir,"settings.png")
 
+# JSON handling
+# Data layouts
+templateData = {"templateNames":[],"templateLoctaions":[],"templateThumbnails":[],"templateDescriptions":[],"templateTypes":[]}
+settingData = {"theme":"sun_valley","darkMode":True}
+
+# Functions (Stolen from visualized because it just works)
 def get_save_loc():
     global dataLocations
     global templates
@@ -93,7 +99,7 @@ def save_data(data):
     with open(os.path.join(dataLocations, 'settings.json'), 'w') as save_file:
         json.dump(data, save_file)
 
-def get_setting_data(data_layout):
+def get_setting_data(data_layout = settingData):
     try:
         with open(os.path.join(dataLocations, 'settings.json')) as save_file:
             print("SETTINGS: attempting to load file...")
@@ -109,7 +115,7 @@ def get_setting_data(data_layout):
             json.dump(data_layout, save_file_3)
         return data_layout
 
-def get_template_data(data_layout):
+def get_template_data(data_layout = templateData):
     global templates
     try:
         with open(os.path.join(templates, 'templateData.ceTemplates')) as save_file:
