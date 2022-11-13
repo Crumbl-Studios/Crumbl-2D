@@ -62,8 +62,9 @@ settings_asset = os.path.join(IconDir,"settings.png")
 
 # JSON handling
 # Data layouts
-templateData = {"templateNames":[],"templateLoctaions":[],"templateThumbnails":[],"templateDescriptions":[],"templateTypes":[]}
+templateData = {"templateNames":[],"templateLoctaions":[],"templateThumbnails":[],"templateDescriptions":[],"templateTypes":["All"]}
 settingData = {"theme":"sun_valley","darkMode":True}
+
 
 # Functions (Stolen from visualized because it just works)
 def get_save_loc():
@@ -96,22 +97,22 @@ def get_save_loc():
     return dataLocations
 
 def save_data(data):
-    with open(os.path.join(dataLocations, 'settings.json'), 'w') as save_file:
+    with open(os.path.join(dataLocations, 'userData.json'), 'w') as save_file:
         json.dump(data, save_file)
 
 def get_setting_data(data_layout = settingData):
     try:
-        with open(os.path.join(dataLocations, 'settings.json')) as save_file:
+        with open(os.path.join(dataLocations, 'userData.json')) as save_file:
             print("SETTINGS: attempting to load file...")
             return json.load(save_file)
     except JSONDecodeError:
         print("SETTINGS: JSON can't decode...")
-        with open(os.path.join(dataLocations, 'settings.json'), 'w') as save_file_2:
+        with open(os.path.join(dataLocations, 'userData.json'), 'w') as save_file_2:
             json.dump(data_layout, save_file_2)
         return data_layout
     except FileNotFoundError:
         print("SETTINGS: file not found,generating...")
-        with open(os.path.join(dataLocations, 'settings.json'), 'w') as save_file_3:
+        with open(os.path.join(dataLocations, 'userData.json'), 'w') as save_file_3:
             json.dump(data_layout, save_file_3)
         return data_layout
 
