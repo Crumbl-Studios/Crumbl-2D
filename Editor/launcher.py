@@ -20,6 +20,7 @@ import sv_ttk
 ## Launcher files
 import fileHandler
 import UIModules.settings_wizard as settings_wizard
+import UIModules.about as about
 
 class splash():
     def __init__(self):
@@ -80,11 +81,15 @@ class splash():
         self.settingsImage = ImageTk.PhotoImage(Image.open(fileHandler.settings_asset))
         self.settingsButton = ttk.Button(self.hamburgerMenu,text="Settings",image = self.settingsImage,compound="left")
         self.settingsButton.pack(side = "top",fill = "x")
+        self.aboutImage = ImageTk.PhotoImage(Image.open(fileHandler.crumbl_logo).resize([32,32]))
+        self.aboutButton = ttk.Button(self.hamburgerMenu,text="About",image = self.aboutImage,compound="left",command=lambda s=self,m="about":self.setupSharedEditorTab)
+        self.aboutButton.pack(side = "top",fill = "x")
 
         # Pre-determined widget frames
         self.welcomeFrame = tkinter.Frame()
         self.createFrame = tkinter.Frame()
         self.settingsFrame = tkinter.Frame()
+        self.aboutFrame = tkinter.Frame()
 
         self.welcomeFrame.pack(fill="both",expand=1)
         self.wText = ttk.Label(self.welcomeFrame,text = "Welcome to the Crumbl Engine!",font = ("TkDefaultFont",24,"bold"))
@@ -126,9 +131,11 @@ class splash():
         self.searchResult.set("Search templates...")
         # String variables
         self.filterTypeChoice = tkinter.StringVar(self.createFrame)
+        self.filterSortChoice = tkinter.StringVar(self.createFrame)
         # Generate new widgets
         self.cProgressBar = ttk.Progressbar(self.createFrame)
         self.cProgressBar.pack(side = "top",fill="x")
+        self.cProgressBar.step(33)
         self.continueButton = ttk.Button(self.createFrame,text = "Install a template")
         self.continueButton.pack(anchor="ne")
         self.cText = ttk.Label(self.createFrame,text = "Create New Project",font = ("TkDefaultFont",24,"bold"))
@@ -136,18 +143,39 @@ class splash():
         self.choiceText = ttk.Label(self.createFrame,text = "Choose a template")
         self.choiceText.pack(side = "top")
         self.filterArea = ttk.Frame(self.createFrame)
-        self.filterArea.pack(side = "top")
-        self.filterMode = ttk.Checkbutton(self.filterArea,style="Switch.TCheckbutton",text="Filter type")
-        self.filterMode.pack(side="left")
-        self.typeMenu = ttk.OptionMenu(self.filterArea,variable=self.filterTypeChoice,values=self.templateDataNew["templateTypes"])
+        self.filterArea.pack(side = "top", fill="x")
+        self.filterText = tkinter.Label(self.filterArea,text = "Filter:")
+        self.filterText.pack(side="left")
+        self.typeMenu = ttk.OptionMenu(self.filterArea,self.filterTypeChoice,*set(fileHandler.templateData["templateTypes"]))
         self.typeMenu.pack(side="left")
-        self.templateFrame = ttk.Frame(relief="raised",borderwidth=2)
-        self.templateFrame.pack(side = "left",fill= "both")
-        self.templateObjects = tkinter.Listbox()
+        self.sortText = tkinter.Label(self.filterArea,text = "Sort by:")
+        self.sortText.pack(side="left")
+        self.sortMenu = ttk.OptionMenu(self.filterArea,self.filterSortChoice,
+                                        *["Type","Type","Times used","Name (A-Z)","Name (Z-A)","Date created","Date installed","Date last used","Size (Ascending)","Size (Descending)"])
+        self.sortMenu.pack(side="left")
+        self.templateFrame = ttk.Frame(self.createFrame,relief="raised",borderwidth=2)
+        self.templateFrame.pack(side = "left",fill= "both",expand=1)
+        self.templates = ttk.Treeview(self.templateFrame)
+        self.templates.pack(fill = "both")
         self.choiceFrame = ttk.Frame(self.createFrame)
         self.choiceFrame.pack(side = "right",fill="y")
-        self.continueButton = ttk.Button(self.choiceFrame,text = "Next>",style="Accent.TButton")
-        self.continueButton.pack()
+        self.objectTitle = ttk.Label(self.choiceFrame,text = "None selected",font = ("TkDefaultFont",18,"bold"))
+        self.objectTitle.pack(side="top")
+        self.objectTitle = ttk.Label(self.choiceFrame,text = "Select something to view more and continue")
+        self.objectTitle.pack(side="top")
+        self.continueButton = ttk.Button(self.choiceFrame,text = "Next>",state="disabled",style="Accent.TButton")
+        self.continueButton.pack(anchor="se")
 
+    def removeSharedEdtiorTab(self,module):
+        self.backButton.pack_forget()
+        if module == "about":
+            self.backButton.pack_forget()
 
+    def setupSharedEditorTab(self,module):
+        self.backButton.pack(side="left")
+        self.backButton.config(command=lambda s=self,m=module:self.removeSharedEditorTab(s,m))
+        self.welcomeFrame.pack_forget()
+        if module == "about":
+            self.aboutFrame.pack(side="both")
+            self.about = about.NotebookPage(self.aboutFrame)
 splashScreen = splash()
