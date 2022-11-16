@@ -1,18 +1,17 @@
 # CrumblEngine
 [![License](https://img.shields.io/:license-gplv2-green.svg)](https://tldrlegal.com/license/gnu-general-public-license-v2)
 
-CrumblEngine is a 2d (and 3d in the future) game engine written in c++, with python scripting and the hopes of it being easy to pick up. It will not be written from scratch, but glued together with pre-existing libraries and in-house extensions of them. It is similar to pygame, as it is based on SDL2. It is largely incomplete.
+Crumbl 2D is a game engine written in c++. With planned python scripting for the hopes of it being easy to pick up. It will not be written from scratch, but glued together with pre-existing libraries, including ENTT, box2d, SDL and in-house extensions of them. It is similar to pygame, as it is based on SDL2. It is largely incomplete.
 
 ## Features
-- (FUTURE) Python based editor that will make it easier to produce games
-- Speed of C++ with stock SDL
+- (FUTURE) Python based editor
+- (FUTURE) Python scripting system
 - (FUTURE) Robust in-game debugger tools
 - (FUTURE) Advanced sound engine
-- Python scripting system
-- (FUTURE) In-editor documentation that has enough knowledge of Python to ease game making
+- (FUTURE) In-editor documentation with knowledge of Python
 
 ## Contributions
-We are actively looking for developers to help. This software is open source and all work is volunteer work. Any help is appreciated, but is entirely voluntary
+We are actively looking for developers to help. This software is open source and all work is volunteer work. Any help is appreciated, but is entirely voluntary.
 
 ## Installation
 ### NOTE FOR ALL VERSIONS: THESE INSTALL INSTRUCTIONS DO NOT WORK; WE ARE CURRENTLY REVAMPING OUR ENTIRE CODEBASE
