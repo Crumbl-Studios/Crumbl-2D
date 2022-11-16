@@ -1,4 +1,4 @@
-# CrumblEngine
+# Crumbl 2D
 [![License](https://img.shields.io/:license-gplv2-green.svg)](https://tldrlegal.com/license/gnu-general-public-license-v2)
 
 Crumbl 2D is a game engine written in c++. With planned python scripting for the hopes of it being easy to pick up. It will not be written from scratch, but glued together with pre-existing libraries, including ENTT, box2d, SDL and in-house extensions of them. It is similar to pygame, as it is based on SDL2. It is largely incomplete.
