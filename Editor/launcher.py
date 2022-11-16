@@ -79,10 +79,10 @@ class splash():
         self.settingsText = ttk.Label(self.hamburgerMenu,text="SETTINGS")
         self.settingsText.pack(side="top",fill = "x")
         self.settingsImage = ImageTk.PhotoImage(Image.open(fileHandler.settings_asset))
-        self.settingsButton = ttk.Button(self.hamburgerMenu,text="Settings",image = self.settingsImage,compound="left")
+        self.settingsButton = ttk.Button(self.hamburgerMenu,text="Settings",image = self.settingsImage,compound="left",command=lambda s=self,m="settings":self.setupSharedEditorTab(s,m))
         self.settingsButton.pack(side = "top",fill = "x")
         self.aboutImage = ImageTk.PhotoImage(Image.open(fileHandler.crumbl_logo).resize([32,32]))
-        self.aboutButton = ttk.Button(self.hamburgerMenu,text="About",image = self.aboutImage,compound="left",command=lambda s=self,m="about":self.setupSharedEditorTab)
+        self.aboutButton = ttk.Button(self.hamburgerMenu,text="About",image = self.aboutImage,compound="left",command=lambda s=self,m="about":self.setupSharedEditorTab(s,m))
         self.aboutButton.pack(side = "top",fill = "x")
 
         # Pre-determined widget frames
@@ -94,6 +94,10 @@ class splash():
         self.welcomeFrame.pack(fill="both",expand=1)
         self.wText = ttk.Label(self.welcomeFrame,text = "Welcome to the Crumbl Engine!",font = ("TkDefaultFont",24,"bold"))
         self.wText.pack(side = "top",fill = "x")
+        self.recentFilesText = ttk.Label(self.welcomeFrame,text = "Recent projects")
+        self.recentFilesText.pack(side = "top",fill = "x")
+        self.recents = ttk.Treeview(self.welcomeFrame)
+        self.recents.pack(fill = "both",expand=1)
 
         # Final steps
         self.splashScreen.mainloop()
@@ -108,7 +112,8 @@ class splash():
         else:
             self.hamburgerEnable = True
             self.hamburgerButton.config(text="X")
-            self.hamburgerMenu.pack(side="left",fill="y")
+            self.welcomeFrame.pack(side = "right",fill="both",expand=1,anchor="center")
+            self.hamburgerMenu.pack(side="left",fill="y",expand=1,anchor="w")
 
     def backToMainMenu(self,menu):
         if menu == "newGame":
@@ -156,7 +161,7 @@ class splash():
         self.templateFrame = ttk.Frame(self.createFrame,relief="raised",borderwidth=2)
         self.templateFrame.pack(side = "left",fill= "both",expand=1)
         self.templates = ttk.Treeview(self.templateFrame)
-        self.templates.pack(fill = "both")
+        self.templates.pack(fill = "both",expand=1)
         self.choiceFrame = ttk.Frame(self.createFrame)
         self.choiceFrame.pack(side = "right",fill="y")
         self.objectTitle = ttk.Label(self.choiceFrame,text = "None selected",font = ("TkDefaultFont",18,"bold"))
@@ -166,16 +171,26 @@ class splash():
         self.continueButton = ttk.Button(self.choiceFrame,text = "Next>",state="disabled",style="Accent.TButton")
         self.continueButton.pack(anchor="se")
 
-    def removeSharedEdtiorTab(self,module):
+    def removeSharedEditorTab(event,self,module):
         self.backButton.pack_forget()
+        self.hamburgerButton.pack(side="left")
+        self.hamburgerMenu.pack(side="left", fill = "y",expand = 1)
+        self.welcomeFrame.pack(fill = "both")
         if module == "about":
-            self.backButton.pack_forget()
+            self.aboutFrame.pack_forget()
+        if module == "settings":
+            self.settingsFrame.pack_forget()
 
-    def setupSharedEditorTab(self,module):
+    def setupSharedEditorTab(event,self,module):
         self.backButton.pack(side="left")
         self.backButton.config(command=lambda s=self,m=module:self.removeSharedEditorTab(s,m))
         self.welcomeFrame.pack_forget()
+        self.hamburgerMenu.pack_forget()
+        self.hamburgerButton.pack_forget()
         if module == "about":
-            self.aboutFrame.pack(side="both")
-            self.about = about.NotebookPage(self.aboutFrame)
+            self.aboutFrame.pack(fill="both")
+            self.about = about.NotebookPage.start_page(self.aboutFrame)
+        if module == "settings":
+            self.settingsFrame.pack(fill="both")
+            self.setting = settings_wizard.NotebookPage.start_page(self.settingsFrame)
 splashScreen = splash()
