@@ -11,8 +11,11 @@ CrumblEngine is a 2d (and 3d in the future) game engine written in c++, with pyt
 - Python scripting system
 - (FUTURE) In-editor documentation that has enough knowledge of Python to ease game making
 
-## Installation
+## Contributions
+We are actively looking for developers to help. This software is open source and all work is volunteer work. Any help is appreciated, but is entirely voluntary
 
+## Installation
+### NOTE FOR ALL VERSIONS: THESE INSTALL INSTRUCTIONS DO NOT WORK; WE ARE CURRENTLY REVAMPING OUR ENTIRE CODEBASE
 Currently the software is incomplete, so this guide only is to get the "demo" program running, and is assuming you have already cloned this repo.
 
 ### Linux/Unix
