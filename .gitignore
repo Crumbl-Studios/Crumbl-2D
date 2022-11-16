@@ -1,13 +1,6 @@
+.vscode/
+/Engine/.idea
+/Sandbox/.idea
 /Editor/__pycache__/
 /Editor/UIModules/__pycache__/
-.idea/
-/Editor/__pycache__/main.cpython-39.pyc
-/Editor/UIModules/__pycache__/start_page.cpython-39.pyc
-/Editor/UIModules/__pycache__/start_page.cpython-39.pyc
-.vscode/
-/Engine/__pycache__
-/Engine/build/sdlWrapper.so
-/Engine/build/sdlWrapper.dll
-/Engine/build/sdlTest
-/Engine/build/sdlTest.exe
-/Engine/SDL2/
+
