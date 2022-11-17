@@ -1,5 +1,0 @@
-# ninja log v5
-0	280	6903351657660567	CMakeFiles/Crumbl2d.dir/src/Crumbl2d/Core/application.cpp.obj	b091efe317c986d3
-281	1014	6903351664950527	libCrumbl2d.dll	7c94b6b6550289ee
-281	1014	6903351664950527	libCrumbl2d.dll.a	7c94b6b6550289ee
-8	873	6903435314520044	build.ninja	24cad2c915f8a1a7

@@ -1,20 +1,18 @@
 cmake_minimum_required(VERSION 3.21)
-project(Engine)
+project(Crumbl2d)
 
 set(CMAKE_CXX_STANDARD 17)
 
-add_compile_definitions(CB_PLATFORM_LINUX)
+add_compile_definitions(CB_PLATFORM_WINDOWS)
 add_compile_definitions(CB_BUILD_DLL)
 
 include_directories(src/Crumbl2d/)
-include_directories(vendor)
-include_directories(vendor/box2D)
-include_directories(vendor/box2D/include)
 include_directories(vendor/box2D/include/box2d)
 include_directories(vendor/ENTT)
-include_directories(vendor/SDL2)
-include_directories(vendor/SDL2/include)
 include_directories(vendor/SDL2/include/SDL2)
+
+link_directories(../Engine/vendor/SDL2/lib)
+link_directories(../Engine/vendor/box2D/lib)
 
 add_library(Crumbl2d SHARED
         src/Crumbl2d/Core/application.cpp
@@ -22,131 +20,11 @@ add_library(Crumbl2d SHARED
         src/Crumbl2d/Core/core.h
         src/Crumbl2d/Core/entryPoint.h
 
-        #src/Tests/cppTester.cpp
-        #src/Tests/debugSystem.h
-        #src/Tests/debugUIHandler.h
+        vendor/ENTT/entt.hpp)
 
-        vendor/ENTT/entt.hpp
+target_link_libraries(Crumbl2d SDL2)
+target_link_libraries(Crumbl2d SDL2_image)
+target_link_libraries(Crumbl2d SDL2_ttf)
+target_link_libraries(Crumbl2d SDL2_mixer)
 
-        vendor/box2D/include/box2d/b2_api.h
-        vendor/box2D/include/box2d/b2_block_allocator.h
-        vendor/box2D/include/box2d/b2_body.h
-        vendor/box2D/include/box2d/b2_broad_phase.h
-        vendor/box2D/include/box2d/b2_chain_shape.h
-        vendor/box2D/include/box2d/b2_circle_shape.h
-        vendor/box2D/include/box2d/b2_collision.h
-        vendor/box2D/include/box2d/b2_common.h
-        vendor/box2D/include/box2d/b2_contact.h
-        vendor/box2D/include/box2d/b2_contact_manager.h
-        vendor/box2D/include/box2d/b2_distance.h
-        vendor/box2D/include/box2d/b2_distance_joint.h
-        vendor/box2D/include/box2d/b2_draw.h
-        vendor/box2D/include/box2d/b2_dynamic_tree.h
-        vendor/box2D/include/box2d/b2_edge_shape.h
-        vendor/box2D/include/box2d/b2_fixture.h
-        vendor/box2D/include/box2d/b2_friction_joint.h
-        vendor/box2D/include/box2d/b2_gear_joint.h
-        vendor/box2D/include/box2d/b2_growable_stack.h
-        vendor/box2D/include/box2d/b2_joint.h
-        vendor/box2D/include/box2d/b2_math.h
-        vendor/box2D/include/box2d/b2_motor_joint.h
-        vendor/box2D/include/box2d/b2_mouse_joint.h
-        vendor/box2D/include/box2d/b2_polygon_shape.h
-        vendor/box2D/include/box2d/b2_prismatic_joint.h
-        vendor/box2D/include/box2d/b2_pulley_joint.h
-        vendor/box2D/include/box2d/b2_revolute_joint.h
-        vendor/box2D/include/box2d/b2_rope.h
-        vendor/box2D/include/box2d/b2_settings.h
-        vendor/box2D/include/box2d/b2_shape.h
-        vendor/box2D/include/box2d/b2_stack_allocator.h
-        vendor/box2D/include/box2d/b2_time_of_impact.h
-        vendor/box2D/include/box2d/b2_time_step.h
-        vendor/box2D/include/box2d/b2_timer.h
-        vendor/box2D/include/box2d/b2_types.h
-        vendor/box2D/include/box2d/b2_weld_joint.h
-        vendor/box2D/include/box2d/b2_wheel_joint.h
-        vendor/box2D/include/box2d/b2_world.h
-        vendor/box2D/include/box2d/b2_world_callbacks.h
-        vendor/box2D/include/box2d/box2d.h
-
-        vendor/SDL2/include/SDL2/begin_code.h
-        vendor/SDL2/include/SDL2/close_code.h
-        vendor/SDL2/include/SDL2/SDL.h
-        vendor/SDL2/include/SDL2/SDL_assert.h
-        vendor/SDL2/include/SDL2/SDL_atomic.h
-        vendor/SDL2/include/SDL2/SDL_audio.h
-        vendor/SDL2/include/SDL2/SDL_bits.h
-        vendor/SDL2/include/SDL2/SDL_blendmode.h
-        vendor/SDL2/include/SDL2/SDL_clipboard.h
-        vendor/SDL2/include/SDL2/SDL_config.h
-        vendor/SDL2/include/SDL2/SDL_cpuinfo.h
-        vendor/SDL2/include/SDL2/SDL_egl.h
-        vendor/SDL2/include/SDL2/SDL_endian.h
-        vendor/SDL2/include/SDL2/SDL_error.h
-        vendor/SDL2/include/SDL2/SDL_events.h
-        vendor/SDL2/include/SDL2/SDL_filesystem.h
-        vendor/SDL2/include/SDL2/SDL_gamecontroller.h
-        vendor/SDL2/include/SDL2/SDL_gesture.h
-        vendor/SDL2/include/SDL2/SDL_guid.h
-        vendor/SDL2/include/SDL2/SDL_haptic.h
-        vendor/SDL2/include/SDL2/SDL_hidapi.h
-        vendor/SDL2/include/SDL2/SDL_hints.h
-        vendor/SDL2/include/SDL2/SDL_image.h
-        vendor/SDL2/include/SDL2/SDL_joystick.h
-        vendor/SDL2/include/SDL2/SDL_keyboard.h
-        vendor/SDL2/include/SDL2/SDL_keycode.h
-        vendor/SDL2/include/SDL2/SDL_loadso.h
-        vendor/SDL2/include/SDL2/SDL_locale.h
-        vendor/SDL2/include/SDL2/SDL_log.h
-        vendor/SDL2/include/SDL2/SDL_main.h
-        vendor/SDL2/include/SDL2/SDL_messagebox.h
-        vendor/SDL2/include/SDL2/SDL_metal.h
-        vendor/SDL2/include/SDL2/SDL_misc.h
-        vendor/SDL2/include/SDL2/SDL_mixer.h
-        vendor/SDL2/include/SDL2/SDL_mouse.h
-        vendor/SDL2/include/SDL2/SDL_mutex.h
-        vendor/SDL2/include/SDL2/SDL_name.h
-        vendor/SDL2/include/SDL2/SDL_opengl.h
-        vendor/SDL2/include/SDL2/SDL_opengl_glext.h
-        vendor/SDL2/include/SDL2/SDL_opengles.h
-        vendor/SDL2/include/SDL2/SDL_opengles2.h
-        vendor/SDL2/include/SDL2/SDL_opengles2_gl2.h
-        vendor/SDL2/include/SDL2/SDL_opengles2_gl2ext.h
-        vendor/SDL2/include/SDL2/SDL_opengles2_gl2platform.h
-        vendor/SDL2/include/SDL2/SDL_opengles2_khrplatform.h
-        vendor/SDL2/include/SDL2/SDL_pixels.h
-        vendor/SDL2/include/SDL2/SDL_platform.h
-        vendor/SDL2/include/SDL2/SDL_power.h
-        vendor/SDL2/include/SDL2/SDL_quit.h
-        vendor/SDL2/include/SDL2/SDL_rect.h
-        vendor/SDL2/include/SDL2/SDL_render.h
-        vendor/SDL2/include/SDL2/SDL_revision.h
-        vendor/SDL2/include/SDL2/SDL_rwops.h
-        vendor/SDL2/include/SDL2/SDL_scancode.h
-        vendor/SDL2/include/SDL2/SDL_sensor.h
-        vendor/SDL2/include/SDL2/SDL_shape.h
-        vendor/SDL2/include/SDL2/SDL_stdinc.h
-        vendor/SDL2/include/SDL2/SDL_surface.h
-        vendor/SDL2/include/SDL2/SDL_system.h
-        vendor/SDL2/include/SDL2/SDL_syswm.h
-        vendor/SDL2/include/SDL2/SDL_test.h
-        vendor/SDL2/include/SDL2/SDL_test_assert.h
-        vendor/SDL2/include/SDL2/SDL_test_common.h
-        vendor/SDL2/include/SDL2/SDL_test_compare.h
-        vendor/SDL2/include/SDL2/SDL_test_crc32.h
-        vendor/SDL2/include/SDL2/SDL_test_font.h
-        vendor/SDL2/include/SDL2/SDL_test_fuzzer.h
-        vendor/SDL2/include/SDL2/SDL_test_harness.h
-        vendor/SDL2/include/SDL2/SDL_test_images.h
-        vendor/SDL2/include/SDL2/SDL_test_log.h
-        vendor/SDL2/include/SDL2/SDL_test_md5.h
-        vendor/SDL2/include/SDL2/SDL_test_memory.h
-        vendor/SDL2/include/SDL2/SDL_test_random.h
-        vendor/SDL2/include/SDL2/SDL_thread.h
-        vendor/SDL2/include/SDL2/SDL_timer.h
-        vendor/SDL2/include/SDL2/SDL_touch.h
-        vendor/SDL2/include/SDL2/SDL_ttf.h
-        vendor/SDL2/include/SDL2/SDL_types.h
-        vendor/SDL2/include/SDL2/SDL_version.h
-        vendor/SDL2/include/SDL2/SDL_video.h
-        vendor/SDL2/include/SDL2/SDL_vulkan.h)
+target_link_libraries(Crumbl2d box2d)

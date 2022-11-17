@@ -635,7 +635,7 @@
 				}
 			],
 			"type" : "PATH",
-			"value" : "C:/Program Files (x86)/Project"
+			"value" : "C:/Program Files (x86)/Crumbl2d"
 		},
 		{
 			"name" : "CMAKE_LINKER",
@@ -851,7 +851,7 @@
 				}
 			],
 			"type" : "STATIC",
-			"value" : "Engine"
+			"value" : "Crumbl2d"
 		},
 		{
 			"name" : "CMAKE_RANLIB",
@@ -1230,7 +1230,7 @@
 			"value" : "FALSE"
 		},
 		{
-			"name" : "Engine_BINARY_DIR",
+			"name" : "Crumbl2d_BINARY_DIR",
 			"properties" : 
 			[
 				{
@@ -1242,7 +1242,7 @@
 			"value" : "D:/dev/Crumbl-Studios/Crumbl-2D/Engine/cmake-build-debug"
 		},
 		{
-			"name" : "Engine_IS_TOP_LEVEL",
+			"name" : "Crumbl2d_IS_TOP_LEVEL",
 			"properties" : 
 			[
 				{
@@ -1254,43 +1254,7 @@
 			"value" : "ON"
 		},
 		{
-			"name" : "Engine_SOURCE_DIR",
-			"properties" : 
-			[
-				{
-					"name" : "HELPSTRING",
-					"value" : "Value Computed by CMake"
-				}
-			],
-			"type" : "STATIC",
-			"value" : "D:/dev/Crumbl-Studios/Crumbl-2D/Engine"
-		},
-		{
-			"name" : "Project_BINARY_DIR",
-			"properties" : 
-			[
-				{
-					"name" : "HELPSTRING",
-					"value" : "Value Computed by CMake"
-				}
-			],
-			"type" : "STATIC",
-			"value" : "D:/dev/Crumbl-Studios/Crumbl-2D/Engine/cmake-build-debug"
-		},
-		{
-			"name" : "Project_IS_TOP_LEVEL",
-			"properties" : 
-			[
-				{
-					"name" : "HELPSTRING",
-					"value" : "Value Computed by CMake"
-				}
-			],
-			"type" : "STATIC",
-			"value" : "ON"
-		},
-		{
-			"name" : "Project_SOURCE_DIR",
+			"name" : "Crumbl2d_SOURCE_DIR",
 			"properties" : 
 			[
 				{

@@ -27,7 +27,7 @@
 					[
 						0
 					],
-					"name" : "Sandbox",
+					"name" : "Crumbl2d",
 					"targetIndexes" : 
 					[
 						0
@@ -38,9 +38,9 @@
 			[
 				{
 					"directoryIndex" : 0,
-					"id" : "Sandbox::@6890427a1f51a3e7e1df",
-					"jsonFile" : "target-Sandbox-Debug-f4fb43fb9d5244d13bb0.json",
-					"name" : "Sandbox",
+					"id" : "Crumbl2d::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-Crumbl2d-Debug-aa99ca7eb4134ab3a8cf.json",
+					"name" : "Crumbl2d",
 					"projectIndex" : 0
 				}
 			]
@@ -49,8 +49,8 @@
 	"kind" : "codemodel",
 	"paths" : 
 	{
-		"build" : "D:/dev/Crumbl-Studios/Crumbl-2D/Sandbox/cmake-build-debug",
-		"source" : "D:/dev/Crumbl-Studios/Crumbl-2D/Sandbox"
+		"build" : "D:/dev/Crumbl-Studios/Crumbl-2D/Engine/cmake-build-debug",
+		"source" : "D:/dev/Crumbl-Studios/Crumbl-2D/Engine"
 	},
 	"version" : 
 	{

@@ -126,7 +126,7 @@
 			},
 			{
 				"backtrace" : 2,
-				"fragment" : "-L\\cmake-build-debug",
+				"fragment" : "-LD:\\dev\\Crumbl-Studios\\Crumbl-2D\\Sandbox\\..\\Engine\\cmake-build-debug",
 				"role" : "libraryPath"
 			},
 			{
