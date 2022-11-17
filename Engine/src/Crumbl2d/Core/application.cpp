@@ -1,6 +1,6 @@
 #include "application.h"
 
-namespace Crumbl
+namespace Crumbl2D
 {
     Application::Application()
     {

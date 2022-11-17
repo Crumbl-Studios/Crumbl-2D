@@ -1,7 +1,7 @@
 #pragma once
 #include "core.h"
 
-namespace Crumbl
+namespace Crumbl2D
 {
     class CRUMBL_API Application
     {
