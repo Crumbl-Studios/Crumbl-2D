@@ -9,7 +9,7 @@ read -p "Please type the option number and press Enter " option
 case $option in
     [1]* )
         {
-            cd ./Engine/
+            cd ./Engine/src
             echo -e "\033[32mMoved to software directory\033[0m"
         }||{
             echo -e "\033[32mAlready in directory\033[0m"
@@ -17,14 +17,12 @@ case $option in
         echo -e "\033[32mEditing configuration\033[0m"
         sed '6\
         > add_compile_definitions(CB_PLATFORM_LINUX)' > CMakeLists.txt
-        sed '7\
-        > ' > CMakeLists.txt # Remove definition, Cmake does not support one line .so creation
         echo -e "\033[32mCompiling\033[0m"
         cmake CMakeLists.txt
         echo -e "\033[32mEngine built\a";;
     [2]* )
         {
-            cd ./Engine/
+            cd ./Engine/src
             echo -e "\033[32mMoved to software directory\033[0m"
         }||{
             echo -e "\033[32mAlready in directory\033[0m"
@@ -39,15 +37,13 @@ case $option in
         python3 engineTester.py;;
     [3]* )
         {
-            cd ./Engine/
+            cd ./Engine/src
             echo -e "\033[32mMoved to software directory\033[0m"
         }||{
             echo -e "\033[32mAlready in directory\033[0m"
         }
         sed '6\
         > add_compile_definitions(CB_PLATFORM_LINUX)' > CMakeLists.txt
-        sed '7\
-        > ' > CMakeLists.txt # Remove definition, Cmake does not support one line .so creation
         echo -e "\033[32mCompiling\033[0m"
         cmake CMakeLists.txt
         echo -e "\033[32mEngine built, running test script \a\033[0m"
