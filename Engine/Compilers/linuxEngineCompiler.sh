@@ -1,5 +1,5 @@
 #!/bin/bash
-echo "Crumbl Engine Builder (Mac/Unix/Linux)"
+echo "Crumbl 2D Builder (Mac/Unix/Linux)"
 echo "Select an option:"
 echo "1.) Build engine"
 echo "2.) Build engine and run Python test script"
@@ -14,7 +14,13 @@ case $option in
         }||{
             echo -e "\033[32mAlready in directory\033[0m"
         }
-        g++ -o build/sdlWrapper.so sdlWrapper.cpp -lSDL2 -lSDL2main -lSDL2_ttf -lSDL2_image -shared -W -g -fPIC -Wall -Wpedantic
+        echo -e "\033[32mEditing configuration\033[0m"
+        sed '6\
+        > add_compile_definitions(CB_PLATFORM_LINUX)' > CMakeLists.txt
+        sed '7\
+        > ' > CMakeLists.txt # Remove definition, Cmake does not support one line .so creation
+        echo -e "\033[32mCompiling\033[0m"
+        cmake CMakeLists.txt
         echo -e "\033[32mEngine built\a";;
     [2]* )
         {
@@ -23,7 +29,12 @@ case $option in
         }||{
             echo -e "\033[32mAlready in directory\033[0m"
         }
-        g++ -o build/sdlWrapper.so sdlWrapper.cpp -lSDL2 -lSDL2main -lSDL2_ttf -lSDL2_image -shared -W -g -fPIC -Wall -Wpedantic
+        sed '6\
+        > add_compile_definitions(CB_PLATFORM_LINUX)' > CMakeLists.txt
+        sed '7\
+        > ' > CMakeLists.txt # Remove definition, Cmake does not support one line .so creation
+        echo -e "\033[32mCompiling\033[0m"
+        cmake CMakeLists.txt
         echo -e " \033[32mEngine built, running test script \a\033[0m"
         python3 engineTester.py;;
     [3]* )
@@ -33,7 +44,12 @@ case $option in
         }||{
             echo -e "\033[32mAlready in directory\033[0m"
         }
-        g++ -o build/sdlTest cppTester.cpp -lSDL2 -lSDL2main -lSDL2_ttf -lSDL2_image -shared -W -g -fPIC
+        sed '6\
+        > add_compile_definitions(CB_PLATFORM_LINUX)' > CMakeLists.txt
+        sed '7\
+        > ' > CMakeLists.txt # Remove definition, Cmake does not support one line .so creation
+        echo -e "\033[32mCompiling\033[0m"
+        cmake CMakeLists.txt
         echo -e "\033[32mEngine built, running test script \a\033[0m"
         ./build/sdlTest;;
     [4]* )

@@ -73,13 +73,13 @@ def get_save_loc():
     userOS = platform.system()
     usrHome = os.path.expanduser("~")
     if userOS == "Windows":
-        dataLocations = os.path.join(usrHome,"AppData/Roaming/CrumblStudios/crumblEngine")
+        dataLocations = os.path.join(usrHome,"AppData/Roaming/CrumblStudios/crumbl2D")
         try:
             os.mkdir(os.path.join(usrHome,"AppData/Roaming/CrumblStudios/"))
         except FileExistsError:
             pass
     else:
-        dataLocations = os.path.join(usrHome,".crumblEngine")
+        dataLocations = os.path.join(usrHome,".crumbl2D")
     print("Data location is %s" %dataLocations)
     
     if os.path.join(dataLocations,"settings.json"):

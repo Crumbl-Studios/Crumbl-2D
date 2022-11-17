@@ -1,4 +1,4 @@
-##    Crumbl Engine Editor
+##    Crumbl 2D Editor
 ##    Copyright (C) 2022 Crumbl Studios
 
 ##    This program is free software; you can redistribute it and/or modify
@@ -75,7 +75,7 @@ class app():
         windowedTabs = []
         tabMode = 0
         win_mode = "tabbed"
-        main = tkinter.Tk(None,None," Loading - Crumbl Engine Editor")
+        main = tkinter.Tk(None,None," Loading - Crumbl 2D Editor")
         
         # Project and settings splash screen (Setup and use main window)
         main.resizable(False,False)
@@ -445,7 +445,7 @@ class app():
         global module_tabs
         if win_mode == "tabbed":
             tab_name = module_tabs.tab(module_tabs.select(),"text")
-            main.winfo_toplevel().title(tab_name +" - Crumbl Engine Editor")
+            main.winfo_toplevel().title(tab_name +" - Crumbl 2D Editor")
             tab_list = [module_tabs.tab(i, option="text") for i in module_tabs.tabs()]
             tab_no = tab_list.index(tab_name)
             print(tab_no)
@@ -458,7 +458,7 @@ class app():
             else:
                 pop_button.config(state = 'disabled')
         if win_mode == "miniwindow":
-            main.winfo_toplevel().title(title +" - Crumbl Engine Editor")
+            main.winfo_toplevel().title(title +" - Crumbl 2D Editor")
 
     def notebookAdd(title,renameable = False,closeable = False,poppable = False):
         global win_mode

@@ -1,12 +1,13 @@
 import tkinter
 import fileHandler
 from tkinter import scrolledtext, ttk
+from PIL import ImageTk,Image
 
 class NotebookPage():
     def start_page(nbPage,startHelp = False):
         about = nbPage
-        engine_icon = tkinter.PhotoImage(master = about,file = fileHandler.engine_logo)
-        studio_icon = tkinter.PhotoImage(master = about,file = fileHandler.studio_logo)
+        engine_icon = ImageTk.PhotoImage(Image.open(fileHandler.engine_logo).resize([480,135]))
+        studio_icon = ImageTk.PhotoImage(Image.open(fileHandler.engine_logo).resize([114,32]))
         logo = tkinter.Label(about,image = engine_icon,text="Version: 0.1B",compound="top")
         logo.pack(side = "top",expand = 0)
         text = tkinter.Label(about,text="Engine Version: 0.1B")

@@ -1,6 +1,6 @@
 @ECHO OFF
 :choice
-echo Crumbl Engine Builder (windows)
+echo Crumbl 2D Builder (windows)
 echo Select an option:
 echo 1.) Build engine
 echo 2.) Build engine and run Python test script

@@ -1,4 +1,4 @@
-##    Crumbl Engine Loader
+##    Crumbl 2D Loader
 ##    Copyright (C) 2022 Crumbl Studios
 
 ##    This program is free software; you can redistribute it and/or modify
@@ -24,7 +24,7 @@ import UIModules.about as about
 
 class splash():
     def __init__(self):
-        self.splashScreen = tkinter.Tk(None,None," Loading - Crumbl Engine Launcher")
+        self.splashScreen = tkinter.Tk(None,None," Loading - Crumbl 2D Launcher")
         self.splashScreen.wm_attributes('-type', 'splash')
         self.splashScreen.geometry("700x420+2000+500")
         self.splashImage = ImageTk.PhotoImage(Image.open(fileHandler.launcherSplash).resize((700,400)))
@@ -47,11 +47,14 @@ class splash():
         self.splashScreen.geometry("1000x600")
         self.imageText.destroy()
         self.loadArea.destroy()
-        self.splashScreen.title("Crumbl Engine Launcher")
+        self.splashScreen.title("Crumbl 2D Launcher")
         self.menuBar = tkinter.Frame(relief="raised",borderwidth=2)
         self.menuBar.pack(side="top", fill= "x")
         self.hamburgerButton = ttk.Button(self.menuBar,text = "X",command=self.toggleHamburger)
         self.hamburgerButton.pack(side = "left")
+        self.logoImage = ImageTk.PhotoImage(Image.open(fileHandler.engine_logo).resize([114,32]))
+        self.logoContainer = ttk.Label(self.menuBar,image=self.logoImage)
+        self.logoContainer.pack(side = "left")
         self.backButton = ttk.Button(self.menuBar,text="<Back")
         self.logoImageFile = Image.open(fileHandler.crumbl_logo).resize((24,24))
         self.splashScreen.iconphoto(True,ImageTk.PhotoImage(self.logoImageFile))
@@ -92,7 +95,7 @@ class splash():
         self.aboutFrame = tkinter.Frame()
 
         self.welcomeFrame.pack(fill="both",expand=1)
-        self.wText = ttk.Label(self.welcomeFrame,text = "Welcome to the Crumbl Engine!",font = ("TkDefaultFont",24,"bold"))
+        self.wText = ttk.Label(self.welcomeFrame,text = "Welcome to the Crumbl 2D launcher!",font = ("TkDefaultFont",24,"bold"))
         self.wText.pack(side = "top",fill = "x")
         self.recentFilesText = ttk.Label(self.welcomeFrame,text = "Recent projects")
         self.recentFilesText.pack(side = "top",fill = "x")
@@ -126,7 +129,7 @@ class splash():
         self.createFrame.pack(fill="both",expand=1)
         self.welcomeFrame.pack_forget()
         # Rename window, place back button
-        self.splashScreen.winfo_toplevel().title = "New project - Crumbl Engine Launcher"
+        self.splashScreen.winfo_toplevel().title = "New project - Crumbl 2D Launcher"
         self.backButton.pack(side="left")
         self.backButton.config(command=lambda self = self,a = "newGame":self.backToMainMenu(a))
         # Remove hamburger button (will be returned if returned to welcome page)
@@ -173,6 +176,9 @@ class splash():
 
     def removeSharedEditorTab(event,self,module):
         self.backButton.pack_forget()
+        self.logoContainer.pack_forget()
+        self.hamburgerButton.pack(side="left")
+        self.logoContainer.pack(side="left")
         self.hamburgerButton.pack(side="left")
         self.hamburgerMenu.pack(side="left", fill = "y",expand = 1)
         self.welcomeFrame.pack(fill = "both")
@@ -182,8 +188,10 @@ class splash():
             self.settingsFrame.pack_forget()
 
     def setupSharedEditorTab(event,self,module):
+        self.logoContainer.pack_forget()        
         self.backButton.pack(side="left")
         self.backButton.config(command=lambda s=self,m=module:self.removeSharedEditorTab(s,m))
+        self.logoContainer.pack(side="left")
         self.welcomeFrame.pack_forget()
         self.hamburgerMenu.pack_forget()
         self.hamburgerButton.pack_forget()
