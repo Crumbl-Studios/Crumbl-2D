@@ -7,5 +7,5 @@
         #define CRUMBL_API __declspec(dll_import)
     #endif
 #elif CB_PLAFORM_MAC || CB_PLAFORM_LINUX
-    #define Crumbl_API
+    #define CRUMBL_API
 #endif
