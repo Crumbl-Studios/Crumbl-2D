@@ -5,3 +5,8 @@
 /Editor/UIModules/__pycache__/
 /build
 
+/Engine/cmake-build-debug
+/Sandbox/cmake-build-debug
+
+Engine/cmake-build-debug/Testing/Temporary/LastTest.log
+Sandbox/cmake-build-debug/Testing/Temporary/LastTest.log
