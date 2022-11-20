@@ -10,6 +10,7 @@ namespace crumbl2d
     enum keycode
     {
         None = 0,
+        ONE, TWO, THREE, FOUR, FIVE, SIX, SEVEN, EIGHT, NINE, ZERO,
         Backspace, Delete, Tab, Clear, Return, Pause, Escape, Space,
         Keypad0, Keypad1, Keypad2, Keypad3, Keypad4, Keypad5, Keypad6, Keypad7,
         Keypad8, Keypad9, KeypadPeriod, KeypadDivide, KeypadMultiply, KeypadMinus,
