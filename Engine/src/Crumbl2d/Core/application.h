@@ -1,17 +1,17 @@
 #pragma once
 #include "core.h"
 
-namespace Crumbl2D
+namespace crumbl2d
 {
-    class CRUMBL_API Application
+    class CRUMBL_API application
     {
     public:
-        Application();
-        virtual ~Application();
+        application();
+        virtual ~application();
 
-        void Run();
+        void run();
     };
 
     // Defined in client
-    Application* CreateApplication();
+    application* createApplication();
 }

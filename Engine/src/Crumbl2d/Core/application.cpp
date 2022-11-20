@@ -1,16 +1,16 @@
 #include "application.h"
 
-namespace Crumbl2D
+namespace crumbl2d
 {
-    Application::Application()
+    application::application()
     {
     }
 
-    Application::~Application()
+    application::~application()
     {
     }
 
-    void Application::Run()
+    void application::run()
     {
         while (true);
     }

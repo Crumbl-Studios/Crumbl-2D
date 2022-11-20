@@ -20,14 +20,19 @@ link_directories(vendor/SDL2/lib/)
 link_directories(vendor/box2D/lib/)
 
 add_library(Crumbl2d SHARED
+        src/Crumbl2d/Core/core.h
+
+        src/Crumbl2d/Core/entryPoint.h
+
         src/Crumbl2d/Core/application.cpp
         src/Crumbl2d/Core/application.h
-        src/Crumbl2d/Core/core.h
-        src/Crumbl2d/Core/entryPoint.h
+
         src/Crumbl2d/Core/log.cpp
         src/Crumbl2d/Core/log.h
 
-        vendor/ENTT/entt.hpp)
+        src/Crumbl2d/Events/input.h
+
+        vendor/ENTT/entt.hpp src/Crumbl2d/Events/event.h src/Crumbl2d/Events/input.cpp)
 
 target_link_libraries(Crumbl2d SDL2)
 target_link_libraries(Crumbl2d SDL2_image)
