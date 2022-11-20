@@ -45,6 +45,7 @@ class splash():
         # Custom window decorations
         self.splashScreen.wm_attributes('-type', 'normal')
         self.splashScreen.geometry("1000x600")
+        self.splashScreen.update()
         self.imageText.destroy()
         self.loadArea.destroy()
         self.splashScreen.title("Crumbl 2D Launcher")
@@ -124,6 +125,16 @@ class splash():
             self.createFrame.pack_forget()
         self.backButton.pack_forget()
         self.hamburgerButton.pack(side="left")
+    
+    def updateTemplateListing(self,event = None):
+        if self.filterSortChoice.get() == "Type":
+            templateTypes = fileHandler.templateData["templateTypes"]
+            filteredTemplateTypes = set(templateTypes)
+            for i in filteredTemplateTypes:
+                self.templates.insert("",tkinter.END,values=i)
+            templateNames = fileHandler.templateData["templateNames"]
+            for i in range(len(templateNames)):
+                self.templates.insert(templateTypes[i],tkinter.END,values = templateNames[i])
 
     def createProject(self):
         self.createFrame.pack(fill="both",expand=1)
@@ -139,7 +150,7 @@ class splash():
         self.searchResult.set("Search templates...")
         # String variables
         self.filterTypeChoice = tkinter.StringVar(self.createFrame)
-        self.filterSortChoice = tkinter.StringVar(self.createFrame)
+        self.filterSortChoice = tkinter.StringVar(self.createFrame,"Type")
         # Generate new widgets
         self.cProgressBar = ttk.Progressbar(self.createFrame)
         self.cProgressBar.pack(side = "top",fill="x")
@@ -159,7 +170,8 @@ class splash():
         self.sortText = tkinter.Label(self.filterArea,text = "Sort by:")
         self.sortText.pack(side="left")
         self.sortMenu = ttk.OptionMenu(self.filterArea,self.filterSortChoice,
-                                        *["Type","Type","Times used","Name (A-Z)","Name (Z-A)","Date created","Date installed","Date last used","Size (Ascending)","Size (Descending)"])
+                                        *["Type","Type","Times used","Name (A-Z)","Name (Z-A)","Date created","Date installed","Date last used","Size (Ascending)","Size (Descending)"]
+                                        ,command=lambda e,s=self:self.updateTemplateListing(s))
         self.sortMenu.pack(side="left")
         self.templateFrame = ttk.Frame(self.createFrame,relief="raised",borderwidth=2)
         self.templateFrame.pack(side = "left",fill= "both",expand=1)
@@ -173,6 +185,7 @@ class splash():
         self.objectDescription.pack(side="top")
         self.continueButton = ttk.Button(self.choiceFrame,text = "Next>",state="disabled",style="Accent.TButton")
         self.continueButton.pack(anchor="se")
+        self.updateTemplateListing(self)
 
     def newProjectStepB(self):
         self.installButton.pack_forget()
@@ -192,6 +205,10 @@ class splash():
 
 
     def removeSharedEditorTab(event,self,module):
+        if module == "about":
+            self.aboutFrame.pack_forget()
+        if module == "settings":
+            self.settingsFrame.pack_forget()
         self.backButton.pack_forget()
         self.logoContainer.pack_forget()
         self.hamburgerButton.pack(side="left")
@@ -199,10 +216,6 @@ class splash():
         self.hamburgerButton.pack(side="left")
         self.hamburgerMenu.pack(side="left", fill = "y",expand = 1)
         self.welcomeFrame.pack(fill = "both")
-        if module == "about":
-            self.aboutFrame.pack_forget()
-        if module == "settings":
-            self.settingsFrame.pack_forget()
 
     def setupSharedEditorTab(event,self,module):
         self.logoContainer.pack_forget()        
