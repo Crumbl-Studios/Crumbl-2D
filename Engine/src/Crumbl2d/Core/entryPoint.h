@@ -1,6 +1,7 @@
 #pragma once
 #include "application.h"
 #include "log.h"
+#undef main
 
 extern crumbl2d::application* crumbl2d::createApplication();
 

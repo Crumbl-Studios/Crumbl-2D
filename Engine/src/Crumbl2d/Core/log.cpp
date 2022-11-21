@@ -1,3 +1,4 @@
+#include "../cbpch.h"
 #include "log.h"
 #include "stdout_color_sinks.h"
 

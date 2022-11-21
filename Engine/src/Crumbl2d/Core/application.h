@@ -1,5 +1,6 @@
 #pragma once
 #include "core.h"
+#include "../Events/input.h"
 
 namespace crumbl2d
 {
@@ -10,6 +11,10 @@ namespace crumbl2d
         virtual ~application();
 
         void run();
+
+        crumbl2d::input input;
+    private:
+        bool m_running = true;
     };
 
     // Defined in client

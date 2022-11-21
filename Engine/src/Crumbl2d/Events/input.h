@@ -8,6 +8,7 @@ namespace crumbl2d
 {
     class CRUMBL_API input
     {
+    public:
         void pollEvents();
         bool getKey(keycode p_keycode);
         bool getKeyDown(keycode p_keycode);
@@ -18,7 +19,6 @@ namespace crumbl2d
         bool getMouseButtonUp();
         bool getAxis();
 
-        std::map<std::string, bool> raw_events;
 
         std::vector<event> events;
         std::map<keycode, keyEvent> key_events;

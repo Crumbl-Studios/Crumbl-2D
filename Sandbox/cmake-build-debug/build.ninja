@@ -53,7 +53,7 @@ build CMakeFiles/Sandbox.dir/src/sandbox.cpp.obj: CXX_COMPILER__Sandbox_Debug D$
   DEFINES = -DCB_PLATFORM_WINDOWS
   DEP_FILE = CMakeFiles\Sandbox.dir\src\sandbox.cpp.obj.d
   FLAGS = -g -std=gnu++17
-  INCLUDES = -ID:/dev/Crumbl-Studios/Crumbl-2D/Sandbox/../Engine/src -ID:/dev/Crumbl-Studios/Crumbl-2D/Sandbox/../Engine/src/Crumbl2d -ID:/dev/Crumbl-Studios/Crumbl-2D/Sandbox/../Engine/vendor/spdlog/include/spdlog -ID:/dev/Crumbl-Studios/Crumbl-2D/Sandbox/../Engine/vendor/spdlog/include/spdlog/sinks -ID:/dev/Crumbl-Studios/Crumbl-2D/Sandbox/../Engine/vendor/entt
+  INCLUDES = -ID:/dev/Crumbl-Studios/Crumbl-2D/Sandbox/../Engine/src -ID:/dev/Crumbl-Studios/Crumbl-2D/Sandbox/../Engine/src/Crumbl2d -ID:/dev/Crumbl-Studios/Crumbl-2D/Sandbox/../Engine/vendor/SDL2/include/SDL2 -ID:/dev/Crumbl-Studios/Crumbl-2D/Sandbox/../Engine/vendor/box2D/include -ID:/dev/Crumbl-Studios/Crumbl-2D/Sandbox/../Engine/vendor/spdlog/include/spdlog -ID:/dev/Crumbl-Studios/Crumbl-2D/Sandbox/../Engine/vendor/spdlog/include/spdlog/sinks -ID:/dev/Crumbl-Studios/Crumbl-2D/Sandbox/../Engine/vendor/entt
   OBJECT_DIR = CMakeFiles\Sandbox.dir
   OBJECT_FILE_DIR = CMakeFiles\Sandbox.dir\src
 
