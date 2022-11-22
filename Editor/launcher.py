@@ -135,7 +135,7 @@ class splash():
         if self.filterSortChoice.get() == "Type":
             filteredTemplateTypes = set(templateTypes)
             for i in filteredTemplateTypes:
-                self.templates.insert("",tkinter.END,values=i,iid=i)
+                self.templates.insert("",tkinter.END,values=i,iid=i)# Set iid to same name as category
             for i in range(len(templateNames)):
                 self.templates.insert(templateTypes[i],tkinter.END,values = templateNames[i])
         elif self.filterSortChoice.get() == "Name (A-Z)":
@@ -148,13 +148,28 @@ class splash():
                 self.templates.insert("",tkinter.END,values = templateNames[i])
         print("Launcher: Item reorganization complete!")
 
+    def selectMenuItem(self,event):
+        iid = self.templates.identify("item",event.x,event.y)
+        name = self.templates.item(iid)["values"]
+        if not name == iid: # Avoid updating if it is a prent root (for type sorting, parent objects have same iid as name)    
+            try:
+                self.objectTitle.configure(text=name)
+                index = fileHandler.templateData["templateNames"].index(name[0])   
+                description = fileHandler.templateData["templateDescriptions"][index]
+                self.objectDescription.configure(text=description)
+                self.continueButton.configure(state="normal",command=lambda s=self,n = name:self.newProjectStepB(s,n))
+            except Exception:
+                print("Launcher: Item selected is a category")
+
     def createProject(self):
         self.createFrame.pack(fill="both",expand=1)
         self.welcomeFrame.pack_forget()
         # Rename window, place back button
         self.splashScreen.winfo_toplevel().title = "New project - Crumbl 2D Launcher"
+        self.logoContainer.pack_forget()# Forget logo temporarily
         self.backButton.pack(side="left")
         self.backButton.config(command=lambda self = self,a = "newGame":self.backToMainMenu(a))
+        self.logoContainer.pack(side="left") # Reintroduce logo
         # Remove hamburger button (will be returned if returned to welcome page)
         self.hamburgerEnable = True
         self.toggleHamburger()
@@ -189,6 +204,7 @@ class splash():
         self.templateFrame.pack(side = "left",fill= "both",expand=1)
         self.templates = ttk.Treeview(self.templateFrame,columns=["Template"])
         self.templates.pack(fill = "both",expand=1)
+        self.templates.bind("<Button-1>",self.selectMenuItem)
         self.choiceFrame = ttk.Frame(self.createFrame)
         self.choiceFrame.pack(side = "right",fill="y")
         self.objectTitle = ttk.Label(self.choiceFrame,text = "None selected",font = ("TkDefaultFont",18,"bold"))
@@ -199,7 +215,11 @@ class splash():
         self.continueButton.pack(anchor="se")
         self.updateTemplateListing(self)
 
-    def newProjectStepB(self):
+    def newProjectStepB(self,objectChoice,name,dir,event = None):
+        pass
+
+    def newProjectStepB(self,objectChoice,event = None):
+        # Remove widgets from previous step
         self.installButton.pack_forget()
         self.cText.pack_forget()
         self.choiceText.pack_forget()
@@ -214,7 +234,29 @@ class splash():
         self.objectTitle.pack_forget()
         self.objectDescription.pack_forget()
         self.continueButton.pack_forget()
-
+        # Advance progress bar        
+        self.cProgressBar.step(33)
+        # Configure back button
+        # TODO: Implement back button changes
+        # Generate naming form
+        self.stepBText= ttk.Label(self.createFrame,text = "Name your project",font = ("TkDefaultFont",24,"bold"))
+        self.stepBText.pack(side = "top")
+        self.templateText = ttk.Label(self.createFrame,text="Template chosen: %s"%objectChoice)
+        self.templateText.pack(side = "top")
+        self.nameText = ttk.Label(self.createFrame,text="Name:")
+        self.nameText.pack(side = "top")
+        self.nameEntry = ttk.Entry(self.choiceFrame)
+        self.nameEntry.pack(side = "top")
+        self.dirText = ttk.Label(self.createFrame,text="Name:")
+        self.dirText.pack(side = "top")
+        self.dirFrame = ttk.Frame(self.choiceFrame)
+        self.dirFrame.pack(self = "top")
+        self.dirEntry = ttk.Entry(self.dirFrame)
+        self.dirEntry.pack(side="left")
+        self.dirButton = ttk.Button(self.dirFrame,text="Browse...")
+        self.dirButton.pack(side="right")
+        self.continueButton.config(command=lambda self = self, a = objectChoice,b = "tempPlaceholder",c = "/path/":self.newProjectStepC(self,a,b,c))
+        self.continueButton.pack(side="bottom",anchor="sw")
 
     def removeSharedEditorTab(event,self,module):
         if module == "about":
