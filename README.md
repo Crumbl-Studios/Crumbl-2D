@@ -56,16 +56,10 @@ Currently the software is incomplete, so this guide only is to get the "demo" pr
 #### Prerequisites:
 - [MinGW with GCC/G++ binaries installed](https://sourceforge.net/projects/mingw/)
 - [Cmake](https://cmake.org/install/?adlt=strict&toWww=1&redig=8767CF0C0A844B15BCEB347DA9D474AE)
-- [SDL2 development source code](https://www.libsdl.org/download-2.0.php)
-- [SDL2 Image header](https://www.libsdl.org/projects/SDL_image/)
-- [SDL2 TTF header](https://github.com/libsdl-org/SDL_ttf/releases)
 
-#### Future:
-- SDL2 Network headers
 
-#### To compile and run demo
-- Unzip all of the downloaded SDL development files
-- Create a folder titled SDL2 in /Engine/
-- Copy all SDL2 dev files from `SDL2-2.X.YYY/include` into `SDL2` folder
-- Run ``./Engine/winEngineCompiler.bat``
-- When it gives the list of options, type `2` if you want to run the Python version or `3` for the C++ version
+#### To compile and run (INCOMPLETE)
+- Install MinGW
+- Install Cmake
+- Add both to PATH
+- Open a CMD window in the Crumbl2D/Engine folder

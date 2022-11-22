@@ -3,13 +3,15 @@
 
 namespace crumbl2d
 {
-    class CRUMBL_API event
+    enum eventcode
     {
+        WindowClose, WindowResize, WindowFocus, WindowLostFocus, WindowMoved,
+        AppTick, AppUpdate, AppRender,
+        MouseMotion
     };
 
     enum keycode
     {
-        None = 0,
         ONE, TWO, THREE, FOUR, FIVE, SIX, SEVEN, EIGHT, NINE, ZERO,
         Backspace, Delete, Tab, Clear, Return, Pause, Escape, Space,
         Keypad0, Keypad1, Keypad2, Keypad3, Keypad4, Keypad5, Keypad6, Keypad7,
@@ -29,9 +31,22 @@ namespace crumbl2d
         Mouse0, Mouse1, Mouse2, Mouse3, Mouse4, Mouse5, Mouse6
     };
 
-    struct keyEvent : public event
+    struct CRUMBL_API Event
     {
-        keyEvent(int p_key_state = 0, int p_repeat = 0)
+        Event(const char* p_event="event", bool p_event_state=false)
+        {
+            event = p_event;
+            event_state = p_event_state;
+        }
+
+        const char* event;
+        bool event_state;
+        eventcode eventcode;
+    };
+
+    struct CRUMBL_API keyEvent
+    {
+        keyEvent(int p_key_state=0, int p_repeat=0)
         {
             key_state = p_key_state;
             repeat = p_repeat;

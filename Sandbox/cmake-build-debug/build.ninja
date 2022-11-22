@@ -68,7 +68,7 @@ build CMakeFiles/Sandbox.dir/src/sandbox.cpp.obj: CXX_COMPILER__Sandbox_Debug D$
 build Sandbox.exe: CXX_EXECUTABLE_LINKER__Sandbox_Debug CMakeFiles/Sandbox.dir/src/sandbox.cpp.obj
   FLAGS = -g
   LINK_LIBRARIES = -lCrumbl2d  -lkernel32 -luser32 -lgdi32 -lwinspool -lshell32 -lole32 -loleaut32 -luuid -lcomdlg32 -ladvapi32
-  LINK_PATH = -LD:/dev/Crumbl-Studios/Crumbl-2D/Sandbox/../Engine/cmake-build-debug
+  LINK_PATH = -LD:/dev/Crumbl-Studios/Crumbl-2D/Sandbox/../Engine/build/debug
   OBJECT_DIR = CMakeFiles\Sandbox.dir
   POST_BUILD = cd .
   PRE_LINK = cd .

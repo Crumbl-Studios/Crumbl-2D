@@ -2,7 +2,6 @@
 #include "../cbpch.h"
 #include "../Core/core.h"
 #include "event.h"
-#include <SDL.h>
 
 namespace crumbl2d
 {
@@ -14,13 +13,11 @@ namespace crumbl2d
         bool getKeyDown(keycode p_keycode);
         bool getKeyUp(keycode p_keycode);
 
-        bool getMouseButton();
-        bool getMouseButtonDown();
-        bool getMouseButtonUp();
         bool getAxis();
 
+        bool getEvent(eventcode p_eventcode);
 
-        std::vector<event> events;
+        std::map<eventcode, Event> events;
         std::map<keycode, keyEvent> key_events;
     };
 }

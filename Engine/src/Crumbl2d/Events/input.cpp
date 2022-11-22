@@ -1,5 +1,6 @@
 #include "../cbpch.h"
 #include "input.h"
+#include <SDL.h>
 
 namespace crumbl2d
 {
@@ -7,21 +8,21 @@ namespace crumbl2d
     {
         SDL_Event sdl_event;
 
-        std::vector<event> n_events;
         key_events.empty();
         while (SDL_PollEvent(&sdl_event))
         {
             switch(sdl_event.type)
             {
                 case SDL_QUIT:
-                    1;
+                    events[WindowClose].event_state = true;
                 case SDL_MOUSEMOTION:
-                    1;
+                    events[MouseMotion].event_state = true;
                 case SDL_MOUSEBUTTONDOWN:
                     switch (sdl_event.button.button)
                     {
                         case SDL_BUTTON_LEFT:
                             key_events[Mouse0].key_state = -1;
+                            CB_TRACE("MOUSE!");
                         case SDL_BUTTON_RIGHT:
                             key_events[Mouse1].key_state = -1;
                         case SDL_BUTTON_MIDDLE:
@@ -423,7 +424,6 @@ namespace crumbl2d
                     }
             }
         }
-        events = n_events;
     }
 
     bool input::getKey(keycode p_keycode)
@@ -438,6 +438,7 @@ namespace crumbl2d
     {
         if (key_events[p_keycode].key_state == -1)
         {
+            key_events[p_keycode].key_state = 0;
             return true;
         }
     }
@@ -446,6 +447,16 @@ namespace crumbl2d
     {
         if (key_events[p_keycode].key_state == 1)
         {
+            key_events[p_keycode].key_state = 0;
+            return true;
+        }
+    }
+
+    bool input::getEvent(eventcode p_eventcode)
+    {
+        if (events[p_eventcode].event_state == true)
+        {
+            events[p_eventcode].event_state = false;
             return true;
         }
     }

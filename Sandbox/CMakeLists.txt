@@ -13,7 +13,8 @@ include_directories(../Engine/vendor/box2D/include)
 include_directories(../Engine/vendor/spdlog/include/spdlog/)
 include_directories(../Engine/vendor/spdlog/include/spdlog/sinks/)
 include_directories(../Engine/vendor/entt/)
-link_directories(../Engine/cmake-build-debug/)
+
+link_directories(../Engine/build/debug)
 
 add_executable(Sandbox
         src/sandbox.cpp)
