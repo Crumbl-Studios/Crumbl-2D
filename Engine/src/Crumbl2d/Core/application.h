@@ -1,24 +1,24 @@
 #pragma once
 #include "core.h"
-#include "../Events/input.h"
+#include "../Events/event.h"
 #include "window.h"
 
-namespace crumbl2d
+namespace Crumbl2D
 {
-    class CRUMBL_API application
+    class CRUMBL_API Application
     {
     public:
-        application();
-        virtual ~application();
+        Application();
+        virtual ~Application();
 
-        void run();
+        void Run();
 
-        crumbl2d::input input = crumbl2d::input();
-        crumbl2d::Window window = crumbl2d::Window();
+        Crumbl2D::EventHandler EventHandler = Crumbl2D::EventHandler();
+        Crumbl2D::Window Window = Crumbl2D::Window();
     private:
         bool m_running = true;
     };
 
     // Defined in client
-    application* createApplication();
+    Application* CreateApplication();
 }

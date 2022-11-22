@@ -1,16 +1,19 @@
 #pragma once
+#include "../cbpch.h"
 #include "../Core/core.h"
+#include "event.h"
 
-namespace crumbl2d
+namespace Crumbl2D
 {
-    enum eventcode
+    enum Eventcode
     {
         WindowClose, WindowResize, WindowFocus, WindowLostFocus, WindowMoved,
         AppTick, AppUpdate, AppRender,
-        MouseMotion
+        MouseMotion,
+        UserEvent0, UserEvent1, UserEvent2
     };
 
-    enum keycode
+    enum Keycode
     {
         ONE, TWO, THREE, FOUR, FIVE, SIX, SEVEN, EIGHT, NINE, ZERO,
         Backspace, Delete, Tab, Clear, Return, Pause, Escape, Space,
@@ -21,14 +24,14 @@ namespace crumbl2d
         Insert, Home, End, PageUp, PageDown,
         F1, F2, F3, F4, F5, F6, F7, F8, F9, F10, F11, F12, F13, F14, F15,
         Exclaim, DoubleQuote, Hash, Dollar, Percent, Ampersand,
-        Quote, LeftParen, RightParen, Aserisk, Plus, Comma, Minus, Period,
+        Quote, LeftParen, RightParen, Asterisk, Plus, Comma, Minus, Period,
         Slash, Colon, Semicolon, Less, Equals, Greater, Question, At,
         LeftBracket, Backslash, RightBracket, Caret, Underscore, BackQuote,
         A, B, C, D, E, F, G, H, I, J, K, L, M, N, O, P, Q, R, S, T, U, V, W, X, Y, Z,
         LeftCurlyBracket, Pipe, RightCurlyBracket, Tilde,
         NumLock, CapsLock, ScrollLock, RightShift, LeftShift, RightControl, LeftControl,
-        RightAlt, LeftAlt, LeftMeta, RightMeta, Help, Print, SysReq, Break, Menu,
-        Mouse0, Mouse1, Mouse2, Mouse3, Mouse4, Mouse5, Mouse6
+        RightAlt, LeftAlt, LeftMeta, RightMeta, Help, Print, SysReq, Menu,
+        Mouse0, Mouse1, Mouse2, Mouse3, Mouse4
     };
 
     struct CRUMBL_API Event
@@ -44,9 +47,9 @@ namespace crumbl2d
         eventcode eventcode;
     };
 
-    struct CRUMBL_API keyEvent
+    struct CRUMBL_API KeyEvent
     {
-        keyEvent(int p_key_state=0, int p_repeat=0)
+        KeyEvent(int p_key_state=0, int p_repeat=0)
         {
             key_state = p_key_state;
             repeat = p_repeat;
@@ -55,5 +58,22 @@ namespace crumbl2d
         keycode keycode;
         int key_state;
         int repeat;
+    };
+
+    class CRUMBL_API EventHandler
+    {
+    public:
+        void PollEvents();
+        bool GetKey(Keycode p_keycode);
+        bool GetKeyDown(Keycode p_keycode);
+        bool GetKeyUp(Keycode p_keycode);
+
+        bool GetAxis();
+
+        bool GetEvent(Eventcode p_eventcode);
+        void CreateEvent(Eventcode p_eventcode);
+    private:
+        std::map<Eventcode, Event> events;
+        std::map<Keycode, KeyEvent> key_events;
     };
 }

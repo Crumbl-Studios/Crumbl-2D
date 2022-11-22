@@ -1,7 +1,7 @@
 #include "../cbpch.h"
 #include "window.h"
 
-namespace crumbl2d
+namespace Crumbl2D
 {
     Window::Window(const char *p_title, int p_width, int p_height)
     {

@@ -1,10 +1,10 @@
 #include "../cbpch.h"
-#include "input.h"
+#include "event.h"
 #include <SDL.h>
 
-namespace crumbl2d
+namespace Crumbl2D
 {
-    void input::pollEvents()
+    void EventHandler::PollEvents()
     {
         SDL_Event sdl_event;
 
@@ -15,6 +15,18 @@ namespace crumbl2d
             {
                 case SDL_QUIT:
                     events[WindowClose].event_state = true;
+                case SDL_WINDOWEVENT:
+                    switch(sdl_event.window.event)
+                    {
+                        case SDL_WINDOWEVENT_RESIZED:
+                            events[WindowResize].event_state = true;
+                        case SDL_WINDOWEVENT_FOCUS_GAINED:
+                            events[WindowFocus].event_state = true;
+                        case SDL_WINDOWEVENT_FOCUS_LOST:
+                            events[WindowLostFocus].event_state = true;
+                        case SDL_WINDOWEVENT_MOVED:
+                            events[WindowMoved].event_state = true;
+                    }
                 case SDL_MOUSEMOTION:
                     events[MouseMotion].event_state = true;
                 case SDL_MOUSEBUTTONDOWN:
@@ -22,21 +34,28 @@ namespace crumbl2d
                     {
                         case SDL_BUTTON_LEFT:
                             key_events[Mouse0].key_state = -1;
-                            CB_TRACE("MOUSE!");
                         case SDL_BUTTON_RIGHT:
                             key_events[Mouse1].key_state = -1;
                         case SDL_BUTTON_MIDDLE:
                             key_events[Mouse2].key_state = -1;
+                        case SDL_BUTTON(3):
+                            key_events[Mouse3].key_state = -1;
+                        case SDL_BUTTON(4):
+                            key_events[Mouse4].key_state = -1;
                     }
                 case SDL_MOUSEBUTTONUP:
                     switch (sdl_event.button.button)
                     {
                         case SDL_BUTTON_LEFT:
+                            key_events[Mouse0].key_state = 1;
+                        case SDL_BUTTON_RIGHT:
                             key_events[Mouse1].key_state = 1;
                         case SDL_BUTTON_MIDDLE:
-                            key_events[Mouse1].key_state = 1;
-                        case SDL_BUTTON_RIGHT:
                             key_events[Mouse2].key_state = 1;
+                        case SDL_BUTTON(3):
+                            key_events[Mouse3].key_state = 1;
+                        case SDL_BUTTON(4):
+                            key_events[Mouse4].key_state = 1;
                     }
                 case SDL_KEYDOWN:
                     switch (sdl_event.key.keysym.sym)
@@ -68,6 +87,12 @@ namespace crumbl2d
                             key_events[F11].key_state = -1;
                         case SDLK_F12:
                             key_events[F12].key_state = -1;
+                        case SDLK_F13:
+                            key_events[F13].key_state = -1;
+                        case SDLK_F14:
+                            key_events[F14].key_state = -1;
+                        case SDLK_F15:
+                            key_events[F15].key_state = -1;
 
                         case SDLK_PRINTSCREEN:
                             key_events[Print].key_state = -1;
@@ -220,6 +245,8 @@ namespace crumbl2d
                             key_events[Space].key_state = -1;
                         case SDLK_RALT:
                             key_events[RightAlt].key_state = -1;
+                        case SDLK_RGUI:
+                            key_events[RightMeta].key_state = -1;
                         case SDLK_RCTRL:
                             key_events[RightControl].key_state = -1;
 
@@ -229,6 +256,84 @@ namespace crumbl2d
                             key_events[DownArrow].key_state = -1;
                         case SDLK_RIGHT:
                             key_events[RightArrow].key_state = -1;
+
+                        case SDLK_CLEAR:
+                            key_events[Clear].key_state = -1;
+                        case SDLK_KP_0:
+                            key_events[Keypad0].key_state = -1;
+                        case SDLK_KP_1:
+                            key_events[Keypad1].key_state = -1;
+                        case SDLK_KP_2:
+                            key_events[Keypad2].key_state = -1;
+                        case SDLK_KP_3:
+                            key_events[Keypad3].key_state = -1;
+                        case SDLK_KP_4:
+                            key_events[Keypad4].key_state = -1;
+                        case SDLK_KP_5:
+                            key_events[Keypad5].key_state = -1;
+                        case SDLK_KP_6:
+                            key_events[Keypad6].key_state = -1;
+                        case SDLK_KP_7:
+                            key_events[Keypad7].key_state = -1;
+                        case SDLK_KP_8:
+                            key_events[Keypad8].key_state = -1;
+                        case SDLK_KP_9:
+                            key_events[Keypad9].key_state = -1;
+
+                        case SDLK_KP_PERIOD:
+                            key_events[KeypadPeriod].key_state = -1;
+                        case SDLK_KP_DIVIDE:
+                            key_events[KeypadDivide].key_state = -1;
+                        case SDLK_KP_MULTIPLY:
+                            key_events[KeypadMultiply].key_state = -1;
+                        case SDLK_KP_MINUS:
+                            key_events[KeypadMinus].key_state = -1;
+                        case SDLK_KP_PLUS:
+                            key_events[KeypadPlus].key_state = -1;
+                        case SDLK_KP_ENTER:
+                            key_events[KeypadEnter].key_state = -1;
+                        case SDLK_KP_EQUALS:
+                            key_events[KeypadEquals].key_state = -1;
+
+                        case SDLK_EXCLAIM:
+                            key_events[Exclaim].key_state = -1;
+                        case SDLK_QUOTEDBL:
+                            key_events[DoubleQuote].key_state = -1;
+                        case SDLK_HASH:
+                            key_events[Hash].key_state = -1;
+                        case SDLK_DOLLAR:
+                            key_events[Dollar].key_state = -1;
+                        case SDLK_PERCENT:
+                            key_events[Percent].key_state = -1;
+                        case SDLK_AMPERSAND:
+                            key_events[Ampersand].key_state = -1;
+                        case SDLK_LEFTPAREN:
+                            key_events[LeftParen].key_state = -1;
+                        case SDLK_RIGHTPAREN:
+                            key_events[RightParen].key_state = -1;
+                        case SDLK_ASTERISK:
+                            key_events[Asterisk].key_state = -1;
+                        case SDLK_COLON:
+                            key_events[Colon].key_state = -1;
+                        case SDLK_LESS:
+                            key_events[Less].key_state = -1;
+                        case SDLK_EQUALS:
+                            key_events[Equals].key_state = -1;
+                        case SDLK_GREATER:
+                            key_events[Greater].key_state = -1;
+                        case SDLK_QUESTION:
+                            key_events[Question].key_state = -1;
+                        case SDLK_AT:
+                            key_events[At].key_state = -1;
+                        case SDLK_UNDERSCORE:
+                            key_events[Underscore].key_state = -1;;
+
+                        case SDLK_NUMLOCKCLEAR:
+                            key_events[NumLock].key_state = -1;
+                        case SDLK_HELP:
+                            key_events[Help].key_state = -1;
+                        case SDLK_SYSREQ:
+                            key_events[SysReq].key_state = -1;
                     }
                 case SDL_KEYUP:
                     switch (sdl_event.key.keysym.sym)
@@ -260,6 +365,12 @@ namespace crumbl2d
                             key_events[F11].key_state = 1;
                         case SDLK_F12:
                             key_events[F12].key_state = 1;
+                        case SDLK_F13:
+                            key_events[F13].key_state = 1;
+                        case SDLK_F14:
+                            key_events[F14].key_state = 1;
+                        case SDLK_F15:
+                            key_events[F15].key_state = 1;
 
                         case SDLK_PRINTSCREEN:
                             key_events[Print].key_state = 1;
@@ -412,6 +523,8 @@ namespace crumbl2d
                             key_events[Space].key_state = 1;
                         case SDLK_RALT:
                             key_events[RightAlt].key_state = 1;
+                        case SDLK_RGUI:
+                            key_events[RightMeta].key_state = 1;
                         case SDLK_RCTRL:
                             key_events[RightControl].key_state = 1;
 
@@ -421,12 +534,90 @@ namespace crumbl2d
                             key_events[DownArrow].key_state = 1;
                         case SDLK_RIGHT:
                             key_events[RightArrow].key_state = 1;
+
+                        case SDLK_CLEAR:
+                            key_events[Clear].key_state = 1;
+                        case SDLK_KP_0:
+                            key_events[Keypad0].key_state = 1;
+                        case SDLK_KP_1:
+                            key_events[Keypad1].key_state = 1;
+                        case SDLK_KP_2:
+                            key_events[Keypad2].key_state = 1;
+                        case SDLK_KP_3:
+                            key_events[Keypad3].key_state = 1;
+                        case SDLK_KP_4:
+                            key_events[Keypad4].key_state = 1;
+                        case SDLK_KP_5:
+                            key_events[Keypad5].key_state = 1;
+                        case SDLK_KP_6:
+                            key_events[Keypad6].key_state = 1;
+                        case SDLK_KP_7:
+                            key_events[Keypad7].key_state = 1;
+                        case SDLK_KP_8:
+                            key_events[Keypad8].key_state = 1;
+                        case SDLK_KP_9:
+                            key_events[Keypad9].key_state = 1;
+
+                        case SDLK_KP_PERIOD:
+                            key_events[KeypadPeriod].key_state = 1;
+                        case SDLK_KP_DIVIDE:
+                            key_events[KeypadDivide].key_state = 1;
+                        case SDLK_KP_MULTIPLY:
+                            key_events[KeypadMultiply].key_state = 1;
+                        case SDLK_KP_MINUS:
+                            key_events[KeypadMinus].key_state = 1;
+                        case SDLK_KP_PLUS:
+                            key_events[KeypadPlus].key_state = 1;
+                        case SDLK_KP_ENTER:
+                            key_events[KeypadEnter].key_state = 1;
+                        case SDLK_KP_EQUALS:
+                            key_events[KeypadEquals].key_state = 1;
+
+                        case SDLK_EXCLAIM:
+                            key_events[Exclaim].key_state = 1;
+                        case SDLK_QUOTEDBL:
+                            key_events[DoubleQuote].key_state = 1;
+                        case SDLK_HASH:
+                            key_events[Hash].key_state = 1;
+                        case SDLK_DOLLAR:
+                            key_events[Dollar].key_state = 1;
+                        case SDLK_PERCENT:
+                            key_events[Percent].key_state = 1;
+                        case SDLK_AMPERSAND:
+                            key_events[Ampersand].key_state = 1;
+                        case SDLK_LEFTPAREN:
+                            key_events[LeftParen].key_state = 1;
+                        case SDLK_RIGHTPAREN:
+                            key_events[RightParen].key_state = 1;
+                        case SDLK_ASTERISK:
+                            key_events[Asterisk].key_state = 1;
+                        case SDLK_COLON:
+                            key_events[Colon].key_state = 1;
+                        case SDLK_LESS:
+                            key_events[Less].key_state = 1;
+                        case SDLK_EQUALS:
+                            key_events[Equals].key_state = 1;
+                        case SDLK_GREATER:
+                            key_events[Greater].key_state = 1;
+                        case SDLK_QUESTION:
+                            key_events[Question].key_state = 1;
+                        case SDLK_AT:
+                            key_events[At].key_state = 1;
+                        case SDLK_UNDERSCORE:
+                            key_events[Underscore].key_state = 1;
+
+                        case SDLK_NUMLOCKCLEAR:
+                            key_events[NumLock].key_state = 1;
+                        case SDLK_HELP:
+                            key_events[Help].key_state = 1;
+                        case SDLK_SYSREQ:
+                            key_events[SysReq].key_state = 1;
                     }
             }
         }
     }
 
-    bool input::getKey(keycode p_keycode)
+    bool EventHandler::GetKey(Keycode p_keycode)
     {
         if (key_events[p_keycode].key_state != 0)
         {
@@ -434,7 +625,7 @@ namespace crumbl2d
         }
     }
 
-    bool input::getKeyDown(keycode p_keycode)
+    bool EventHandler::GetKeyDown(Keycode p_keycode)
     {
         if (key_events[p_keycode].key_state == -1)
         {
@@ -443,7 +634,7 @@ namespace crumbl2d
         }
     }
 
-    bool input::getKeyUp(keycode p_keycode)
+    bool EventHandler::GetKeyUp(Keycode p_keycode)
     {
         if (key_events[p_keycode].key_state == 1)
         {
@@ -452,12 +643,17 @@ namespace crumbl2d
         }
     }
 
-    bool input::getEvent(eventcode p_eventcode)
+    bool EventHandler::GetEvent(Eventcode p_eventcode)
     {
         if (events[p_eventcode].event_state == true)
         {
             events[p_eventcode].event_state = false;
             return true;
         }
+    }
+
+    void EventHandler::CreateEvent(Eventcode p_eventcode)
+    {
+        events[p_eventcode].event_state = true;
     }
 }

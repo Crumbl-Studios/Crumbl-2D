@@ -1,7 +1,7 @@
 #pragma once
 #include <SDL.h>
 
-namespace crumbl2d
+namespace Crumbl2D
 {
     class CRUMBL_API Window
     {

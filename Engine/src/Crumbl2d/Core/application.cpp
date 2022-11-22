@@ -5,9 +5,9 @@
 #include <SDL_image.h>
 #include <SDL_ttf.h>
 
-namespace crumbl2d
+namespace Crumbl2D
 {
-    application::application()
+    Application::Application()
     {
         if (SDL_Init(SDL_INIT_VIDEO) > 0)
         {
@@ -25,23 +25,23 @@ namespace crumbl2d
         CB_CORE_INFO("Initialized SDL_TTF!");
     }
 
-    application::~application()
+    Application::~Application()
     {
-        window.CleanUp();
+        Window.CleanUp();
         SDL_Quit();
         TTF_Quit();
     }
 
-    void application::run()
+    void Application::Run()
     {
         while (m_running)
         {
-            if (input.getEvent(WindowClose))
+            if (EventHandler.GetEvent(WindowClose))
             {
                 m_running = false;
             }
-            input.pollEvents();
-            window.OnUpdate();
+            EventHandler.PollEvents();
+            Window.OnUpdate();
         }
     }
 }

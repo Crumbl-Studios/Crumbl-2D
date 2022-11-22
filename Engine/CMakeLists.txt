@@ -30,9 +30,9 @@ add_library(Crumbl2d SHARED
         src/Crumbl2d/Core/log.cpp
         src/Crumbl2d/Core/log.h
 
-        src/Crumbl2d/Events/input.h
+        src/Crumbl2d/Events/event.h
 
-        vendor/ENTT/entt.hpp src/Crumbl2d/Events/event.h src/Crumbl2d/Events/input.cpp src/Crumbl2d/Core/window.cpp src/Crumbl2d/Core/window.h)
+        vendor/ENTT/entt.hpp src/Crumbl2d/Events/event.cpp src/Crumbl2d/Core/window.cpp src/Crumbl2d/Core/window.h)
 
 target_link_libraries(Crumbl2d SDL2)
 target_link_libraries(Crumbl2d SDL2_image)

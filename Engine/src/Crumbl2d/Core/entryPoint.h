@@ -8,14 +8,14 @@
 #include <SDL_image.h>
 #include <SDL_ttf.h>
 
-extern crumbl2d::application* crumbl2d::createApplication();
+extern Crumbl2D::Application* Crumbl2D::CreateApplication();
 
 int main(int argc, char** argv)
 {
-    crumbl2d::log::init();
+    Crumbl2D::log::init();
     CB_CORE_INFO("Initialized Log!");
 
-    auto app = crumbl2d::createApplication();
-    app->run();
+    auto app = Crumbl2D::CreateApplication();
+    app->Run();
     delete app;
 }

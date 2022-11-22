@@ -3,12 +3,12 @@
 #include "core.h"
 #include "spdlog.h"
 
-namespace crumbl2d
+namespace Crumbl2D
 {
-    class CRUMBL_API log
+    class CRUMBL_API Log
     {
     public:
-        static void init();
+        static void Init();
 
         inline static std::shared_ptr<spdlog::logger>& GetCoreLogger()
         {
@@ -25,16 +25,16 @@ namespace crumbl2d
 }
 
 // Core log macros
-#define CB_CORE_TRACE(...)::crumbl2d::log::GetCoreLogger()->trace(__VA_ARGS__)
-#define CB_CORE_INFO(...)::crumbl2d::log::GetCoreLogger()->info(__VA_ARGS__)
-#define CB_CORE_WARN(...)::crumbl2d::log::GetCoreLogger()->warn(__VA_ARGS__)
-#define CB_CORE_ERROR(...)::crumbl2d::log::GetCoreLogger()->error(__VA_ARGS__)
-#define CB_CORE_CRITICAL(...)::crumbl2d::log::GetCoreLogger()->fatal(__VA_ARGS__)
+#define CB_CORE_TRACE(...)::crumbl2d::Log::GetCoreLogger()->trace(__VA_ARGS__)
+#define CB_CORE_INFO(...)::Crumbl2D::Log::GetCoreLogger()->info(__VA_ARGS__)
+#define CB_CORE_WARN(...)::Crumbl2D::Log::GetCoreLogger()->warn(__VA_ARGS__)
+#define CB_CORE_ERROR(...)::crumbl2d::Log::GetCoreLogger()->error(__VA_ARGS__)
+#define CB_CORE_CRITICAL(...)::crumbl2d::Log::GetCoreLogger()->critical(__VA_ARGS__)
 
 //Client log macros
-#define CB_TRACE(...)::crumbl2d::log::GetClientLogger()->trace(__VA_ARGS__)
-#define CB_INFO(...)::crumbl2d::log::GetClientLogger()->info(__VA_ARGS__)
-#define CB_WARN(...)::crumbl2d::log::GetClientLogger()->warn(__VA_ARGS__)
-#define CB_ERROR(...)::crumbl2d::log::GetClientLogger()->error(__VA_ARGS__)
-#define CB_CRITICAL(...)::crumbl2d::log::GetClientLogger()->fatal(__VA_ARGS__)
+#define CB_TRACE(...)::Crumbl2D::Log::GetClientLogger()->trace(__VA_ARGS__)
+#define CB_INFO(...)::crumbl2d::Log::GetClientLogger()->info(__VA_ARGS__)
+#define CB_WARN(...)::crumbl2d::Log::GetClientLogger()->warn(__VA_ARGS__)
+#define CB_ERROR(...)::crumbl2d::Log::GetClientLogger()->error(__VA_ARGS__)
+#define CB_CRITICAL(...)::crumbl2d::Log::GetClientLogger()->critical(__VA_ARGS__)
 
