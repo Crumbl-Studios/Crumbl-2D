@@ -127,14 +127,26 @@ class splash():
         self.hamburgerButton.pack(side="left")
     
     def updateTemplateListing(self,event = None):
+        for i in self.templates.get_children():
+            self.templates.delete(i)
+        print("Launcher: Previous items removed for reorginization")
+        templateTypes = fileHandler.templateData["templateTypes"]
+        templateNames = fileHandler.templateData["templateNames"]
         if self.filterSortChoice.get() == "Type":
-            templateTypes = fileHandler.templateData["templateTypes"]
             filteredTemplateTypes = set(templateTypes)
             for i in filteredTemplateTypes:
-                self.templates.insert("",tkinter.END,values=i)
-            templateNames = fileHandler.templateData["templateNames"]
+                self.templates.insert("",tkinter.END,values=i,iid=i)
             for i in range(len(templateNames)):
                 self.templates.insert(templateTypes[i],tkinter.END,values = templateNames[i])
+        elif self.filterSortChoice.get() == "Name (A-Z)":
+            templateNames.sort()
+            for i in range(len(templateNames)):
+                self.templates.insert("",tkinter.END,values = templateNames[i])
+        elif self.filterSortChoice.get() == "Name (Z-A)":
+            templateNames.sort(reverse=True)
+            for i in range(len(templateNames)):
+                self.templates.insert("",tkinter.END,values = templateNames[i])
+        print("Launcher: Item reorganization complete!")
 
     def createProject(self):
         self.createFrame.pack(fill="both",expand=1)
@@ -175,7 +187,7 @@ class splash():
         self.sortMenu.pack(side="left")
         self.templateFrame = ttk.Frame(self.createFrame,relief="raised",borderwidth=2)
         self.templateFrame.pack(side = "left",fill= "both",expand=1)
-        self.templates = ttk.Treeview(self.templateFrame)
+        self.templates = ttk.Treeview(self.templateFrame,columns=["Template"])
         self.templates.pack(fill = "both",expand=1)
         self.choiceFrame = ttk.Frame(self.createFrame)
         self.choiceFrame.pack(side = "right",fill="y")

@@ -12,10 +12,10 @@ settingAmounts = 8
 
 # Object values
 # Personalization
-readableThemeNames = ["Sun Valley","Forest", "Normal TCL/TK theme"]
+readableThemeNames = ["Sun Valley","Forest","Breeze","Normal TCL/TK theme"]
 
-darkMode = True
-theme = "sun_valley"
+darkMode = fileHandler.settingData["darkMode"]
+theme = fileHandler.settingData["theme"]
 
 # Images and Icons
 darkModeIcon : ImageTk.PhotoImage
@@ -65,30 +65,46 @@ class NotebookPage():
             currentOP.set("Loading setting 2/2")
             progressBar.step(100/settingAmounts)
             window.update()
-            themeTextVar = tkinter.StringVar(self,value = "Forest")
+            themeTextVar = tkinter.StringVar(window,value = "Forest")
             if darkMode:
-                self.tk.call('source', os.path.join(fileHandler.IconDir,'forest-dark.tcl'))
+                window.tk.call('source', os.path.join(fileHandler.IconDir,'forest-dark.tcl'))
                 ttk.Style().theme_use('forest-dark')
             else:
-                self.tk.call('source', os.path.join(fileHandler.IconDir,'forest-light.tcl'))
+                window.tk.call('source', os.path.join(fileHandler.IconDir,'forest-light.tcl'))
                 ttk.Style().theme_use('forest-light')
             currentOP.set("Setting theme thumbnails")
             progressBar.step(100/settingAmounts)
             window.update()
-            darkModeIcon = tkinter.PhotoImage(master = self, file = fileHandler.forest_dark_asset)
-            lightModeIcon = tkinter.PhotoImage(master = self, file = fileHandler.forest_light_asset)
+            darkModeIcon = tkinter.PhotoImage(master = window, file = fileHandler.forest_dark_asset)
+            lightModeIcon = tkinter.PhotoImage(master = window, file = fileHandler.forest_light_asset)
+        elif theme == "breeze":
+            currentOP.set("Loading setting 2/2")
+            progressBar.step(100/settingAmounts)
+            window.update()
+            themeTextVar = tkinter.StringVar(window,value = "Breeze")
+            if darkMode:
+                window.tk.call('source', os.path.join(fileHandler.IconDir,'breeze-dark.tcl'))#tclibpath must be set
+                ttk.Style().theme_use('breeze-dark')
+            else:
+                window.tk.call('source', os.path.join(fileHandler.IconDir,'breeze.tcl'))
+                ttk.Style().theme_use('breeze')
+            currentOP.set("Setting theme thumbnails")
+            progressBar.step(100/settingAmounts)
+            window.update()
+            darkModeIcon = tkinter.PhotoImage(master = window, file = fileHandler.sv_dark_asset)
+            lightModeIcon = tkinter.PhotoImage(master = window, file = fileHandler.sv_light_asset)
         else:
             currentOP.set("Loading setting 2/2")
             progressBar.step(100/settingAmounts)
             window.update()
-            themeTextVar = tkinter.StringVar(self,value = "Normal TCL/TK style")
+            themeTextVar = tkinter.StringVar(window,value = "Normal TCL/TK style")
             if darkMode:
                 ttk.Style().theme_use('alt')
             currentOP.set("Setting theme thumbnails")
             progressBar.step(100/settingAmounts)
             window.update()
-            darkModeIcon = tkinter.PhotoImage(master = self, file = fileHandler.tk_dark_asset)
-            lightModeIcon = tkinter.PhotoImage(master = self, file = fileHandler.tk_light_asset)
+            darkModeIcon = tkinter.PhotoImage(master = window, file = fileHandler.tk_dark_asset)
+            lightModeIcon = tkinter.PhotoImage(master = window, file = fileHandler.tk_light_asset)
         currentOP.set("Ready")
         window.update()
 

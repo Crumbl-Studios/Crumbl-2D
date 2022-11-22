@@ -62,7 +62,7 @@ settings_asset = os.path.join(IconDir,"settings.png")
 
 # JSON handling
 # Data layouts
-templateData = {"templateNames":[],"templateLoctaions":[],"templateThumbnails":[],"templateDescriptions":[],"templateTypes":["All"]}
+templateData = {"templateNames":["Blank","Game"],"templateLoctaions":["NoTemplate/"],"templateThumbnails":["NoTemplate/noPack.png"],"templateDescriptions":["Blank editor project with minimal engine bindings"],"templateTypes":["All"],"uses":["1"]}
 settingData = {"theme":"sun_valley","darkMode":True}
 
 
