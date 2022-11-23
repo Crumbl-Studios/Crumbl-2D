@@ -7,8 +7,8 @@
 #    include <spdlog/sinks/ansicolor_sink.h>
 #endif
 
-#include <spdlog/pattern_formatter.h>
-#include <spdlog/details/os.h>
+#include <pattern_formatter.h>
+#include <details/os.h>
 
 namespace spdlog {
 namespace sinks {

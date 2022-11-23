@@ -59,12 +59,13 @@ new_project_asset = os.path.join(IconDir,"newProject.png")
 open_project_asset = os.path.join(IconDir,"open.png")
 git_clone_asset = os.path.join(IconDir,"git.png")
 settings_asset = os.path.join(IconDir,"settings.png")
+noFile_asset = os.path.join(IconDir,"noFile.png")
 
 # JSON handling
 # Data layouts
 templateData = {"templateNames":["Blank"],"templateLoctaions":["NoTemplate/"],"templateThumbnails":["NoTemplate/noPack.png"],"templateDescriptions":["Blank editor project with minimal engine bindings"],"templateTypes":["All"],"uses":["1"]}
 settingData = {"theme":"sun_valley","darkMode":True}
-
+recentFileData = {"recentFilenames":[],"recentLocations":[],"recentDates":[],"objectTemplates":[]}
 
 # Functions (Stolen from visualized because it just works)
 def get_save_loc():
@@ -136,5 +137,26 @@ def get_template_data(data_layout = templateData):
             print("TEMPLATES: No directory found, generating template data folder")
             os.mkdir(templates)
             with open(os.path.join(templates, 'templateData.ceTemplates'), 'w') as save_file_3:
+                json.dump(data_layout, save_file_3)
+        return data_layout
+
+def get_user_data(data_layout = recentFileData):
+    try:
+        with open(os.path.join(dataLocations, 'userdata.json')) as save_file:
+            print("USERDATA: attempting to load file...")
+            return json.load(save_file)
+    except JSONDecodeError:
+        print("USERDATA: JSON can't decode...")
+        with open(os.path.join(dataLocations, 'userdata.json'), 'w') as save_file_2:
+            json.dump(data_layout, save_file_2)
+        return data_layout
+    except FileNotFoundError:
+        print("USERDATA: file not found, generating template data file")
+        try:
+            with open(os.path.join(dataLocations, 'userdata.json'), 'w') as save_file_3:
+                json.dump(data_layout, save_file_3)
+        except FileNotFoundError:
+            print("USERDATA: No directory found, generating template data folder")
+            with open(os.path.join(dataLocations, 'userdata.json'), 'w') as save_file_3:
                 json.dump(data_layout, save_file_3)
         return data_layout

@@ -8,7 +8,7 @@ import os
 settingObjects = ["Personalization","Terminal","Browser","IDE","Asset Viewer","Scene Editor"]
 settingChanged = [False,False,False,False,False,False]
 settingColumns = ["category","changed"]
-settingAmounts = 8
+settingAmounts = 9
 
 # Object values
 # Personalization
@@ -34,11 +34,14 @@ class NotebookPage():
         window.update()
         if not isAfterSave:
             currentOP.set("Getting settings")
-            self.settingDataNew = fileHandler.get_setting_data()
+            fileHandler.settingData = fileHandler.get_setting_data()
             progressBar.step(100/settingAmounts)
             window.update()
         currentOP.set("Getting templates")
-        self.templateDataNew = fileHandler.get_template_data()
+        fileHandler.templateData = fileHandler.get_template_data()
+        progressBar.step(100/settingAmounts)
+        currentOP.set("Getting user data")
+        fileHandler.recentFileData = fileHandler.get_user_data()
         progressBar.step(100/settingAmounts)
         window.update()
         # Load theme

@@ -100,8 +100,19 @@ class splash():
         self.wText.pack(side = "top",fill = "x")
         self.recentFilesText = ttk.Label(self.welcomeFrame,text = "Recent projects")
         self.recentFilesText.pack(side = "top",fill = "x")
-        self.recents = ttk.Treeview(self.welcomeFrame)
-        self.recents.pack(fill = "both",expand=1)
+        if len(fileHandler.recentFileData["recentFilenames"]) == 0:
+            self.noFileIcon = ImageTk.PhotoImage(Image.open(fileHandler.noFile_asset))
+            self.noRecentFilesText = ttk.Label(self.welcomeFrame,text="No recent files found",font = ("TkDefaultFont",18,"bold"),image=self.noFileIcon,compound="top")
+            self.noRecentFilesText.pack(anchor="center")
+            self.noRecentFilesText = ttk.Label(self.welcomeFrame,text="Start a project or open an existing one to get started!")
+            self.noRecentFilesText.pack(anchor="center")
+            self.createFirstProjectButton = ttk.Button(self.welcomeFrame,text="New Project",image = self.newProjectImage,compound="left",command=self.createProject)
+            self.createFirstProjectButton.pack(anchor="center")
+        else:
+            self.recents = ttk.Treeview(self.welcomeFrame)
+            self.recents.pack(fill = "both",expand=1)
+            for i in fileHandler.recentFileData["recentFilenames"]:
+                self.recents.insert("",tkinter.END,i)
 
         # Final steps
         self.splashScreen.mainloop()
@@ -215,7 +226,7 @@ class splash():
         self.continueButton.pack(anchor="se")
         self.updateTemplateListing(self)
 
-    def newProjectStepB(self,objectChoice,name,dir,event = None):
+    def newProjectStepC(self,objectChoice,name,dir,event = None):
         pass
 
     def newProjectStepB(self,objectChoice,event = None):
@@ -245,12 +256,12 @@ class splash():
         self.templateText.pack(side = "top")
         self.nameText = ttk.Label(self.createFrame,text="Name:")
         self.nameText.pack(side = "top")
-        self.nameEntry = ttk.Entry(self.choiceFrame)
+        self.nameEntry = ttk.Entry(self.createFrame)
         self.nameEntry.pack(side = "top")
-        self.dirText = ttk.Label(self.createFrame,text="Name:")
+        self.dirText = ttk.Label(self.createFrame,text="Location:")
         self.dirText.pack(side = "top")
-        self.dirFrame = ttk.Frame(self.choiceFrame)
-        self.dirFrame.pack(self = "top")
+        self.dirFrame = ttk.Frame(self.createFrame)
+        self.dirFrame.pack(side = "top")
         self.dirEntry = ttk.Entry(self.dirFrame)
         self.dirEntry.pack(side="left")
         self.dirButton = ttk.Button(self.dirFrame,text="Browse...")

@@ -12,6 +12,7 @@ include_directories(vendor/SDL2/include/SDL2)
 include_directories(vendor/box2D/include/box2d)
 
 include_directories(vendor/ENTT)
+include_directories(vendor/spdlog/include/)
 include_directories(vendor/spdlog/include/spdlog/)
 include_directories(vendor/spdlog/include/spdlog/sinks/)
 

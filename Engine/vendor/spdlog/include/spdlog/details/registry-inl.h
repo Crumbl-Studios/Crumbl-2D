@@ -17,7 +17,7 @@
 #    ifdef _WIN32
 #        include <sinks/wincolor_sink.h>
 #    else
-#        include <spdlog/sinks/ansicolor_sink.h>
+#        include <sinks/ansicolor_sink.h>
 #    endif
 #endif // SPDLOG_DISABLE_DEFAULT_LOGGER
 

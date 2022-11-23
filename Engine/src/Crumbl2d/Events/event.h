@@ -44,7 +44,7 @@ namespace Crumbl2D
 
         const char* event;
         bool event_state;
-        eventcode eventcode;
+        Eventcode Eventcode;
     };
 
     struct CRUMBL_API KeyEvent
@@ -55,7 +55,7 @@ namespace Crumbl2D
             repeat = p_repeat;
         }
 
-        keycode keycode;
+        Keycode Keycode;
         int key_state;
         int repeat;
     };
