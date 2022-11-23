@@ -2,3 +2,95 @@
 -- Configuring done
 -- Generating done
 -- Build files have been written to: D:/dev/Crumbl-Studios/Crumbl-2D/Engine/build/debug
+
+Cannot get compiler information:
+	Compiler exited with error code 1: D:\dev\Compiler\mingw64\bin\c++.exe -xc++ -DCB_BUILD_DLL -DCB_PLATFORM_WINDOWS -DCrumbl2d_EXPORTS -ID:/dev/Crumbl-Studios/Crumbl-2D/Engine/src/Crumbl2d -ID:/dev/Crumbl-Studios/Crumbl-2D/Engine/vendor/SDL2/include/SDL2 -ID:/dev/Crumbl-Studios/Crumbl-2D/Engine/vendor/box2D/include/box2d -ID:/dev/Crumbl-Studios/Crumbl-2D/Engine/vendor/ENTT -ID:/dev/Crumbl-Studios/Crumbl-2D/Engine/vendor/spdlog/include -ID:/dev/Crumbl-Studios/Crumbl-2D/Engine/vendor/spdlog/include/spdlog -ID:/dev/Crumbl-Studios/Crumbl-2D/Engine/vendor/spdlog/include/spdlog/sinks -g -std=gnu++17 -Winvalid-pch -include D:/dev/Crumbl-Studios/Crumbl-2D/Engine/build/debug/CMakeFiles/Crumbl2d.dir/cmake_pch.hxx -fpch-preprocess -v -dD -E
+	Using built-in specs.
+	COLLECT_GCC=D:\dev\Compiler\mingw64\bin\c++.exe
+	Target: x86_64-w64-mingw32
+	Configured with: ../../../src/gcc-8.1.0/configure --host=x86_64-w64-mingw32 --build=x86_64-w64-mingw32 --target=x86_64-w64-mingw32 --prefix=/mingw64 --with-sysroot=/c/mingw810/x86_64-810-posix-seh-rt_v6-rev0/mingw64 --enable-shared --enable-static --disable-multilib --enable-languages=c,c++,fortran,lto --enable-libstdcxx-time=yes --enable-threads=posix --enable-libgomp --enable-libatomic --enable-lto --enable-graphite --enable-checking=release --enable-fully-dynamic-string --enable-version-specific-runtime-libs --disable-libstdcxx-pch --disable-libstdcxx-debug --enable-bootstrap --disable-rpath --disable-win32-registry --disable-nls --disable-werror --disable-symvers --with-gnu-as --with-gnu-ld --with-arch=nocona --with-tune=core2 --with-libiconv --with-system-zlib --with-gmp=/c/mingw810/prerequisites/x86_64-w64-mingw32-static --with-mpfr=/c/mingw810/prerequisites/x86_64-w64-mingw32-static --with-mpc=/c/mingw810/prerequisites/x86_64-w64-mingw32-static --with-isl=/c/mingw810/prerequisites/x86_64-w64-mingw32-static --with-pkgversion='x86_64-posix-seh-rev0, Built by MinGW-W64 project' --with-bugurl=https://sourceforge.net/projects/mingw-w64 CFLAGS='-O2 -pipe -fno-ident -I/c/mingw810/x86_64-810-posix-seh-rt_v6-rev0/mingw64/opt/include -I/c/mingw810/prerequisites/x86_64-zlib-static/include -I/c/mingw810/prerequisites/x86_64-w64-mingw32-static/include' CXXFLAGS='-O2 -pipe -fno-ident -I/c/mingw810/x86_64-810-posix-seh-rt_v6-rev0/mingw64/opt/include -I/c/mingw810/prerequisites/x86_64-zlib-static/include -I/c/mingw810/prerequisites/x86_64-w64-mingw32-static/include' CPPFLAGS=' -I/c/mingw810/x86_64-810-posix-seh-rt_v6-rev0/mingw64/opt/include -I/c/mingw810/prerequisites/x86_64-zlib-static/include -I/c/mingw810/prerequisites/x86_64-w64-mingw32-static/include' LDFLAGS='-pipe -fno-ident -L/c/mingw810/x86_64-810-posix-seh-rt_v6-rev0/mingw64/opt/lib -L/c/mingw810/prerequisites/x86_64-zlib-static/lib -L/c/mingw810/prerequisites/x86_64-w64-mingw32-static/lib '
+	Thread model: posix
+	gcc version 8.1.0 (x86_64-posix-seh-rev0, Built by MinGW-W64 project) 
+	COLLECT_GCC_OPTIONS='-D' 'CB_BUILD_DLL' '-D' 'CB_PLATFORM_WINDOWS' '-D' 'Crumbl2d_EXPORTS' '-I' 'D:/dev/Crumbl-Studios/Crumbl-2D/Engine/src/Crumbl2d' '-I' 'D:/dev/Crumbl-Studios/Crumbl-2D/Engine/vendor/SDL2/include/SDL2' '-I' 'D:/dev/Crumbl-Studios/Crumbl-2D/Engine/vendor/box2D/include/box2d' '-I' 'D:/dev/Crumbl-Studios/Crumbl-2D/Engine/vendor/ENTT' '-I' 'D:/dev/Crumbl-Studios/Crumbl-2D/Engine/vendor/spdlog/include' '-I' 'D:/dev/Crumbl-Studios/Crumbl-2D/Engine/vendor/spdlog/include/spdlog' '-I' 'D:/dev/Crumbl-Studios/Crumbl-2D/Engine/vendor/spdlog/include/spdlog/sinks' '-g' '-std=gnu++17' '-Winvalid-pch' '-include' 'D:/dev/Crumbl-Studios/Crumbl-2D/Engine/build/debug/CMakeFiles/Crumbl2d.dir/cmake_pch.hxx' '-fpch-preprocess' '-v' '-dD' '-E' '-D' '___CIDR_DEFINITIONS_END' '-shared-libgcc' '-mtune=core2' '-march=nocona'
+	 D:/dev/Compiler/mingw64/bin/../libexec/gcc/x86_64-w64-mingw32/8.1.0/cc1plus.exe -E -quiet -v -I D:/dev/Crumbl-Studios/Crumbl-2D/Engine/src/Crumbl2d -I D:/dev/Crumbl-Studios/Crumbl-2D/Engine/vendor/SDL2/include/SDL2 -I D:/dev/Crumbl-Studios/Crumbl-2D/Engine/vendor/box2D/include/box2d -I D:/dev/Crumbl-Studios/Crumbl-2D/Engine/vendor/ENTT -I D:/dev/Crumbl-Studios/Crumbl-2D/Engine/vendor/spdlog/include -I D:/dev/Crumbl-Studios/Crumbl-2D/Engine/vendor/spdlog/include/spdlog -I D:/dev/Crumbl-Studios/Crumbl-2D/Engine/vendor/spdlog/include/spdlog/sinks -iprefix D:/dev/Compiler/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/8.1.0/ -D_REENTRANT -D CB_BUILD_DLL -D CB_PLATFORM_WINDOWS -D Crumbl2d_EXPORTS -D ___CIDR_DEFINITIONS_END -include D:/dev/Crumbl-Studios/Crumbl-2D/Engine/build/debug/CMakeFiles/Crumbl2d.dir/cmake_pch.hxx C:\Users\Eshan\AppData\Local\Temp\compiler-file10015845889897635430 -mtune=core2 -march=nocona -std=gnu++17 -Winvalid-pch -fpch-preprocess -g -fworking-directory -dD
+	ignoring duplicate directory "D:/dev/Compiler/mingw64/lib/gcc/../../lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++"
+	ignoring duplicate directory "D:/dev/Compiler/mingw64/lib/gcc/../../lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++/x86_64-w64-mingw32"
+	ignoring duplicate directory "D:/dev/Compiler/mingw64/lib/gcc/../../lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++/backward"
+	ignoring duplicate directory "D:/dev/Compiler/mingw64/lib/gcc/../../lib/gcc/x86_64-w64-mingw32/8.1.0/include"
+	ignoring nonexistent directory "C:/mingw810/x86_64-810-posix-seh-rt_v6-rev0/mingw64C:/msys64/mingw64/lib/gcc/x86_64-w64-mingw32/8.1.0/../../../../include"
+	ignoring duplicate directory "D:/dev/Compiler/mingw64/lib/gcc/../../lib/gcc/x86_64-w64-mingw32/8.1.0/include-fixed"
+	ignoring duplicate directory "D:/dev/Compiler/mingw64/lib/gcc/../../lib/gcc/x86_64-w64-mingw32/8.1.0/../../../../x86_64-w64-mingw32/include"
+	ignoring nonexistent directory "C:/mingw810/x86_64-810-posix-seh-rt_v6-rev0/mingw64/mingw/include"
+	#include "..." search starts here:
+	#include <...> search starts here:
+	 D:/dev/Crumbl-Studios/Crumbl-2D/Engine/src/Crumbl2d
+	 D:/dev/Crumbl-Studios/Crumbl-2D/Engine/vendor/SDL2/include/SDL2
+	 D:/dev/Crumbl-Studios/Crumbl-2D/Engine/vendor/box2D/include/box2d
+	 D:/dev/Crumbl-Studios/Crumbl-2D/Engine/vendor/ENTT
+	 D:/dev/Crumbl-Studios/Crumbl-2D/Engine/vendor/spdlog/include
+	 D:/dev/Crumbl-Studios/Crumbl-2D/Engine/vendor/spdlog/include/spdlog
+	 D:/dev/Crumbl-Studios/Crumbl-2D/Engine/vendor/spdlog/include/spdlog/sinks
+	 D:/dev/Compiler/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++
+	 D:/dev/Compiler/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++/x86_64-w64-mingw32
+	 D:/dev/Compiler/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++/backward
+	 D:/dev/Compiler/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/8.1.0/include
+	 D:/dev/Compiler/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/8.1.0/include-fixed
+	 D:/dev/Compiler/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/8.1.0/../../../../x86_64-w64-mingw32/include
+	End of search list.
+	In file included from D:/dev/Crumbl-Studios/Crumbl-2D/Engine/src/Crumbl2d/Core/log.h:3,
+	                 from D:/dev/Crumbl-Studios/Crumbl-2D/Engine/src/cbpch.h:17,
+	                 from D:/dev/Crumbl-Studios/Crumbl-2D/Engine/build/debug/CMakeFiles/Crumbl2d.dir/cmake_pch.hxx:5,
+	                 from <command-line>:
+	D:/dev/Crumbl-Studios/Crumbl-2D/Engine/src/Crumbl2d/Core/core.h:12:2: error: #elif after #else
+	 #elif CB_PLAFORM_MACOS || CB_PLAFORM_LINUX
+	  ^~~~
+	D:/dev/Crumbl-Studios/Crumbl-2D/Engine/src/Crumbl2d/Core/core.h:3: error: the conditional began here
+	 #ifdef CB_PLATFORM_WINDOWS
+	 
+	
+	
+	Compiler exited with error code 1: D:\dev\Compiler\mingw64\bin\c++.exe -xc++ -DCB_BUILD_DLL -DCB_PLATFORM_WINDOWS -DCrumbl2d_EXPORTS -ID:/dev/Crumbl-Studios/Crumbl-2D/Engine/src/Crumbl2d -ID:/dev/Crumbl-Studios/Crumbl-2D/Engine/vendor/SDL2/include/SDL2 -ID:/dev/Crumbl-Studios/Crumbl-2D/Engine/vendor/box2D/include/box2d -ID:/dev/Crumbl-Studios/Crumbl-2D/Engine/vendor/ENTT -ID:/dev/Crumbl-Studios/Crumbl-2D/Engine/vendor/spdlog/include -ID:/dev/Crumbl-Studios/Crumbl-2D/Engine/vendor/spdlog/include/spdlog -ID:/dev/Crumbl-Studios/Crumbl-2D/Engine/vendor/spdlog/include/spdlog/sinks -g -std=gnu++17 -Winvalid-pch -x c++-header -include D:/dev/Crumbl-Studios/Crumbl-2D/Engine/build/debug/CMakeFiles/Crumbl2d.dir/cmake_pch.hxx -fpch-preprocess -v -dD -E
+	Using built-in specs.
+	COLLECT_GCC=D:\dev\Compiler\mingw64\bin\c++.exe
+	Target: x86_64-w64-mingw32
+	Configured with: ../../../src/gcc-8.1.0/configure --host=x86_64-w64-mingw32 --build=x86_64-w64-mingw32 --target=x86_64-w64-mingw32 --prefix=/mingw64 --with-sysroot=/c/mingw810/x86_64-810-posix-seh-rt_v6-rev0/mingw64 --enable-shared --enable-static --disable-multilib --enable-languages=c,c++,fortran,lto --enable-libstdcxx-time=yes --enable-threads=posix --enable-libgomp --enable-libatomic --enable-lto --enable-graphite --enable-checking=release --enable-fully-dynamic-string --enable-version-specific-runtime-libs --disable-libstdcxx-pch --disable-libstdcxx-debug --enable-bootstrap --disable-rpath --disable-win32-registry --disable-nls --disable-werror --disable-symvers --with-gnu-as --with-gnu-ld --with-arch=nocona --with-tune=core2 --with-libiconv --with-system-zlib --with-gmp=/c/mingw810/prerequisites/x86_64-w64-mingw32-static --with-mpfr=/c/mingw810/prerequisites/x86_64-w64-mingw32-static --with-mpc=/c/mingw810/prerequisites/x86_64-w64-mingw32-static --with-isl=/c/mingw810/prerequisites/x86_64-w64-mingw32-static --with-pkgversion='x86_64-posix-seh-rev0, Built by MinGW-W64 project' --with-bugurl=https://sourceforge.net/projects/mingw-w64 CFLAGS='-O2 -pipe -fno-ident -I/c/mingw810/x86_64-810-posix-seh-rt_v6-rev0/mingw64/opt/include -I/c/mingw810/prerequisites/x86_64-zlib-static/include -I/c/mingw810/prerequisites/x86_64-w64-mingw32-static/include' CXXFLAGS='-O2 -pipe -fno-ident -I/c/mingw810/x86_64-810-posix-seh-rt_v6-rev0/mingw64/opt/include -I/c/mingw810/prerequisites/x86_64-zlib-static/include -I/c/mingw810/prerequisites/x86_64-w64-mingw32-static/include' CPPFLAGS=' -I/c/mingw810/x86_64-810-posix-seh-rt_v6-rev0/mingw64/opt/include -I/c/mingw810/prerequisites/x86_64-zlib-static/include -I/c/mingw810/prerequisites/x86_64-w64-mingw32-static/include' LDFLAGS='-pipe -fno-ident -L/c/mingw810/x86_64-810-posix-seh-rt_v6-rev0/mingw64/opt/lib -L/c/mingw810/prerequisites/x86_64-zlib-static/lib -L/c/mingw810/prerequisites/x86_64-w64-mingw32-static/lib '
+	Thread model: posix
+	gcc version 8.1.0 (x86_64-posix-seh-rev0, Built by MinGW-W64 project) 
+	COLLECT_GCC_OPTIONS='-D' 'CB_BUILD_DLL' '-D' 'CB_PLATFORM_WINDOWS' '-D' 'Crumbl2d_EXPORTS' '-I' 'D:/dev/Crumbl-Studios/Crumbl-2D/Engine/src/Crumbl2d' '-I' 'D:/dev/Crumbl-Studios/Crumbl-2D/Engine/vendor/SDL2/include/SDL2' '-I' 'D:/dev/Crumbl-Studios/Crumbl-2D/Engine/vendor/box2D/include/box2d' '-I' 'D:/dev/Crumbl-Studios/Crumbl-2D/Engine/vendor/ENTT' '-I' 'D:/dev/Crumbl-Studios/Crumbl-2D/Engine/vendor/spdlog/include' '-I' 'D:/dev/Crumbl-Studios/Crumbl-2D/Engine/vendor/spdlog/include/spdlog' '-I' 'D:/dev/Crumbl-Studios/Crumbl-2D/Engine/vendor/spdlog/include/spdlog/sinks' '-g' '-std=gnu++17' '-Winvalid-pch' '-include' 'D:/dev/Crumbl-Studios/Crumbl-2D/Engine/build/debug/CMakeFiles/Crumbl2d.dir/cmake_pch.hxx' '-fpch-preprocess' '-v' '-dD' '-E' '-D' '___CIDR_DEFINITIONS_END' '-shared-libgcc' '-mtune=core2' '-march=nocona'
+	 D:/dev/Compiler/mingw64/bin/../libexec/gcc/x86_64-w64-mingw32/8.1.0/cc1plus.exe -E -quiet -v -I D:/dev/Crumbl-Studios/Crumbl-2D/Engine/src/Crumbl2d -I D:/dev/Crumbl-Studios/Crumbl-2D/Engine/vendor/SDL2/include/SDL2 -I D:/dev/Crumbl-Studios/Crumbl-2D/Engine/vendor/box2D/include/box2d -I D:/dev/Crumbl-Studios/Crumbl-2D/Engine/vendor/ENTT -I D:/dev/Crumbl-Studios/Crumbl-2D/Engine/vendor/spdlog/include -I D:/dev/Crumbl-Studios/Crumbl-2D/Engine/vendor/spdlog/include/spdlog -I D:/dev/Crumbl-Studios/Crumbl-2D/Engine/vendor/spdlog/include/spdlog/sinks -iprefix D:/dev/Compiler/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/8.1.0/ -D_REENTRANT -D CB_BUILD_DLL -D CB_PLATFORM_WINDOWS -D Crumbl2d_EXPORTS -D ___CIDR_DEFINITIONS_END -include D:/dev/Crumbl-Studios/Crumbl-2D/Engine/build/debug/CMakeFiles/Crumbl2d.dir/cmake_pch.hxx C:\Users\Eshan\AppData\Local\Temp\compiler-file10015845889897635430 -mtune=core2 -march=nocona -std=gnu++17 -Winvalid-pch -fpch-preprocess -g -fworking-directory -dD
+	ignoring duplicate directory "D:/dev/Compiler/mingw64/lib/gcc/../../lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++"
+	ignoring duplicate directory "D:/dev/Compiler/mingw64/lib/gcc/../../lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++/x86_64-w64-mingw32"
+	ignoring duplicate directory "D:/dev/Compiler/mingw64/lib/gcc/../../lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++/backward"
+	ignoring duplicate directory "D:/dev/Compiler/mingw64/lib/gcc/../../lib/gcc/x86_64-w64-mingw32/8.1.0/include"
+	ignoring nonexistent directory "C:/mingw810/x86_64-810-posix-seh-rt_v6-rev0/mingw64C:/msys64/mingw64/lib/gcc/x86_64-w64-mingw32/8.1.0/../../../../include"
+	ignoring duplicate directory "D:/dev/Compiler/mingw64/lib/gcc/../../lib/gcc/x86_64-w64-mingw32/8.1.0/include-fixed"
+	ignoring duplicate directory "D:/dev/Compiler/mingw64/lib/gcc/../../lib/gcc/x86_64-w64-mingw32/8.1.0/../../../../x86_64-w64-mingw32/include"
+	ignoring nonexistent directory "C:/mingw810/x86_64-810-posix-seh-rt_v6-rev0/mingw64/mingw/include"
+	#include "..." search starts here:
+	#include <...> search starts here:
+	 D:/dev/Crumbl-Studios/Crumbl-2D/Engine/src/Crumbl2d
+	 D:/dev/Crumbl-Studios/Crumbl-2D/Engine/vendor/SDL2/include/SDL2
+	 D:/dev/Crumbl-Studios/Crumbl-2D/Engine/vendor/box2D/include/box2d
+	 D:/dev/Crumbl-Studios/Crumbl-2D/Engine/vendor/ENTT
+	 D:/dev/Crumbl-Studios/Crumbl-2D/Engine/vendor/spdlog/include
+	 D:/dev/Crumbl-Studios/Crumbl-2D/Engine/vendor/spdlog/include/spdlog
+	 D:/dev/Crumbl-Studios/Crumbl-2D/Engine/vendor/spdlog/include/spdlog/sinks
+	 D:/dev/Compiler/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++
+	 D:/dev/Compiler/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++/x86_64-w64-mingw32
+	 D:/dev/Compiler/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++/backward
+	 D:/dev/Compiler/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/8.1.0/include
+	 D:/dev/Compiler/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/8.1.0/include-fixed
+	 D:/dev/Compiler/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/8.1.0/../../../../x86_64-w64-mingw32/include
+	End of search list.
+	In file included from D:/dev/Crumbl-Studios/Crumbl-2D/Engine/src/Crumbl2d/Core/log.h:3,
+	                 from D:/dev/Crumbl-Studios/Crumbl-2D/Engine/src/cbpch.h:17,
+	                 from D:/dev/Crumbl-Studios/Crumbl-2D/Engine/build/debug/CMakeFiles/Crumbl2d.dir/cmake_pch.hxx:5,
+	                 from <command-line>:
+	D:/dev/Crumbl-Studios/Crumbl-2D/Engine/src/Crumbl2d/Core/core.h:12:2: error: #elif after #else
+	 #elif CB_PLAFORM_MACOS || CB_PLAFORM_LINUX
+	  ^~~~
+	D:/dev/Crumbl-Studios/Crumbl-2D/Engine/src/Crumbl2d/Core/core.h:3: error: the conditional began here
+	 #ifdef CB_PLATFORM_WINDOWS
+	 
+	
+	

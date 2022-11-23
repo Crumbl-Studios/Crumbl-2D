@@ -44,7 +44,6 @@ namespace Crumbl2D
 
         const char* event;
         bool event_state;
-        Eventcode Eventcode;
     };
 
     struct CRUMBL_API KeyEvent
@@ -55,7 +54,6 @@ namespace Crumbl2D
             repeat = p_repeat;
         }
 
-        Keycode Keycode;
         int key_state;
         int repeat;
     };
@@ -71,7 +69,7 @@ namespace Crumbl2D
         bool GetAxis();
 
         bool GetEvent(Eventcode p_eventcode);
-        void CreateEvent(Eventcode p_eventcode);
+        void AddEvent(Eventcode p_eventcode, const char* p_event="event");
     private:
         std::map<Eventcode, Event> events;
         std::map<Keycode, KeyEvent> key_events;

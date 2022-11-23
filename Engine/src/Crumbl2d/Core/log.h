@@ -25,16 +25,16 @@ namespace Crumbl2D
 }
 
 // Core log macros
-#define CB_CORE_TRACE(...)::crumbl2d::Log::GetCoreLogger()->trace(__VA_ARGS__)
+#define CB_CORE_TRACE(...)::Crumbl2D::Log::GetCoreLogger()->trace(__VA_ARGS__)
 #define CB_CORE_INFO(...)::Crumbl2D::Log::GetCoreLogger()->info(__VA_ARGS__)
 #define CB_CORE_WARN(...)::Crumbl2D::Log::GetCoreLogger()->warn(__VA_ARGS__)
-#define CB_CORE_ERROR(...)::crumbl2d::Log::GetCoreLogger()->error(__VA_ARGS__)
-#define CB_CORE_CRITICAL(...)::crumbl2d::Log::GetCoreLogger()->critical(__VA_ARGS__)
+#define CB_CORE_ERROR(...)::Crumbl2D::Log::GetCoreLogger()->error(__VA_ARGS__)
+#define CB_CORE_CRITICAL(...)::Crumbl2D::Log::GetCoreLogger()->critical(__VA_ARGS__)
 
 //Client log macros
 #define CB_TRACE(...)::Crumbl2D::Log::GetClientLogger()->trace(__VA_ARGS__)
-#define CB_INFO(...)::crumbl2d::Log::GetClientLogger()->info(__VA_ARGS__)
-#define CB_WARN(...)::crumbl2d::Log::GetClientLogger()->warn(__VA_ARGS__)
-#define CB_ERROR(...)::crumbl2d::Log::GetClientLogger()->error(__VA_ARGS__)
-#define CB_CRITICAL(...)::crumbl2d::Log::GetClientLogger()->critical(__VA_ARGS__)
+#define CB_INFO(...)::Crumbl2D::Log::GetClientLogger()->info(__VA_ARGS__)
+#define CB_WARN(...)::Crumbl2D::Log::GetClientLogger()->warn(__VA_ARGS__)
+#define CB_ERROR(...)::Crumbl2D::Log::GetClientLogger()->error(__VA_ARGS__)
+#define CB_CRITICAL(...)::Crumbl2D::Log::GetClientLogger()->critical(__VA_ARGS__)
 

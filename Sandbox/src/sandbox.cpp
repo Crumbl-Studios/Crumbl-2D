@@ -1,6 +1,6 @@
 #include <Crumbl2d.h>
 
-class Sandbox : public  crumbl2d::application
+class Sandbox : public  Crumbl2D::Application
 {
 public:
     Sandbox()
@@ -12,7 +12,7 @@ public:
     }
 };
 
-crumbl2d::application* crumbl2d::createApplication()
+Crumbl2D::Application* Crumbl2D::CreateApplication()
 {
     return new Sandbox;
 }

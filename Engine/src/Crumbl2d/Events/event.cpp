@@ -326,7 +326,7 @@ namespace Crumbl2D
                         case SDLK_AT:
                             key_events[At].key_state = -1;
                         case SDLK_UNDERSCORE:
-                            key_events[Underscore].key_state = -1;;
+                            key_events[Underscore].key_state = -1;
 
                         case SDLK_NUMLOCKCLEAR:
                             key_events[NumLock].key_state = -1;
@@ -632,6 +632,7 @@ namespace Crumbl2D
             key_events[p_keycode].key_state = 0;
             return true;
         }
+        return false;
     }
 
     bool EventHandler::GetKeyUp(Keycode p_keycode)
@@ -641,6 +642,7 @@ namespace Crumbl2D
             key_events[p_keycode].key_state = 0;
             return true;
         }
+        return false;
     }
 
     bool EventHandler::GetEvent(Eventcode p_eventcode)
@@ -650,10 +652,12 @@ namespace Crumbl2D
             events[p_eventcode].event_state = false;
             return true;
         }
+        return false;
     }
 
-    void EventHandler::CreateEvent(Eventcode p_eventcode)
+    void EventHandler::AddEvent(Eventcode p_eventcode, const char* p_event)
     {
         events[p_eventcode].event_state = true;
+        events[p_eventcode].event = p_event;
     }
 }
