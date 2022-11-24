@@ -14,7 +14,7 @@
 ##    with this program; if not, write to the Free Software Foundation, Inc.,
 ##    51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 import tkinter
-from tkinter import ttk
+from tkinter import ttk,messagebox,filedialog
 from PIL import ImageTk,Image
 import sv_ttk
 ## Launcher files
@@ -208,7 +208,7 @@ class splash():
         self.sortText = tkinter.Label(self.filterArea,text = "Sort by:")
         self.sortText.pack(side="left")
         self.sortMenu = ttk.OptionMenu(self.filterArea,self.filterSortChoice,
-                                        *["Type","Type","Times used","Name (A-Z)","Name (Z-A)","Date created","Date installed","Date last used","Size (Ascending)","Size (Descending)"]
+                                        *["Type","Type","Times used","Name (A-Z)","Name (Z-A)"]
                                         ,command=lambda e,s=self:self.updateTemplateListing(s))
         self.sortMenu.pack(side="left")
         self.templateFrame = ttk.Frame(self.createFrame,relief="raised",borderwidth=2)
@@ -225,9 +225,9 @@ class splash():
         self.continueButton = ttk.Button(self.choiceFrame,text = "Next>",state="disabled",style="Accent.TButton")
         self.continueButton.pack(anchor="se")
         self.updateTemplateListing(self)
-
-    def newProjectStepC(self,objectChoice,name,dir,event = None):
-        pass
+    
+    def chooseDir(self,event = None):
+        self.dirData.set(filedialog.askdirectory(title="Choose project directory"))
 
     def newProjectStepB(self,objectChoice,event = None):
         # Remove widgets from previous step
@@ -256,18 +256,54 @@ class splash():
         self.templateText.pack(side = "top")
         self.nameText = ttk.Label(self.createFrame,text="Name:")
         self.nameText.pack(side = "top")
-        self.nameEntry = ttk.Entry(self.createFrame)
+        self.nameData = tkinter.StringVar(self.createFrame)
+        self.nameEntry = ttk.Entry(self.createFrame,textvariable=self.nameData)
         self.nameEntry.pack(side = "top")
         self.dirText = ttk.Label(self.createFrame,text="Location:")
         self.dirText.pack(side = "top")
         self.dirFrame = ttk.Frame(self.createFrame)
         self.dirFrame.pack(side = "top")
-        self.dirEntry = ttk.Entry(self.dirFrame)
+        self.dirData = tkinter.StringVar(self.dirFrame)
+        self.dirEntry = ttk.Entry(self.dirFrame,textvariable = self.dirData)
         self.dirEntry.pack(side="left")
-        self.dirButton = ttk.Button(self.dirFrame,text="Browse...")
+        self.dirButton = ttk.Button(self.dirFrame,text="Browse...",command=lambda s = self:self.chooseDir(s))
         self.dirButton.pack(side="right")
-        self.continueButton.config(command=lambda self = self, a = objectChoice,b = "tempPlaceholder",c = "/path/":self.newProjectStepC(self,a,b,c))
-        self.continueButton.pack(side="bottom",anchor="sw")
+        self.stepCContinue = ttk.Button(self.createFrame,style = "Accent.TButton",text = "Next>",command=lambda s = self, a = objectChoice:self.newProjectStepC(s,a))
+        self.stepCContinue.pack(side="bottom",anchor="se")
+
+    def newProjectStepC(self,objectChoice,event = None):
+        # Check if all fields have been filled
+        if self.nameData.get() == "":
+            self.nameEntry.state(["invalid"])
+        if self.dirData.get() == "":
+            self.dirEntry.state(["invalid"])
+        # Generate error messages based on conditions
+        if self.nameData.get() == "" and self.dirData.get() == "":
+            messagebox.showerror("Finish form","Please give your project a name and save location!")
+        elif self.nameData.get() == "":
+            messagebox.showerror("Finish form","Please give your project a name!")
+        elif self.dirData.get() == "":
+            messagebox.showerror("Finish form","Please choose a place to save your project!")
+        #Continue if all conditions met
+        else: 
+            # Destroy all old modules replace with new
+            self.stepBText.pack_forget()
+            self.templateText.pack_forget()
+            self.nameText.pack_forget()
+            self.nameEntry.pack_forget()
+            self.dirText.pack_forget()
+            self.dirFrame.pack_forget()
+            self.dirEntry.pack_forget()
+            self.dirButton.pack_forget()
+            self.stepCContinue.pack_forget()
+            # Step progress bar
+            self.cProgressBar.step(33)
+            # Final step instructional text
+            self.stepBText= ttk.Label(self.createFrame,text = "Finishing steps",font = ("TkDefaultFont",24,"bold"))
+            self.stepBText.pack(side = "top")
+            self.finishButton = ttk.Button(self.createFrame,style = "Accent.TButton",text = "Finish")
+            self.finishButton.pack(side="bottom",anchor="se")
+
 
     def removeSharedEditorTab(event,self,module):
         if module == "about":
