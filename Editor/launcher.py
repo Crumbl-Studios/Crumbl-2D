@@ -17,6 +17,7 @@ import tkinter
 from tkinter import ttk,messagebox,filedialog
 from PIL import ImageTk,Image
 import sv_ttk
+import os
 ## Launcher files
 import fileHandler
 import UIModules.settings_wizard as settings_wizard
@@ -75,10 +76,10 @@ class splash():
         self.openProjectText = ttk.Label(self.hamburgerMenu,text="OPEN")
         self.openProjectText.pack(side="top",fill = "x")
         self.openProjectImage = ImageTk.PhotoImage(Image.open(fileHandler.open_project_asset))
-        self.openGameButton = ttk.Button(self.hamburgerMenu,text="Open Project",image = self.openProjectImage,compound="left")
+        self.openGameButton = ttk.Button(self.hamburgerMenu,text="Open Project",image = self.openProjectImage,compound="left",command=lambda s = self : self.openProject(s))
         self.openGameButton.pack(side = "top",fill = "x")
         self.gitCloneImage = ImageTk.PhotoImage(Image.open(fileHandler.git_clone_asset))
-        self.openGitButton = ttk.Button(self.hamburgerMenu,text="Clone from Git",image = self.gitCloneImage,compound="left")
+        self.openGitButton = ttk.Button(self.hamburgerMenu,text="Clone from Git",image = self.gitCloneImage,compound="left",command=lambda s = self : self.gitClone(s))
         self.openGitButton.pack(side = "top",fill = "x")
         self.settingsText = ttk.Label(self.hamburgerMenu,text="SETTINGS")
         self.settingsText.pack(side="top",fill = "x")
@@ -172,6 +173,55 @@ class splash():
             except Exception:
                 print("Launcher: Item selected is a category")
 
+    def openProject(self,event = None):
+        print("Launcher: Open project started")
+        self.directory = filedialog.askdirectory(title="Choose project directory")
+        print("Launcher: Checking for project validity")
+        self.projectManifest = os.path.join(self.directory,"projectData.c2data")
+        if os.path.exists(self.projectManifest): # Check for the project mainfest json file
+            print("Launcher: Project is valid! Opening...")
+        elif not self.directory:
+            print("Launcher: Project opening cancelled!")
+        else:
+            print("Launcher: Directory is not a project")
+            messagebox.showerror("Invalid folder","This directory is not a Crumbl2D project!")
+            self.openProject(self) # Loop back
+
+    def gitClone(self,event =None):
+        self.welcomeFrame.pack_forget()
+        self.createFrame.pack(fill="both",expand=1)
+        # Rename window, place back button
+        self.splashScreen.winfo_toplevel().title = "Clone from Git - Crumbl 2D Launcher"
+        self.logoContainer.pack_forget()# Forget logo temporarily
+        self.backButton.pack(side="left")
+        self.backButton.config(command=lambda self = self,a = "newGame":self.backToMainMenu(a))
+        self.loginButton = ttk.Button(self.createFrame,text = "Login to Git")
+        self.loginButton.pack(anchor="ne")
+        self.loginText = ttk.Label(self.createFrame,text = "Reccommended for collaboration")
+        self.loginText.pack(anchor="ne")
+        self.urlMenu = ttk.Combobox(self.createFrame)
+        self.urlMenu.pack(anchor="nw")
+        self.urlText = ttk.Label(self.createFrame,text = "Git URL")
+        self.urlText.pack(anchor="nw")
+        self.cloneText = ttk.Label(self.createFrame,text = "Clone From Git",font = ("TkDefaultFont",24,"bold"))
+        self.cloneText.pack()
+        self.repoText = ttk.Label(self.createFrame,text="Repository location:")
+        self.repoText.pack(side = "top")
+        self.repoData = tkinter.StringVar(self.createFrame)
+        self.repoEntry = ttk.Entry(self.createFrame,textvariable=self.repoData)
+        self.repoEntry.pack(side = "top")
+        self.dirText = ttk.Label(self.createFrame,text="Location:")
+        self.dirText.pack(side = "top")
+        self.dirFrame = ttk.Frame(self.createFrame)
+        self.dirFrame.pack(side = "top")
+        self.dirData = tkinter.StringVar(self.dirFrame)
+        self.dirEntry = ttk.Entry(self.dirFrame,textvariable = self.dirData)
+        self.dirEntry.pack(side="left")
+        self.dirButton = ttk.Button(self.dirFrame,text="Browse...",command=lambda s = self:self.chooseDir(s))
+        self.dirButton.pack(side="right")
+        self.stepCContinue = ttk.Button(self.createFrame,style = "Accent.TButton",text = "Clone!")
+        self.stepCContinue.pack(side="bottom",anchor="se")
+   
     def createProject(self):
         self.createFrame.pack(fill="both",expand=1)
         self.welcomeFrame.pack_forget()
