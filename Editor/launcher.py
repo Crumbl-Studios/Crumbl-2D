@@ -26,8 +26,9 @@ import UIModules.about as about
 class splash():
     def __init__(self):
         self.splashScreen = tkinter.Tk(None,None," Loading - Crumbl 2D Launcher")
-        self.splashScreen.wm_attributes('-type', 'splash')
+        self.splashScreen.wm_attributes('-type', 'normal') #Origially splash to make actual splash screen, KDE (and maybe all other DE's, no matter the OS) never updates 
         self.splashScreen.geometry("700x420+2000+500")
+        self.splashScreen.resizable(False,False)
         self.splashImage = ImageTk.PhotoImage(Image.open(fileHandler.launcherSplash).resize((700,400)))
         self.imageText = tkinter.Label(image=self.splashImage)
         self.imageText.pack()

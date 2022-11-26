@@ -66,6 +66,7 @@ noFile_asset = os.path.join(IconDir,"noFile.png")
 templateData = {"templateNames":["Blank"],"templateLoctaions":["NoTemplate/"],"templateThumbnails":["NoTemplate/noPack.png"],"templateDescriptions":["Blank editor project with minimal engine bindings"],"templateTypes":["All"],"uses":["1"]}
 settingData = {"theme":"sun_valley","darkMode":True}
 recentFileData = {"recentFilenames":[],"recentLocations":[],"recentDates":[],"objectTemplates":[]}
+projectData = {"Title":"","author":"NULL","uiLayout":[],"fileStructure":[]}
 
 # Functions (Stolen from visualized because it just works)
 def get_save_loc():
@@ -160,3 +161,30 @@ def get_user_data(data_layout = recentFileData):
             with open(os.path.join(dataLocations, 'userdata.json'), 'w') as save_file_3:
                 json.dump(data_layout, save_file_3)
         return data_layout
+
+def loadData(dir,statusText,statusBar,dataStyle = projectData):
+    statusText.set("Getting project files: loading JSON data")
+    dataStyle = {"Title":"","author":"NULL","uiLayout":[],"fileStructure":[]}
+    try:
+        with open(os.path.join(dir, 'userdata.json')) as save_file:
+            print("USERDATA: attempting to load file...")
+            return json.load(save_file)
+    except JSONDecodeError:
+        print("USERDATA: JSON can't decode...")
+        with open(os.path.join(dir, 'userdata.json'), 'w') as save_file_2:
+            json.dump(dataStyle, save_file_2)
+        return dataStyle
+    except FileNotFoundError:
+        print("USERDATA: file not found, generating template data file")
+        try:
+            with open(os.path.join(dir, 'userdata.json'), 'w') as save_file_3:
+                json.dump(dataStyle, save_file_3)
+        except FileNotFoundError:
+            print("USERDATA: No directory found, generating template data folder")
+            with open(os.path.join(dir, 'userdata.json'), 'w') as save_file_3:
+                json.dump(dataStyle, save_file_3)
+        return dataStyle
+    statusBar.step(33)
+
+def createData(dir,title,statusText,statusBar,dataStyle = projectData):
+    statusText.set("Creating project files 0%")

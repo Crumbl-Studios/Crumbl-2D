@@ -17,7 +17,7 @@
 import tkinter
 from tkinter import Menu, ttk
 import fileHandler
-from PIL import ImageTk
+from PIL import ImageTk,Image
 import sv_ttk
 import os
 from tkinter import scrolledtext
@@ -38,7 +38,7 @@ def convertRGBcolor(r,g,b):
     return "#%02x%02x%02x" %(r,g,b)
 
 class app():
-    def __init__(self,projectDir):
+    def __init__(self,projectDir,isANewDirectory,template = "",projectTitle = ""):
         # Globalise vars created here
         global main_frame
         global left_pane
@@ -79,13 +79,22 @@ class app():
         
         # Project and settings splash screen (Setup and use main window)
         main.resizable(False,False)
-        main.geometry("200x100")
-        currentoptext = tkinter.StringVar(main,"Loading")
-        currentoplabel = tkinter.Label(main,textvariable = currentoptext)
-        currentoplabel.pack(side="top")
-        loadBar = ttk.Progressbar(main)
-        loadBar.pack(side="top")
+        main.geometry("1000x600")
+        self.splashImage = ImageTk.PhotoImage(Image.open(fileHandler.launcherSplash).resize((700,400)))
+        self.imageText = tkinter.Label(image=self.splashImage)
+        self.imageText.pack()
+        loadArea = tkinter.Frame(main)
+        loadArea.pack(side="bottom",fill="x")
+        currentoptext = tkinter.StringVar(loadArea,"Loading")
+        currentoplabel = tkinter.Label(loadArea,textvariable = currentoptext)
+        currentoplabel.pack(side="left")
+        loadBar = ttk.Progressbar(loadArea)
+        loadBar.pack(side="right")
         main.update()
+        if isANewDirectory:    
+            fileHandler.openFiles()
+        else:
+            fileHandler.loadFiles()
         settings_wizard.NotebookPage.applySettings(main,currentoptext,loadBar)
 
         currentoplabel.destroy()
