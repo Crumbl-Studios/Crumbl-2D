@@ -14,7 +14,7 @@
 ##    with this program; if not, write to the Free Software Foundation, Inc.,
 ##    51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 import tkinter
-from tkinter import ttk,messagebox,filedialog
+from tkinter import ttk,messagebox,filedialog,font
 from PIL import ImageTk,Image
 import sv_ttk
 import os
@@ -41,6 +41,8 @@ class splash():
         self.loadBar.pack(side="right",fill="x")
         self.hamburgerEnable = True
         self.splashScreen.update()
+        self.defaultFont = font.nametofont("TkDefaultFont")
+        self.defaultFont.configure(family="Source Sans Pro")
         settings_wizard.NotebookPage.applySettings(self,self.loadStatus,self.loadBar,self.splashScreen)
         self.convertFromSplash()
     def convertFromSplash(self):

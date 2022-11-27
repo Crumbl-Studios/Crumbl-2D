@@ -61,6 +61,11 @@ git_clone_asset = os.path.join(IconDir,"git.png")
 settings_asset = os.path.join(IconDir,"settings.png")
 noFile_asset = os.path.join(IconDir,"noFile.png")
 
+# Fonts, as used by ttf modules
+defaultFontDir = "UIAssets/Source_Sans_Pro"
+defaultFont = os.path.join(defaultFontDir,"SourceSansPro-Regular.ttf")
+
+
 # JSON handling
 # Data layouts
 templateData = {"templateNames":["Blank"],"templateLoctaions":["NoTemplate/"],"templateThumbnails":["NoTemplate/noPack.png"],"templateDescriptions":["Blank editor project with minimal engine bindings"],"templateTypes":["All"],"uses":["1"]}
@@ -184,7 +189,7 @@ def loadData(dir,statusText,statusBar,dataStyle = projectData):
             with open(os.path.join(dir, 'userdata.json'), 'w') as save_file_3:
                 json.dump(dataStyle, save_file_3)
         return dataStyle
-    statusBar.step(33)
+    statusBar.step(25)
 
 def createData(dir,title,statusText,statusBar,dataStyle = projectData):
     statusText.set("Creating project files 0%")

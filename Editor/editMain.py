@@ -15,12 +15,11 @@
 ##    51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 
 import tkinter
-from tkinter import Menu, ttk
+from tkinter import Menu, ttk, font, scrolledtext
 import fileHandler
-from PIL import ImageTk,Image
+from PIL import ImageTk,Image,ImageFont,ImageDraw
 import sv_ttk
 import os
-from tkinter import scrolledtext
 
 # UI Module imports
 import UIModules.start_page as start_page
@@ -91,6 +90,14 @@ class app():
         loadBar = ttk.Progressbar(loadArea)
         loadBar.pack(side="right")
         main.update()
+        main.defaultFont = font.nametofont("TkDefaultFont")
+        main.defaultFont.configure(family="Source Sans Pro")
+        currentoptext.set("Compositing splash screen")
+        launcherSplash = app.compositeSplashScreen(fileHandler.projectSplash,projectTitle,"author")
+        self.splashImage = ImageTk.PhotoImage(Image.open(launcherSplash).resize((700,400)))
+        self.imageText = tkinter.Label(image=self.splashImage)
+        self.imageText.pack()
+        loadBar.step(25)
         if isANewDirectory:    
             fileHandler.openFiles()
         else:
@@ -373,6 +380,16 @@ class app():
         start_page.NotebookPage.start_page(nbPage,stat_var,progress_stat)
 
         main.mainloop()
+        
+
+    # Image compositing
+    def compositeSplashScreen(splashScreen,title,author):
+        splashImage = Image.open(fileHandler.projectSplash)
+        title_font = ImageFont.truetype(fileHandler.defaultFont, 150)
+        editedSplash = ImageDraw.Draw(splashImage)
+        editedSplash.text([60,140],title,[255,255,255],title_font)
+        return splashImage
+
 
     def fullscreen():
         global main
