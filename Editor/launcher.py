@@ -22,6 +22,7 @@ import os
 import fileHandler
 import UIModules.settings_wizard as settings_wizard
 import UIModules.about as about
+import editMain
 
 class splash():
     def __init__(self):
@@ -183,6 +184,8 @@ class splash():
         self.projectManifest = os.path.join(self.directory,"projectData.c2data")
         if os.path.exists(self.projectManifest): # Check for the project mainfest json file
             print("Launcher: Project is valid! Opening...")
+            editMain.app(self.directory,False) # Open editor
+            self.splashScreen.destroy() # Close launcher
         elif not self.directory:
             print("Launcher: Project opening cancelled!")
         else:
