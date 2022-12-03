@@ -355,14 +355,22 @@ class splash():
             # Step progress bar
             self.cProgressBar.step(33)
             # Read into JSON for special values and platform choices
+            # Create menus
             self.osMenu = tkinter.Menu(self.createFrame)
+            self.unsupportedMenu = tkinter.Menu(self.osMenu)
+            # Read data
             self.platforms = fileHandler.templateData["platforms"]
             self.reccomendedPlatforms = fileHandler.projectData["reccomendedPlatforms"]
             self.specialChoices = fileHandler.projectData["specialInformation"]
+            # Place data in menu
             for i in self.reccomendedPlatforms:
                 self.osMenu.add_checkbutton(label=i)
             self.osMenu.add_separator()
-            self.osMenu.add_checkbutton(label="Show all platforms")
+            self.unsupportedPlatforms = [x for x in self.platforms if x not in self.reccomendedPlatforms]
+            if not len(self.unsupportedPlatforms) == 0:
+                self.osMenu.add_cascade(label="Show unsupported platforms",menu=self.unsupportedMenu)
+                for i in self.reccomendedPlatforms:
+                    self.osMenu.add_checkbutton(label=i)
             # Final step instructional text
             self.stepBText= ttk.Label(self.createFrame,text = "Finishing steps",font = ("TkDefaultFont",24,"bold"))
             self.stepBText.pack(side = "top")
