@@ -143,7 +143,7 @@ class app():
         menubar = tkinter.Menu(main)
 
         filemenu = tkinter.Menu(menubar, tearoff=0)
-        filemenu.add_command(label="New project",command=self.generateNew)
+        # filemenu.add_command(label="New project",command=self.generateNew) # Deprecated by launcher
         filemenu.add_command(label="Open project")
         filemenu.add_command(label="Save")
         filemenu.add_separator()

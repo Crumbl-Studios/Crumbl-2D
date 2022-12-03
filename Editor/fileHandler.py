@@ -68,10 +68,10 @@ defaultFont = os.path.join(defaultFontDir,"SourceSansPro-Regular.ttf")
 
 # JSON handling
 # Data layouts
-templateData = {"templateNames":["Blank"],"templateLoctaions":["NoTemplate/"],"templateThumbnails":["NoTemplate/noPack.png"],"templateDescriptions":["Blank editor project with minimal engine bindings"],"templateTypes":["All"],"uses":["1"]}
+templateData = {"templateNames":["Blank"],"templateLoctaions":["NoTemplate/"],"templateThumbnails":["NoTemplate/noPack.png"],"templateDescriptions":["Blank editor project with minimal engine bindings"],"templateTypes":["All"],"platforms":["Windows","Mac","Linux"]}
 settingData = {"theme":"sun_valley","darkMode":True}
 recentFileData = {"recentFilenames":[],"recentLocations":[],"recentDates":[],"objectTemplates":[]}
-projectData = {"Title":"","author":"NULL","uiLayout":[],"fileStructure":[]}
+projectData = {"Title":"","author":"NULL","uiLayout":[],"fileStructure":[],"chosenPlatforms":[""],"reccomendedPlatforms":["Windows","Mac","Linux"],"specialInformation":[]}
 
 # Functions (Stolen from visualized because it just works)
 def get_save_loc():
@@ -103,7 +103,7 @@ def get_save_loc():
     print("Template location is %s" %templates)
     return dataLocations
 
-def save_data(data):
+def save_setting_data(data):
     with open(os.path.join(dataLocations, 'userData.json'), 'w') as save_file:
         json.dump(data, save_file)
 
@@ -122,6 +122,10 @@ def get_setting_data(data_layout = settingData):
         with open(os.path.join(dataLocations, 'userData.json'), 'w') as save_file_3:
             json.dump(data_layout, save_file_3)
         return data_layout
+
+def save_template_data(data):
+    with open(os.path.join(templates, 'templateData.ceTemplates'), 'w') as save_file:
+        json.dump(data, save_file)
 
 def get_template_data(data_layout = templateData):
     global templates
@@ -145,6 +149,10 @@ def get_template_data(data_layout = templateData):
             with open(os.path.join(templates, 'templateData.ceTemplates'), 'w') as save_file_3:
                 json.dump(data_layout, save_file_3)
         return data_layout
+
+def save_user_data(data):
+    with open(os.path.join(dataLocations, 'userdata.json'), 'w') as save_file:
+        json.dump(data, save_file)
 
 def get_user_data(data_layout = recentFileData):
     try:
@@ -190,6 +198,8 @@ def loadData(dir,statusText,statusBar,dataStyle = projectData):
                 json.dump(dataStyle, save_file_3)
         return dataStyle
     statusBar.step(25)
+
+
 
 def createData(dir,title,statusText,statusBar,dataStyle = projectData):
     statusText.set("Creating project files 0%")

@@ -354,9 +354,22 @@ class splash():
             self.stepCContinue.pack_forget()
             # Step progress bar
             self.cProgressBar.step(33)
+            # Read into JSON for special values and platform choices
+            self.osMenu = tkinter.Menu(self.createFrame)
+            self.platforms = fileHandler.templateData["platforms"]
+            self.reccomendedPlatforms = fileHandler.projectData["reccomendedPlatforms"]
+            self.specialChoices = fileHandler.projectData["specialInformation"]
+            for i in self.reccomendedPlatforms:
+                self.osMenu.add_checkbutton(label=i)
+            self.osMenu.add_separator()
+            self.osMenu.add_checkbutton(label="Show all platforms")
             # Final step instructional text
             self.stepBText= ttk.Label(self.createFrame,text = "Finishing steps",font = ("TkDefaultFont",24,"bold"))
             self.stepBText.pack(side = "top")
+            self.platformsMenu= ttk.Menubutton(self.createFrame,text = "Platforms", menu = self.osMenu)
+            self.platformsMenu.pack(side = "top")
+            self.templateOptions = ttk.Label(self.createFrame,text = "Template-based options",font = ("TkDefaultFont",18,"bold"))
+            self.templateOptions.pack(side = "top")
             self.finishButton = ttk.Button(self.createFrame,style = "Accent.TButton",text = "Finish")
             self.finishButton.pack(side="bottom",anchor="se")
 
