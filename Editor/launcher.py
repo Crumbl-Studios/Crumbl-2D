@@ -327,6 +327,11 @@ class splash():
         self.stepCContinue = ttk.Button(self.createFrame,style = "Accent.TButton",text = "Next>",command=lambda s = self, a = objectChoice:self.newProjectStepC(s,a))
         self.stepCContinue.pack(side="bottom",anchor="se")
 
+    def finishProjectCreation(self,name,dir,template,specialoptionNames,event = None):
+        print("LAUNCHER: Checking for unsupported release targets")
+        if self.unsupportedChosenBool == True:
+            messagebox.showwarning("Unsupported platforms chosen","Using this template with the selected platforms will not compile correctly")        
+
     def newProjectStepC(self,objectChoice,event = None):
         # Check if all fields have been filled
         if self.nameData.get() == "":
@@ -358,27 +363,31 @@ class splash():
             # Create menus
             self.osMenu = tkinter.Menu(self.createFrame)
             self.unsupportedMenu = tkinter.Menu(self.osMenu)
+            self.chosenBool = []
+            self.unsupportedChosenBool = []
             # Read data
             self.platforms = fileHandler.templateData["platforms"]
             self.reccomendedPlatforms = fileHandler.projectData["reccomendedPlatforms"]
             self.specialChoices = fileHandler.projectData["specialInformation"]
             # Place data in menu
             for i in self.reccomendedPlatforms:
-                self.osMenu.add_checkbutton(label=i)
+                self.chosenBool.append(True)
+                self.osMenu.add_checkbutton(label=i,variable=self.chosenBool[-1])
             self.osMenu.add_separator()
             self.unsupportedPlatforms = [x for x in self.platforms if x not in self.reccomendedPlatforms]
             if not len(self.unsupportedPlatforms) == 0:
-                self.osMenu.add_cascade(label="Show unsupported platforms",menu=self.unsupportedMenu)
-                for i in self.reccomendedPlatforms:
-                    self.osMenu.add_checkbutton(label=i)
+                self.osMenu.add_cascade(label="Unsupported release platforms",menu=self.unsupportedMenu)
+                for i in self.unsupportedPlatforms:
+                    self.unsupportedChosenBool.append(False)
+                    self.unsupportedMenu.add_checkbutton(label=i,variable = self.unsupportedChosenBool[-1])
             # Final step instructional text
             self.stepBText= ttk.Label(self.createFrame,text = "Finishing steps",font = ("TkDefaultFont",24,"bold"))
             self.stepBText.pack(side = "top")
-            self.platformsMenu= ttk.Menubutton(self.createFrame,text = "Platforms", menu = self.osMenu)
+            self.platformsMenu= ttk.Menubutton(self.createFrame,text = "Select your release platforms", menu = self.osMenu)
             self.platformsMenu.pack(side = "top")
             self.templateOptions = ttk.Label(self.createFrame,text = "Template-based options",font = ("TkDefaultFont",18,"bold"))
             self.templateOptions.pack(side = "top")
-            self.finishButton = ttk.Button(self.createFrame,style = "Accent.TButton",text = "Finish")
+            self.finishButton = ttk.Button(self.createFrame,style = "Accent.TButton",text = "Finish",command=lambda s = self,a = self.nameData,b = self.dirData,c= objectChoice,d = [""]: self.finishProjectCreation(a,b,c,d))
             self.finishButton.pack(side="bottom",anchor="se")
 
 
