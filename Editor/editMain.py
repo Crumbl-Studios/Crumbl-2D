@@ -37,7 +37,7 @@ def convertRGBcolor(r,g,b):
     return "#%02x%02x%02x" %(r,g,b)
 
 class app():
-    def __init__(self,projectDir,isANewDirectory,template = "",projectTitle = ""):
+    def __init__(self,projectDir,isANewDirectory,template = "",projectTitle = "",specialoptionNames = []):
         # Globalise vars created here
         global main_frame
         global left_pane
@@ -78,7 +78,7 @@ class app():
         
         # Project and settings splash screen (Setup and use main window)
         main.resizable(False,False)
-        main.geometry("1000x600")
+        main.geometry("700x450")
         self.splashImage = ImageTk.PhotoImage(Image.open(fileHandler.launcherSplash).resize((700,400)))
         self.imageText = tkinter.Label(image=self.splashImage)
         self.imageText.pack()
@@ -93,8 +93,8 @@ class app():
         main.defaultFont = font.nametofont("TkDefaultFont")
         main.defaultFont.configure(family="Source Sans Pro")
         currentoptext.set("Compositing splash screen")
-        launcherSplash = app.compositeSplashScreen(fileHandler.projectSplash,projectTitle,"author")
-        self.splashImage = ImageTk.PhotoImage(Image.open(launcherSplash).resize((700,400)))
+        projectSplash = app.compositeSplashScreen(fileHandler.projectSplash,projectTitle,"author")
+        self.splashImage = ImageTk.PhotoImage(Image.open(projectSplash).resize((700,400)))
         self.imageText = tkinter.Label(image=self.splashImage)
         self.imageText.pack()
         loadBar.step(25)

@@ -329,8 +329,10 @@ class splash():
 
     def finishProjectCreation(self,name,dir,template,specialoptionNames,event = None):
         print("LAUNCHER: Checking for unsupported release targets")
-        if self.unsupportedChosenBool == True:
-            messagebox.showwarning("Unsupported platforms chosen","Using this template with the selected platforms will not compile correctly")        
+        if any(x == True for x in self.unsupportedChosenBool):
+            messagebox.showwarning("Unsupported platforms chosen","Using this template with the selected platforms will not compile correctly. This can be changed later.")        
+        self.splashScreen.destroy()
+        editMain.app(dir,True,template,name,specialoptionNames)
 
     def newProjectStepC(self,objectChoice,event = None):
         # Check if all fields have been filled

@@ -62,8 +62,7 @@ settings_asset = os.path.join(IconDir,"settings.png")
 noFile_asset = os.path.join(IconDir,"noFile.png")
 
 # Fonts, as used by ttf modules
-defaultFontDir = "UIAssets/Source_Sans_Pro"
-defaultFont = os.path.join(defaultFontDir,"SourceSansPro-Regular.ttf")
+defaultFont = os.path.join(IconDir,"Source_Sans_Pro","SourceSansPro-Regular.ttf")
 
 
 # JSON handling
