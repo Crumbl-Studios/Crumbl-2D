@@ -79,9 +79,6 @@ class app():
         # Project and settings splash screen (Setup and use main window)
         main.resizable(False,False)
         main.geometry("700x450")
-        self.splashImage = ImageTk.PhotoImage(Image.open(fileHandler.launcherSplash).resize((700,400)))
-        self.imageText = tkinter.Label(image=self.splashImage)
-        self.imageText.pack()
         loadArea = tkinter.Frame(main)
         loadArea.pack(side="bottom",fill="x")
         currentoptext = tkinter.StringVar(loadArea,"Loading")
@@ -94,14 +91,15 @@ class app():
         main.defaultFont.configure(family="Source Sans Pro")
         currentoptext.set("Compositing splash screen")
         projectSplash = app.compositeSplashScreen(fileHandler.projectSplash,projectTitle,"author")
-        self.splashImage = ImageTk.PhotoImage(Image.open(projectSplash).resize((700,400)))
+        self.splashImage = ImageTk.PhotoImage(projectSplash.resize((700,400)))
         self.imageText = tkinter.Label(image=self.splashImage)
         self.imageText.pack()
         loadBar.step(25)
+        currentoptext.set("Loading directories")
         if isANewDirectory:    
-            fileHandler.openFiles()
+            fileHandler.createData(projectDir,projectTitle,currentoptext,loadBar)
         else:
-            fileHandler.loadFiles()
+            fileHandler.openFiles(projectDir,projectTitle,currentoptext,loadBar)
         settings_wizard.NotebookPage.applySettings(main,currentoptext,loadBar)
 
         currentoplabel.destroy()
@@ -387,7 +385,7 @@ class app():
         splashImage = Image.open(fileHandler.projectSplash)
         title_font = ImageFont.truetype(fileHandler.defaultFont, 150)
         editedSplash = ImageDraw.Draw(splashImage)
-        editedSplash.text([60,140],title,[255,255,255],title_font)
+        editedSplash.text((60,140),title,(255,255,255),title_font)
         return splashImage
 
 

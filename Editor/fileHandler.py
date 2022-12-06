@@ -198,7 +198,10 @@ def loadData(dir,statusText,statusBar,dataStyle = projectData):
         return dataStyle
     statusBar.step(25)
 
+# File handling for project creation/ opening
 
-
-def createData(dir,title,statusText,statusBar,dataStyle = projectData):
+def createData(dir,title,statusText,statusBar):
     statusText.set("Creating project files 0%")
+
+def openFiles(dir,title,statusText,statusBar):
+    statusText.set("Loading project files 0%")

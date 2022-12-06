@@ -389,7 +389,7 @@ class splash():
             self.platformsMenu.pack(side = "top")
             self.templateOptions = ttk.Label(self.createFrame,text = "Template-based options",font = ("TkDefaultFont",18,"bold"))
             self.templateOptions.pack(side = "top")
-            self.finishButton = ttk.Button(self.createFrame,style = "Accent.TButton",text = "Finish",command=lambda s = self,a = self.nameData,b = self.dirData,c= objectChoice,d = [""]: self.finishProjectCreation(a,b,c,d))
+            self.finishButton = ttk.Button(self.createFrame,style = "Accent.TButton",text = "Finish",command=lambda s = self,a = self.nameData.get(),b = self.dirData.get(),c= objectChoice,d = [""]: self.finishProjectCreation(a,b,c,d))
             self.finishButton.pack(side="bottom",anchor="se")
 
 
