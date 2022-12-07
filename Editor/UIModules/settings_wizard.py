@@ -138,6 +138,11 @@ class NotebookPage():
         self.personalizedSetting.pack(fill='both') # Pack this so it shows up on start
         self.personalizationLabel = tkinter.Label(self.personalizedSetting,text="Personalization")
         self.personalizationLabel.pack(side = "top")
+        self.authorData = tkinter.StringVar(self.personalizedSetting)
+        self.authorEntry = ttk.Entry(self.personalizedSetting,textvariable=self.authorData)
+        self.authorEntry.pack(side = "bottom")
+        self.authorText = ttk.Label(self.personalizedSetting,text="Author name:")
+        self.authorText.pack(side = "bottom")
         self.themeDecider = ttk.Frame(self.personalizedSetting)
         self.themeDecider.pack(side="bottom")
         self.lightButton = ttk.Button(self.themeDecider,text = "Light",image = lightModeIcon,compound="top",command=lambda self = self: NotebookPage.chooseLightMode(self))

@@ -68,7 +68,7 @@ defaultFont = os.path.join(IconDir,"Source_Sans_Pro","SourceSansPro-Regular.ttf"
 # JSON handling
 # Data layouts
 templateData = {"templateNames":["Blank"],"templateLoctaions":["NoTemplate/"],"templateThumbnails":["NoTemplate/noPack.png"],"templateDescriptions":["Blank editor project with minimal engine bindings"],"templateTypes":["All"],"platforms":["Windows","Mac","Linux"]}
-settingData = {"theme":"sun_valley","darkMode":True}
+settingData = {"theme":"sun_valley","darkMode":True,"author":"placeholder"}
 recentFileData = {"recentFilenames":[],"recentLocations":[],"recentDates":[],"objectTemplates":[]}
 projectData = {"Title":"","author":"NULL","uiLayout":[],"fileStructure":[],"chosenPlatforms":[""],"reccomendedPlatforms":["Windows","Mac","Linux"],"specialInformation":[]}
 

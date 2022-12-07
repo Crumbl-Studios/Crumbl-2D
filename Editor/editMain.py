@@ -90,7 +90,7 @@ class app():
         main.defaultFont = font.nametofont("TkDefaultFont")
         main.defaultFont.configure(family="Source Sans Pro")
         currentoptext.set("Compositing splash screen")
-        projectSplash = app.compositeSplashScreen(fileHandler.projectSplash,projectTitle,"author")
+        projectSplash = app.compositeSplashScreen(fileHandler.projectSplash,projectTitle,fileHandler.settingData["author"])
         self.splashImage = ImageTk.PhotoImage(projectSplash.resize((700,400)))
         self.imageText = tkinter.Label(image=self.splashImage)
         self.imageText.pack()
@@ -384,8 +384,14 @@ class app():
     def compositeSplashScreen(splashScreen,title,author):
         splashImage = Image.open(fileHandler.projectSplash)
         title_font = ImageFont.truetype(fileHandler.defaultFont, 150)
+        author_font = ImageFont.truetype(fileHandler.defaultFont, 100)
         editedSplash = ImageDraw.Draw(splashImage)
-        editedSplash.text((60,140),title,(255,255,255),title_font)
+        editedSplash.text((60,40),title,(255,255,255),title_font)
+        if not author == "placeholder":
+            editedSplash.text((60,175),author,(255,255,255),author_font)
+        else:
+            author = os.getlogin()
+            editedSplash.text((60,175),author,(255,255,255),author_font)
         return splashImage
 
 

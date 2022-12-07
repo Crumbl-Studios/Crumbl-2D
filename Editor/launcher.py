@@ -48,6 +48,7 @@ class splash():
         self.convertFromSplash()
     def convertFromSplash(self):
         # Custom window decorations
+        self.splashScreen.resizable(True,True)
         self.splashScreen.wm_attributes('-type', 'normal')
         self.splashScreen.geometry("1000x600")
         self.splashScreen.update()
