@@ -89,6 +89,7 @@ class app():
         main.update()
         main.defaultFont = font.nametofont("TkDefaultFont")
         main.defaultFont.configure(family="Source Sans Pro")
+        settings_wizard.NotebookPage.applySettings(main,currentoptext,loadBar,main)
         currentoptext.set("Compositing splash screen")
         projectSplash = app.compositeSplashScreen(fileHandler.projectSplash,projectTitle,fileHandler.settingData["author"])
         self.splashImage = ImageTk.PhotoImage(projectSplash.resize((700,400)))
@@ -100,8 +101,6 @@ class app():
             fileHandler.createData(projectDir,projectTitle,currentoptext,loadBar)
         else:
             fileHandler.openFiles(projectDir,projectTitle,currentoptext,loadBar)
-        settings_wizard.NotebookPage.applySettings(main,currentoptext,loadBar)
-
         currentoplabel.destroy()
         loadBar.destroy()
         main.resizable(True,True)
