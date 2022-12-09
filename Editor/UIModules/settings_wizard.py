@@ -53,12 +53,15 @@ class NotebookPage():
             currentOP.set("Loading setting 2/2")
             progressBar.step(100/settingAmounts)
             window.update()
-            if darkMode:
-                sv_ttk.set_theme("dark")
-                sv_ttk.use_dark_theme()
-            else:
-                sv_ttk.set_theme("light")
-                sv_ttk.use_light_theme()
+            try:
+                if darkMode:
+                    sv_ttk.set_theme("dark")
+                    sv_ttk.use_dark_theme()
+                else:
+                    sv_ttk.set_theme("light")
+                    sv_ttk.use_light_theme()
+            except Exception:
+                    print("\033[31mSETTINGS: WARNING: sv_ttk theme failed to load, will start in ttk theme without darkmode support\033[0m")
             currentOP.set("Setting theme thumbnails")
             progressBar.step(100/settingAmounts)
             window.update()
