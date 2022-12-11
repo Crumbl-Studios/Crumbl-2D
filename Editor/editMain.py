@@ -68,6 +68,8 @@ class app():
         global quick_rotate_button
         global quick_resize_button
         global isFullscreen
+        global currentoplabel
+        global loadBar
 
         wins = []
         mini_wins = []
@@ -91,7 +93,12 @@ class app():
         main.defaultFont.configure(family="Source Sans Pro")
         settings_wizard.NotebookPage.applySettings(main,currentoptext,loadBar,main)
         currentoptext.set("Compositing splash screen")
-        projectSplash = app.compositeSplashScreen(fileHandler.projectSplash,projectTitle,fileHandler.settingData["author"])
+        try:
+            projectSplash = app.compositeSplashScreen(fileHandler.projectSplash,projectTitle,fileHandler.settingData["author"])
+            print("\033[32mEDITOR: Sucess compositing splash screen\033[0m")
+        except KeyError:
+            print("\033[31mEDITOR: ERROR: Failed to load author data, using placeholder\033[0m")
+            projectSplash = app.compositeSplashScreen(fileHandler.projectSplash,projectTitle,"placeholder")
         self.splashImage = ImageTk.PhotoImage(projectSplash.resize((700,400)))
         self.imageText = tkinter.Label(image=self.splashImage)
         self.imageText.pack()
@@ -101,8 +108,43 @@ class app():
             fileHandler.createData(projectDir,projectTitle,currentoptext,loadBar)
         else:
             fileHandler.openFiles(projectDir,projectTitle,currentoptext,loadBar)
+        app.removeSplash(self,projectDir,isANewDirectory,template,projectTitle,specialoptionNames)
+
+    
+    def removeSplash(self,projectDir,isANewDirectory,template = "",projectTitle = "",specialoptionNames = []):
+        global main_frame
+        global left_pane
+        global right_pane
+        global bottom_pane
+        global module_tabs
+        global main
+        global close_button
+        global pop_button
+        global windowedTabs
+        global close_bar
+        global mini_win_canvas
+        global mini_wins
+        global winModeDetached
+        global winModeSeperate
+        global winModeTabbed
+        global tabMode
+        global wins
+        global canvas_frame
+        global win_mode
+        global move_frames
+        global select_button
+        global move_button
+        global rotate_button
+        global resize_button
+        global quick_select_button
+        global quick_move_button
+        global quick_rotate_button
+        global quick_resize_button
+        global isFullscreen
+        
         currentoplabel.destroy()
         loadBar.destroy()
+        self.imageText.destroy()
         main.resizable(True,True)
         main.geometry("1366x720")
         isFullscreen = False

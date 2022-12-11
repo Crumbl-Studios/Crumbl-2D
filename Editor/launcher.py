@@ -163,7 +163,7 @@ class splash():
             templateNames.sort(reverse=True)
             for i in range(len(templateNames)):
                 self.templates.insert("",tkinter.END,values = templateNames[i])
-        print("Launcher: Item reorganization complete!")
+        print("\033[32mLauncher: Item reorganization complete!\033[0m")
 
     def selectMenuItem(self,event):
         iid = self.templates.identify("item",event.x,event.y)
@@ -176,7 +176,7 @@ class splash():
                 self.objectDescription.configure(text=description)
                 self.continueButton.configure(state="normal",command=lambda s=self,n = name:self.newProjectStepB(s,n))
             except Exception:
-                print("Launcher: Item selected is a category")
+                print("\033[33mLauncher: Item selected is a category\033[0m")
 
     def openProject(self,event = None):
         print("Launcher: Open project started")
@@ -184,13 +184,13 @@ class splash():
         print("Launcher: Checking for project validity")
         self.projectManifest = os.path.join(self.directory,"projectData.c2data")
         if os.path.exists(self.projectManifest): # Check for the project mainfest json file
-            print("Launcher: Project is valid! Opening...")
+            print("\033[32mLauncher: Project is valid! Opening...\033[0m")
             editMain.app(self.directory,False) # Open editor
             self.splashScreen.destroy() # Close launcher
         elif not self.directory:
-            print("Launcher: Project opening cancelled!")
+            print("\033[33mLauncher: Project opening cancelled!\033[0m")
         else:
-            print("Launcher: Directory is not a project")
+            print("\033[33mLauncher: Directory is not a project\033[0m")
             messagebox.showerror("Invalid folder","This directory is not a Crumbl2D project!")
             self.openProject(self) # Loop back
 
