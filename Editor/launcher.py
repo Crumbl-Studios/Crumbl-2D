@@ -332,8 +332,12 @@ class splash():
         print("LAUNCHER: Checking for unsupported release targets")
         if any(x == True for x in self.unsupportedChosenBool):
             messagebox.showwarning("Unsupported platforms chosen","Using this template with the selected platforms will not compile correctly. This can be changed later.")        
-        self.splashScreen.destroy()
-        editMain.app(dir,True,template,name,specialoptionNames)
+        # Remove launcher widgets to share window with Editor
+        self.menuBar.destroy()
+        self.createFrame.destroy()
+        self.stepCContinue.destroy()
+        # Share launcher window, to reduce theme errors
+        editMain.app(self.splashScreen,dir,True,template,name,specialoptionNames)
 
     def newProjectStepC(self,objectChoice,event = None):
         # Check if all fields have been filled

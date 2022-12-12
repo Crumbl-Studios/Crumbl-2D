@@ -37,7 +37,7 @@ def convertRGBcolor(r,g,b):
     return "#%02x%02x%02x" %(r,g,b)
 
 class app():
-    def __init__(self,projectDir,isANewDirectory,template = "",projectTitle = "",specialoptionNames = []):
+    def __init__(self,win,projectDir,isANewDirectory,template = "",projectTitle = "",specialoptionNames = []):
         # Globalise vars created here
         global main_frame
         global left_pane
@@ -70,13 +70,17 @@ class app():
         global isFullscreen
         global currentoplabel
         global loadBar
+        
+        # Get shared window form launcher
+        main = win
 
+        # Custom variables fro later
         wins = []
         mini_wins = []
         windowedTabs = []
         tabMode = 0
         win_mode = "tabbed"
-        main = tkinter.Tk(None,None," Loading - Crumbl 2D Editor")
+
         
         # Project and settings splash screen (Setup and use main window)
         main.resizable(False,False)
@@ -90,7 +94,7 @@ class app():
         loadBar.pack(side="right")
         main.update()
         main.defaultFont = font.nametofont("TkDefaultFont")
-        main.defaultFont.configure(family="Source Sans Pro")
+        win.title("Loading - Crumbl 2D Editor")
         settings_wizard.NotebookPage.applySettings(main,currentoptext,loadBar,main)
         currentoptext.set("Compositing splash screen")
         try:
@@ -149,6 +153,8 @@ class app():
         main.geometry("1366x720")
         isFullscreen = False
         
+        main.winfo_toplevel().title(projectTitle + "- Crumbl 2D Editor")
+
         # Iconography
         logo_icon = tkinter.PhotoImage(master = main,file = fileHandler.crumbl_logo)
 
@@ -183,7 +189,7 @@ class app():
 
         filemenu = tkinter.Menu(menubar, tearoff=0)
         # filemenu.add_command(label="New project",command=self.generateNew) # Deprecated by launcher
-        filemenu.add_command(label="Open project")
+        # filemenu.add_command(label="Open project") 
         filemenu.add_command(label="Save")
         filemenu.add_separator()
         filemenu.add_command(label="Configure Git")
@@ -516,7 +522,6 @@ class app():
         global module_tabs
         if win_mode == "tabbed":
             tab_name = module_tabs.tab(module_tabs.select(),"text")
-            main.winfo_toplevel().title(tab_name +" - Crumbl 2D Editor")
             tab_list = [module_tabs.tab(i, option="text") for i in module_tabs.tabs()]
             tab_no = tab_list.index(tab_name)
             print(tab_no)
