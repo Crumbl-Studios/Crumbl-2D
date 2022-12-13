@@ -152,8 +152,6 @@ class app():
         main.resizable(True,True)
         main.geometry("1366x720")
         isFullscreen = False
-        
-        main.winfo_toplevel().title(projectTitle + "- Crumbl 2D Editor")
 
         # Iconography
         logo_icon = tkinter.PhotoImage(master = main,file = fileHandler.crumbl_logo)
@@ -534,7 +532,7 @@ class app():
             else:
                 pop_button.config(state = 'disabled')
         if win_mode == "miniwindow":
-            main.winfo_toplevel().title(title +" - Crumbl 2D Editor")
+            pass 
 
     def notebookAdd(title,renameable = False,closeable = False,poppable = False):
         global win_mode

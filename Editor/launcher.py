@@ -325,6 +325,9 @@ class splash():
         self.dirEntry.pack(side="left")
         self.dirButton = ttk.Button(self.dirFrame,text="Browse...",command=lambda s = self:self.chooseDir(s))
         self.dirButton.pack(side="right")
+        self.newDir = True
+        self.createNewDir = ttk.Checkbutton(self.createFrame,text = "Create in new directory",variable=self.newDir,style="Switch.TCheckbutton")
+        self.createNewDir.pack(side = "top")
         self.stepCContinue = ttk.Button(self.createFrame,style = "Accent.TButton",text = "Next>",command=lambda s = self, a = objectChoice:self.newProjectStepC(s,a))
         self.stepCContinue.pack(side="bottom",anchor="se")
 
@@ -336,7 +339,12 @@ class splash():
         self.menuBar.destroy()
         self.createFrame.destroy()
         self.stepCContinue.destroy()
+        # Start processing, and implementing small options
+        if self.newDir:
+            self.dirFriendlyNames = name.replace(" ","_")
+            dir = os.path.join(dir,self.dirFriendlyNames)
         # Share launcher window, to reduce theme errors
+        self.splashScreen.title(name + "- Crumbl 2D Editor")
         editMain.app(self.splashScreen,dir,True,template,name,specialoptionNames)
 
     def newProjectStepC(self,objectChoice,event = None):
@@ -364,6 +372,7 @@ class splash():
             self.dirEntry.pack_forget()
             self.dirButton.pack_forget()
             self.stepCContinue.pack_forget()
+            self.createNewDir.pack_forget()
             # Step progress bar
             self.cProgressBar.step(33)
             # Read into JSON for special values and platform choices
