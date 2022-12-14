@@ -72,6 +72,8 @@ settingData = {"theme":"sun_valley","darkMode":True,"author":"placeholder"}
 recentFileData = {"recentFilenames":[],"recentLocations":[],"recentDates":[],"objectTemplates":[]}
 projectData = {"Title":"","author":"NULL","uiLayout":[],"fileStructure":[],"chosenPlatforms":[""],"reccomendedPlatforms":["Windows","Mac","Linux"],"specialInformation":[]}
 
+openProject = ""
+
 # Functions (Stolen from visualized because it just works)
 def get_save_loc():
     global dataLocations
@@ -202,6 +204,12 @@ def loadData(dir,statusText,statusBar,dataStyle = projectData):
 
 def createData(dir,title,statusText,statusBar):
     statusText.set("Creating project files 0%")
+    os.makedirs(dir)
+    statusText.set("Creating project files 5%")
+    statusBar.step(5)
 
 def openFiles(dir,title,statusText,statusBar):
     statusText.set("Loading project files 0%")
+    openProject = dir
+    statusText.set("Loading project files 5%")
+    statusBar.step(5)
