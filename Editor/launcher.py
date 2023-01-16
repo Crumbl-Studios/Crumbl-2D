@@ -146,7 +146,7 @@ class splash():
     def updateTemplateListing(self,event = None):
         for i in self.templates.get_children():
             self.templates.delete(i)
-        print("Launcher: Previous items removed for reorginization")
+        print("Launcher: Previous items removed for reorganization")
         templateTypes = fileHandler.templateData["templateTypes"]
         templateNames = fileHandler.templateData["templateNames"]
         if self.filterSortChoice.get() == "Type":
@@ -170,11 +170,11 @@ class splash():
         name = self.templates.item(iid)["values"]
         if not name == iid: # Avoid updating if it is a prent root (for type sorting, parent objects have same iid as name)    
             try:
-                self.objectTitle.configure(text=name)
                 index = fileHandler.templateData["templateNames"].index(name[0])   
                 description = fileHandler.templateData["templateDescriptions"][index]
                 self.objectDescription.configure(text=description)
-                self.continueButton.configure(state="normal",command=lambda s=self,n = name:self.newProjectStepB(s,n))
+                self.objectName.set(name) # Run this last, so the exception would have gone through before the name was edited
+                self.continueButton.configure(state="normal",command=lambda s=self:self.newProjectStepB(s))
             except Exception:
                 print("\033[33mLauncher: Item selected is a category\033[0m")
 
@@ -246,6 +246,7 @@ class splash():
         # String variables
         self.filterTypeChoice = tkinter.StringVar(self.createFrame)
         self.filterSortChoice = tkinter.StringVar(self.createFrame,"Type")
+        self.objectName = tkinter.StringVar(self.createFrame,"None selected")
         # Generate new widgets
         self.cProgressBar = ttk.Progressbar(self.createFrame)
         self.cProgressBar.pack(side = "top",fill="x")
@@ -275,9 +276,9 @@ class splash():
         self.templates.bind("<Button-1>",self.selectMenuItem)
         self.choiceFrame = ttk.Frame(self.createFrame)
         self.choiceFrame.pack(side = "right",fill="y")
-        self.objectTitle = ttk.Label(self.choiceFrame,text = "None selected",font = ("TkDefaultFont",18,"bold"))
+        self.objectTitle = ttk.Label(self.choiceFrame,textvariable=self.objectName,font = ("TkDefaultFont",18,"bold"))
         self.objectTitle.pack(side="top")
-        self.objectDescription = ttk.Label(self.choiceFrame,text = "Select something to view more and continue")
+        self.objectDescription = ttk.Label(self.choiceFrame,text = "Select something to get more info and continue")
         self.objectDescription.pack(side="top")
         self.continueButton = ttk.Button(self.choiceFrame,text = "Next>",state="disabled",style="Accent.TButton")
         self.continueButton.pack(anchor="se")
@@ -286,7 +287,7 @@ class splash():
     def chooseDir(self,event = None):
         self.dirData.set(filedialog.askdirectory(title="Choose project directory"))
 
-    def newProjectStepB(self,objectChoice,event = None):
+    def newProjectStepB(self,event = None):
         # Remove widgets from previous step
         self.installButton.pack_forget()
         self.cText.pack_forget()
@@ -309,7 +310,7 @@ class splash():
         # Generate naming form
         self.stepBText= ttk.Label(self.createFrame,text = "Name your project",font = ("TkDefaultFont",24,"bold"))
         self.stepBText.pack(side = "top")
-        self.templateText = ttk.Label(self.createFrame,text="Template chosen: %s"%objectChoice)
+        self.templateText = ttk.Label(self.createFrame,text="Template chosen: %s"%self.objectName.get())
         self.templateText.pack(side = "top")
         self.nameText = ttk.Label(self.createFrame,text="Name:")
         self.nameText.pack(side = "top")
@@ -328,7 +329,7 @@ class splash():
         self.newDir = True
         self.createNewDir = ttk.Checkbutton(self.createFrame,text = "Create in new directory",variable=self.newDir,style="Switch.TCheckbutton")
         self.createNewDir.pack(side = "top")
-        self.stepCContinue = ttk.Button(self.createFrame,style = "Accent.TButton",text = "Next>",command=lambda s = self, a = objectChoice:self.newProjectStepC(s,a))
+        self.stepCContinue = ttk.Button(self.createFrame,style = "Accent.TButton",text = "Next>",command=lambda s = self, a = self.objectName.get():self.newProjectStepC(s,a))
         self.stepCContinue.pack(side="bottom",anchor="se")
 
     def finishProjectCreation(self,name,dir,template,specialoptionNames,event = None):
