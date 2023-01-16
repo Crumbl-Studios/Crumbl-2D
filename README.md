@@ -13,13 +13,22 @@ Crumbl 2D is a game engine written in c++. With planned python scripting for the
 ## Contributions
 We are actively looking for developers to help. This software is open source and all work is volunteer work. Any help is appreciated, but is entirely voluntary.
 
-## Installation
+## Installation: Editor
+### All platforms
+#### Prerequisites
+- Source code
+- Python interpreter
+
+#### To run
+- Go to editor directory and run `launcher.py`
+
+## Installation: RGB Demo
 ### NOTE FOR ALL VERSIONS: THESE INSTALL INSTRUCTIONS DO NOT WORK; WE ARE CURRENTLY REVAMPING OUR ENTIRE CODEBASE
 Currently the software is incomplete, so this guide only is to get the "demo" program running, and is assuming you have already cloned this repo.
 
 ### Linux/Unix
 
-#### Prerequisites: 
+#### Prerequisites
 - GCC/G++ (most distros include it)
 - libsdl2-2.0-0 (most distros include it)
 - libsdl2-dev 
