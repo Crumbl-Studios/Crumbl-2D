@@ -310,7 +310,7 @@ class splash():
         # Generate naming form
         self.stepBText= ttk.Label(self.createFrame,text = "Name your project",font = ("TkDefaultFont",24,"bold"))
         self.stepBText.pack(side = "top")
-        self.templateText = ttk.Label(self.createFrame,text="Template chosen: %s"%self.objectName.get())
+        self.templateText = ttk.Label(self.createFrame,text="Template chosen: %s"%self.objectName.get().lstrip("('").rstrip("',)"))
         self.templateText.pack(side = "top")
         self.nameText = ttk.Label(self.createFrame,text="Name:")
         self.nameText.pack(side = "top")
@@ -388,15 +388,15 @@ class splash():
             self.specialChoices = fileHandler.projectData["specialInformation"]
             # Place data in menu
             for i in self.reccomendedPlatforms:
-                self.chosenBool.append(True)
-                self.osMenu.add_checkbutton(label=i,variable=self.chosenBool[-1])
+                self.chosenBool[self.reccomendedPlatforms.index(i)] = tkinter.BooleanVar(True)
+                self.osMenu.add_checkbutton(label=i,variable=self.chosenBool[self.reccomendedPlatforms.index(i)])
             self.osMenu.add_separator()
             self.unsupportedPlatforms = [x for x in self.platforms if x not in self.reccomendedPlatforms]
             if not len(self.unsupportedPlatforms) == 0:
                 self.osMenu.add_cascade(label="Unsupported release platforms",menu=self.unsupportedMenu)
                 for i in self.unsupportedPlatforms:
                     self.unsupportedChosenBool.append(False)
-                    self.unsupportedMenu.add_checkbutton(label=i,variable = self.unsupportedChosenBool[-1])
+                    self.unsupportedMenu.add_checkbutton(label=i,variable = self.unsupportedChosenBool[len(self.unsupportedChosenBool)-1])
             # Final step instructional text
             self.stepBText= ttk.Label(self.createFrame,text = "Finishing steps",font = ("TkDefaultFont",24,"bold"))
             self.stepBText.pack(side = "top")
