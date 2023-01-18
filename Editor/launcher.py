@@ -388,14 +388,14 @@ class splash():
             self.specialChoices = fileHandler.projectData["specialInformation"]
             # Place data in menu
             for i in self.reccomendedPlatforms:
-                self.chosenBool[self.reccomendedPlatforms.index(i)] = tkinter.BooleanVar(True)
+                self.chosenBool.append(tkinter.BooleanVar(self.osMenu,True))
                 self.osMenu.add_checkbutton(label=i,variable=self.chosenBool[self.reccomendedPlatforms.index(i)])
             self.osMenu.add_separator()
             self.unsupportedPlatforms = [x for x in self.platforms if x not in self.reccomendedPlatforms]
             if not len(self.unsupportedPlatforms) == 0:
                 self.osMenu.add_cascade(label="Unsupported release platforms",menu=self.unsupportedMenu)
                 for i in self.unsupportedPlatforms:
-                    self.unsupportedChosenBool.append(False)
+                    self.unsupportedChosenBool.append(tkinter.BooleanVar(self.osMenu,True))
                     self.unsupportedMenu.add_checkbutton(label=i,variable = self.unsupportedChosenBool[len(self.unsupportedChosenBool)-1])
             # Final step instructional text
             self.stepBText= ttk.Label(self.createFrame,text = "Finishing steps",font = ("TkDefaultFont",24,"bold"))
